@@ -22,7 +22,9 @@
 		"esbuild": true
 	},
 	"devDependencies": {
+		"@tailwindcss/vite": "^4.3.3",
 		"@types/node": "^26.5.1",
+		"tailwindcss": "^4.3.3",
 		"wrangler": "^4.131.1"
 	}
 }

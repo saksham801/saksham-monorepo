@@ -287,6 +287,7 @@ const services = [
         background: #090b0d;
         color: #e8edf0;
         font-family: "DM Mono", monospace;
+        overflow-x: hidden;
     }
     .health-shell {
         background-color: #090b0d;
@@ -727,6 +728,23 @@ const services = [
     }
     .health-footer a {
         color: #8da0a8;
+    }
+    @media (max-width: 900px) and (min-width: 701px) {
+        .health-hero {
+            gap: 40px;
+        }
+        .overall-status {
+            min-width: 240px;
+        }
+        .metric strong {
+            font-size: 2rem;
+        }
+        .benchmark-meta {
+            gap: 18px;
+        }
+        .service-row {
+            grid-template-columns: 1fr 70px 110px;
+        }
     }
     @media (max-width: 700px) {
         .health-header {
