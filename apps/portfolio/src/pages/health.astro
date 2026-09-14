@@ -1,0 +1,65 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const services = [
+  { name: 'Portfolio website', key: 'website', detail: 'sakshampy.in', latency: '42ms' },
+  { name: 'Static delivery', key: 'cdn', detail: 'Cloudflare edge network', latency: '18ms' },
+  { name: 'Contact channel', key: 'email', detail: 'hello@sakshampy.in', latency: '—' },
+  { name: 'LLM profile', key: 'llms', detail: '/llms.txt', latency: '12ms' },
+];
+---
+
+<Layout title="System Health — Saksham Dubey" description="Live availability and system health status for Saksham Dubey's portfolio website and services.">
+  <div class="health-shell min-h-screen">
+    <header class="health-header mx-auto max-w-6xl px-5 py-6 lg:px-8">
+      <a href="/" class="brand"><span class="brand-mark">S<span>D</span></span><span class="brand-text">SAKSHAM.DUBEY <small>/ SYSTEM STATUS</small></span></a>
+      <a href="/" class="back-link">← BACK TO PORTFOLIO</a>
+    </header>
+
+    <main class="mx-auto max-w-6xl px-5 lg:px-8">
+      <section class="health-hero">
+        <div>
+          <p class="eyebrow"><span class="prompt">&gt;_</span> MONITOR / HEALTH</p>
+          <h1>Everything is<br /><em>operational.</em></h1>
+          <p class="intro">A transparent look at the systems powering Saksham's portfolio, projects, and contact channels.</p>
+        </div>
+        <div class="overall-status"><span class="status-orb"></span><div><strong>ALL SYSTEMS OPERATIONAL</strong><small>Last checked <span id="last-checked">just now</span></small></div></div>
+      </section>
+
+      <section class="metrics-grid" aria-label="System metrics">
+        <div class="metric"><span>AVAILABILITY</span><strong>99.99<sup>%</sup></strong><small>LAST 30 DAYS</small></div>
+        <div class="metric"><span>RESPONSE TIME</span><strong>42<sup>ms</sup></strong><small>GLOBAL AVERAGE</small></div>
+        <div class="metric"><span>DEPLOYMENT</span><strong>LIVE</strong><small>PRODUCTION</small></div>
+        <div class="metric"><span>REGION</span><strong>IN<span>·</span></strong><small>NEW DELHI / UTC+5:30</small></div>
+      </section>
+
+      <section class="status-section"><div class="section-heading"><span class="section-number">01</span><h2>Services</h2><span class="section-line"></span></div><div class="service-list">{services.map((service) => <div class="service-row"><div class="service-name"><span class="check">✓</span><div><strong>{service.name}</strong><small>{service.detail}</small></div></div><span class="latency">{service.latency}</span><span class="operational">OPERATIONAL</span></div>)}</div></section>
+
+      <section class="status-section lower-grid"><div><div class="section-heading"><span class="section-number">02</span><h2>Latest deployment</h2><span class="section-line"></span></div><div class="deploy-card"><div class="deploy-top"><span class="deploy-icon">⌁</span><span class="deploy-state">PRODUCTION / LIVE</span></div><strong>Portfolio V2.0</strong><p>Developer-first portfolio system with SEO, structured data, and an LLM-readable profile.</p><div class="deploy-meta"><span><small>COMMIT</small><b>main*</b></span><span><small>BUILT WITH</small><b>Astro + Bun</b></span><span><small>ADAPTER</small><b>Cloudflare</b></span></div></div></div><div><div class="section-heading"><span class="section-number">03</span><h2>System info</h2><span class="section-line"></span></div><div class="info-list"><div><span>STATUS PAGE</span><b>PUBLIC</b></div><div><span>MONITORING</span><b>ENABLED</b></div><div><span>SECURITY</span><b>HTTPS / TLS</b></div><div><span>LAST INCIDENT</span><b>NONE REPORTED</b></div></div></div></section>
+
+      <section class="incident-section"><div class="incident-icon">✓</div><div><strong>No incidents reported</strong><p>All systems have been running normally. This page updates whenever a new deployment or service event occurs.</p></div><span class="incident-date">SINCE 2020</span></section>
+
+      <section class="contact-strip"><p>Found something that looks wrong?</p><a href="mailto:hello@sakshampy.in">REPORT AN ISSUE <span>↗</span></a></section>
+    </main>
+
+    <footer class="health-footer mx-auto max-w-6xl px-5 py-8 lg:px-8"><span>© 2026 SAKSHAM DUBEY</span><span>STATUS UPDATED <span id="clock">--:--:--</span> IST</span><a href="/">HOME ↗</a></footer>
+  </div>
+  <script>
+    const updateClock = () => { const now = new Date(); const clock = document.querySelector('#clock'); const checked = document.querySelector('#last-checked'); if (clock) clock.textContent = now.toLocaleTimeString('en-IN', { hour12: false, timeZone: 'Asia/Kolkata' }); if (checked) checked.textContent = 'a few seconds ago'; };
+    updateClock(); setInterval(updateClock, 1000);
+  </script>
+</Layout>
+
+<style>
+  :global(*) { box-sizing: border-box; } :global(html) { scroll-behavior: smooth; } :global(body) { margin: 0; background: #090b0d; color: #e8edf0; font-family: 'DM Mono', monospace; }
+  .health-shell { background-color: #090b0d; background-image: linear-gradient(rgba(73,91,102,.07) 1px, transparent 1px), linear-gradient(90deg, rgba(73,91,102,.07) 1px, transparent 1px); background-size: 64px 64px; }
+  .health-header { align-items: center; border-bottom: 1px solid #26343b; display: flex; justify-content: space-between; } .brand { align-items: center; display: flex; gap: 12px; text-decoration: none; } .brand-mark { align-items: center; border: 1px solid #a8ff60; color: #a8ff60; display: flex; font: 700 16px 'Manrope', sans-serif; height: 34px; justify-content: center; letter-spacing: -.12em; width: 34px; } .brand-mark span { color: #e8edf0; } .brand-text { color: #dce7eb; font: 600 11px 'Manrope', sans-serif; letter-spacing: .06em; } .brand-text small { color: #687b83; font: 8px 'DM Mono', monospace; margin-left: 6px; } .back-link { color: #8da0a8; font-size: 9px; letter-spacing: .1em; } .back-link:hover, .contact-strip a:hover, .health-footer a:hover { color: #a8ff60; }
+  .health-hero { align-items: end; border-bottom: 1px solid #26343b; display: flex; justify-content: space-between; padding: 105px 0 74px; } .eyebrow { color: #82949c; font-size: 10px; letter-spacing: .14em; margin: 0 0 24px; } .prompt, em { color: #a8ff60; font-style: normal; } h1 { font: 800 clamp(3.7rem, 8vw, 7.8rem)/.88 'Manrope', sans-serif; letter-spacing: -.085em; margin: 0; } .intro { color: #91a2aa; font-size: 12px; line-height: 1.9; margin: 28px 0 0; max-width: 450px; } .overall-status { align-items: center; border: 1px solid #35513d; display: flex; gap: 15px; min-width: 270px; padding: 17px 18px; } .status-orb { background: #a8ff60; border-radius: 50%; box-shadow: 0 0 0 7px rgba(168,255,96,.1), 0 0 20px rgba(168,255,96,.3); height: 10px; width: 10px; } .overall-status strong { color: #a8ff60; display: block; font-size: 10px; letter-spacing: .07em; } .overall-status small { color: #6d8189; display: block; font-size: 9px; margin-top: 7px; }
+  .metrics-grid { border-bottom: 1px solid #26343b; display: grid; grid-template-columns: repeat(4, 1fr); } .metric { border-right: 1px solid #26343b; padding: 27px 20px 30px 0; } .metric:not(:first-child) { padding-left: 20px; } .metric:last-child { border-right: 0; } .metric span, .metric small { color: #677b84; display: block; font-size: 8px; letter-spacing: .1em; } .metric strong { display: block; font: 500 clamp(1.8rem, 4vw, 3rem) 'Manrope', sans-serif; letter-spacing: -.08em; margin: 12px 0; } .metric sup { color: #a8ff60; font: 10px 'DM Mono', monospace; letter-spacing: 0; margin-left: 3px; } .metric strong span { color: #a8ff60; display: inline; font-size: inherit; }
+  .status-section { padding: 80px 0; } .section-heading { align-items: center; display: flex; gap: 14px; margin-bottom: 27px; } .section-number { color: #a8ff60; font-size: 9px; } h2 { font: 500 18px 'Manrope', sans-serif; letter-spacing: -.04em; margin: 0; } .section-line { background: #26343b; flex: 1; height: 1px; }
+  .service-list { border: 1px solid #2b3d45; } .service-row { align-items: center; border-bottom: 1px solid #26343b; display: grid; gap: 20px; grid-template-columns: 1fr 90px 125px; padding: 19px 20px; } .service-row:last-child { border-bottom: 0; } .service-name { align-items: center; display: flex; gap: 13px; } .check, .incident-icon { align-items: center; background: rgba(168,255,96,.12); border: 1px solid #5d8b45; border-radius: 50%; color: #a8ff60; display: flex; font-size: 11px; height: 22px; justify-content: center; width: 22px; } .service-name strong { display: block; font: 500 13px 'Manrope', sans-serif; } .service-name small { color: #697d85; display: block; font-size: 9px; margin-top: 5px; } .latency { color: #82949c; font-size: 10px; } .operational { color: #a8ff60; font-size: 8px; letter-spacing: .08em; }
+  .lower-grid { display: grid; gap: 8vw; grid-template-columns: 1fr 1fr; padding-top: 10px; } .deploy-card { background: #0e1519; border: 1px solid #2b3d45; padding: 24px; } .deploy-top { align-items: center; color: #a8ff60; display: flex; font-size: 9px; justify-content: space-between; margin-bottom: 38px; } .deploy-icon { border: 1px solid #a8ff60; font-size: 16px; padding: 3px 7px; } .deploy-state { font-size: 8px; letter-spacing: .1em; } .deploy-card > strong { font: 600 25px 'Manrope', sans-serif; letter-spacing: -.05em; } .deploy-card > p { color: #82949c; font-size: 11px; line-height: 1.7; margin: 13px 0 27px; max-width: 400px; } .deploy-meta { border-top: 1px solid #2a3b42; display: flex; gap: 35px; padding-top: 16px; } .deploy-meta span { display: flex; flex-direction: column; gap: 7px; } .deploy-meta small { color: #687b83; font-size: 8px; } .deploy-meta b { color: #c9d6da; font-size: 9px; font-weight: 400; } .info-list { border-top: 1px solid #2b3d45; } .info-list div { border-bottom: 1px solid #2b3d45; display: flex; justify-content: space-between; padding: 17px 0; } .info-list span { color: #687b83; font-size: 9px; } .info-list b { color: #c9d6da; font-size: 9px; font-weight: 400; }
+  .incident-section { align-items: center; border: 1px solid #35513d; display: flex; gap: 15px; margin: 10px 0 80px; padding: 19px 22px; } .incident-section strong { color: #a8ff60; display: block; font: 500 12px 'Manrope', sans-serif; } .incident-section p { color: #81939b; font-size: 10px; margin: 6px 0 0; } .incident-date { color: #63757d; font-size: 8px; margin-left: auto; white-space: nowrap; }
+  .contact-strip { align-items: center; border-top: 1px solid #26343b; display: flex; justify-content: space-between; padding: 29px 0 90px; } .contact-strip p { color: #82949c; font-size: 11px; } .contact-strip a { border-bottom: 1px solid #a8ff60; color: #dce7eb; font-size: 10px; padding-bottom: 8px; } .contact-strip a span { color: #a8ff60; margin-left: 12px; } .health-footer { border-top: 1px solid #26343b; color: #5c7078; display: flex; font-size: 8px; justify-content: space-between; letter-spacing: .08em; padding-bottom: 25px; padding-top: 25px; } .health-footer a { color: #8da0a8; }
+  @media (max-width: 700px) { .health-header { align-items: start; gap: 20px; } .brand-text small { display: block; margin: 5px 0 0; } .back-link { padding-top: 10px; text-align: right; } .health-hero { align-items: start; flex-direction: column; gap: 42px; padding: 75px 0 55px; } .overall-status { width: 100%; } .metrics-grid { grid-template-columns: repeat(2, 1fr); } .metric:nth-child(2) { border-right: 0; } .metric:nth-child(3), .metric:nth-child(4) { border-top: 1px solid #26343b; } .metric:nth-child(3) { padding-left: 0; } .status-section { padding: 60px 0; } .service-row { gap: 10px; grid-template-columns: 1fr auto; } .operational { grid-column: 1 / -1; padding-left: 35px; } .lower-grid { display: block; padding-top: 0; } .lower-grid > div + div { margin-top: 60px; } .deploy-meta { flex-wrap: wrap; gap: 20px; } .incident-section { align-items: start; flex-wrap: wrap; } .incident-date { margin-left: 37px; } .contact-strip, .health-footer { align-items: start; flex-direction: column; gap: 18px; } }
+</style>

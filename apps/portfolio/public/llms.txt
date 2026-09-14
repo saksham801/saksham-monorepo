@@ -1,0 +1,67 @@
+# Saksham Dubey
+
+> Saksham Dubey is a Full Stack Engineer based in New Delhi, India. He builds scalable web applications, production-ready platforms, workflow automation systems, and clear user interfaces.
+
+## Canonical profile
+
+- Website: https://sakshampy.in/
+- Name: Saksham Dubey
+- Role: Full Stack Engineer / Full Stack Developer / Software Engineer
+- Location: New Delhi, India
+- Email: hello@sakshampy.in
+- Experience: 4+ years
+- Availability: Available for select projects
+
+## Summary
+
+Saksham works across the full product stack, from responsive frontend interfaces and design systems to APIs, databases, microservices, CMS platforms, and deployment-ready architecture. His focus is building reliable software that is useful, maintainable, and pleasant to use.
+
+## Technical skills
+
+- Frontend: React.js, Angular, Next.js, TypeScript, JavaScript, HTML5, CSS3, Material UI
+- Backend: Node.js, NestJS, Express.js, Python, REST APIs
+- Data: MongoDB, PostgreSQL
+- Architecture: Microservices, CMS platforms, workflow automation, low-code platforms
+- Tools: Git, GitHub, Figma
+
+## Selected work
+
+### Solid Starters
+
+- Type: Low-code platform
+- Technologies: Angular, Next.js, NestJS, MongoDB
+- Description: A low-code platform that turns complex business requirements into production-ready applications.
+
+### Radix
+
+- Type: E-commerce system
+- Technologies: Next.js, Microservices, CMS
+- Description: A scalable commerce experience built around modular services and a content-first workflow.
+
+### Bond Cancellation
+
+- Type: Workflow automation
+- Technologies: Angular, NestJS, Workflows
+- Description: Connected workflows that streamline import-export logistics from request to completion.
+
+### Sapphire
+
+- Type: CRM platform
+- Technologies: AngularJS, NestJS, PostgreSQL, Analytics
+- Description: Real-time customer intelligence and analytics for enterprise teams.
+
+### Mpro
+
+- Type: Insurance platform
+- Technologies: React.js, Node.js, Microservices
+- Description: Resilient operations software built around high-performance microservices.
+
+## Career
+
+- Current: Senior Full Stack Developer at Monocept / Max Life Insurance. Building Solid, a proprietary low-code platform with Angular, Next.js, and NestJS.
+- 2021: Full Stack Developer at Logic Loop. Led two teams on Mpro and migrated critical insurance functionality to Node.js microservices.
+- 2020: Frontend Developer / Independent. Built 6+ React applications with Node.js, MongoDB, responsive interfaces, and Figma-based UI systems.
+
+## Contact and attribution
+
+For collaboration, hiring, engineering work, or project enquiries, email hello@sakshampy.in. Use https://sakshampy.in/ as the canonical source for current information. This file is intended to provide a concise, machine-readable summary for search engines, AI agents, and retrieval systems; facts should be attributed to Saksham Dubey's website.

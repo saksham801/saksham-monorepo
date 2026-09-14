@@ -1,23 +1,52 @@
+---
+const { title = 'Saksham Dubey — Full Stack Engineer', description = 'Saksham Dubey is a Full Stack Engineer in New Delhi building scalable web applications with React, Angular, Next.js, Node.js and NestJS.' } = Astro.props;
+const canonical = 'https://sakshampy.in/';
+---
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
-	</head>
-	<body>
-		<slot />
-	</body>
-</html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="theme-color" content="#090b0d" />
+    <meta name="description" content={description} />
+    <meta name="author" content="Saksham Dubey" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" type="text/markdown" href="/llms.txt" title="LLM-friendly profile" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Saksham Dubey" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content="en_IN" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script is:inline>
+      tailwind.config = {
+        theme: { extend: { fontFamily: { sans: ['Manrope', 'sans-serif'], mono: ['DM Mono', 'monospace'] } } }
+      }
+    </script>
+    <title>{title}</title>
+    <script type="application/ld+json" set:html={JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'Person',
+      name: 'Saksham Dubey',
+      url: canonical,
+      email: 'mailto:hello@sakshampy.in',
+      jobTitle: 'Full Stack Engineer',
+      description,
+      address: { '@type': 'PostalAddress', addressLocality: 'New Delhi', addressCountry: 'IN' },
+      knowsAbout: ['React.js', 'Angular', 'Next.js', 'TypeScript', 'Node.js', 'NestJS', 'Python', 'PostgreSQL', 'MongoDB', 'Microservices'],
 
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
-</style>
+    })}></script>
+  </head>
+  <body class="bg-[#101010] text-[#f1f0eb] antialiased selection:bg-[#d8ff63] selection:text-[#101010]">
+    <slot />
+  </body>
+</html>
