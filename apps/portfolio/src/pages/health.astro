@@ -40,6 +40,7 @@ const services = [
     description="Live availability and system health status for Saksham Dubey's portfolio website and services."
 >
     <div class="health-shell min-h-screen">
+        <div class="health-pointer-glow" aria-hidden="true"></div>
         <header class="health-header mx-auto max-w-6xl px-5 py-6 lg:px-8">
             <a href="/" class="brand">
                 <span class="brand-mark">
@@ -274,6 +275,16 @@ const services = [
         };
         updateClock();
         setInterval(updateClock, 1000);
+
+        const glow = document.querySelector<HTMLElement>(
+            ".health-pointer-glow",
+        );
+        window.addEventListener("pointermove", (event) => {
+            if (glow && window.matchMedia("(pointer: fine)").matches) {
+                glow.style.setProperty("--pointer-x", `${event.clientX}px`);
+                glow.style.setProperty("--pointer-y", `${event.clientY}px`);
+            }
+        });
     </script>
 </Layout>
 
@@ -297,6 +308,29 @@ const services = [
             linear-gradient(rgba(73, 91, 102, 0.07) 1px, transparent 1px),
             linear-gradient(90deg, rgba(73, 91, 102, 0.07) 1px, transparent 1px);
         background-size: 64px 64px;
+        isolation: isolate;
+        position: relative;
+    }
+    .health-pointer-glow {
+        background: radial-gradient(
+            circle,
+            rgba(168, 255, 96, 0.12) 0,
+            rgba(101, 201, 255, 0.04) 22%,
+            transparent 60%
+        );
+        height: 460px;
+        left: calc(var(--pointer-x, 50vw) - 230px);
+        pointer-events: none;
+        position: fixed;
+        top: calc(var(--pointer-y, 40vh) - 230px);
+        width: 460px;
+        z-index: 0;
+    }
+    .health-header,
+    .health-shell > main,
+    .health-footer {
+        position: relative;
+        z-index: 1;
     }
     .health-header {
         align-items: center;
@@ -418,6 +452,9 @@ const services = [
     }
     .metric {
         border-right: 1px solid #26343b;
+        transition:
+            background 0.25s ease,
+            padding-left 0.25s ease;
         padding: 27px 20px 30px 0;
     }
     .metric:not(:first-child) {
@@ -425,6 +462,39 @@ const services = [
     }
     .metric:last-child {
         border-right: 0;
+    }
+    .metric:hover {
+        background: rgba(168, 255, 96, 0.035);
+        padding-left: 10px;
+    }
+    .service-row {
+        transition:
+            background 0.25s ease,
+            padding-left 0.25s ease;
+    }
+    .service-row:hover {
+        background: rgba(168, 255, 96, 0.035);
+        padding-left: 27px;
+    }
+    .deploy-card {
+        transition:
+            border-color 0.25s ease,
+            transform 0.25s ease,
+            box-shadow 0.25s ease;
+    }
+    .deploy-card:hover {
+        border-color: #a8ff60;
+        box-shadow: 0 16px 45px rgba(0, 0, 0, 0.22);
+        transform: translateY(-4px);
+    }
+    .info-list div {
+        transition:
+            background 0.2s ease,
+            padding-left 0.2s ease;
+    }
+    .info-list div:hover {
+        background: rgba(168, 255, 96, 0.035);
+        padding-left: 10px;
     }
     .metric span,
     .metric small {
@@ -746,6 +816,17 @@ const services = [
         }
         .service-row {
             grid-template-columns: 1fr 70px 110px;
+        }
+    }
+    @media (prefers-reduced-motion: reduce) {
+        .health-pointer-glow {
+            display: none;
+        }
+        .metric,
+        .service-row,
+        .deploy-card,
+        .info-list div {
+            transition: none;
         }
     }
     @media (max-width: 700px) {
