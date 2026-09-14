@@ -1,6 +1,8 @@
 ---
 import Layout from "../layouts/Layout.astro";
 
+export const prerender = true;
+
 const skills = [
     "TypeScript",
     "React.js",
@@ -1147,9 +1149,17 @@ const experience = [
         gap: 20px;
         padding: 20px;
     }
+    .mobile-menu.hidden {
+        display: none;
+    }
     .mobile-menu a {
         color: #a8ff60;
         font-size: 11px;
+    }
+    @media (min-width: 801px) {
+        .mobile-menu {
+            display: none !important;
+        }
     }
     @media (max-width: 1080px) and (min-width: 801px) {
         .hero {
