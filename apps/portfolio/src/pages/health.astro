@@ -296,8 +296,11 @@ const services = [
     :global(html) {
         scroll-behavior: smooth;
     }
+    :global(html),
     :global(body) {
         margin: 0;
+        width: 100%;
+        min-width: 0;
         background: #090b0d;
         color: #e8edf0;
         font-family: "DM Mono", monospace;
@@ -305,6 +308,8 @@ const services = [
     }
     .health-shell {
         background-color: #090b0d;
+        min-width: 0;
+        width: 100%;
         background-image:
             linear-gradient(rgba(73, 91, 102, 0.07) 1px, transparent 1px),
             linear-gradient(90deg, rgba(73, 91, 102, 0.07) 1px, transparent 1px);
@@ -891,6 +896,12 @@ const services = [
         }
     }
     @media (max-width: 700px) {
+        .health-header,
+        .health-shell > main,
+        .health-footer {
+            max-width: none;
+            width: 100%;
+        }
         .health-header {
             align-items: start;
             gap: 20px;
