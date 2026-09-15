@@ -50,9 +50,19 @@ const services = [
                     SAKSHAM.DUBEY <small>/ SYSTEM STATUS</small>
                 </span>
             </a>
-            <a href="/" class="back-link">
-                ← BACK TO PORTFOLIO
-            </a>
+            <div class="health-header-links">
+                <a
+                    href="https://saksham.openstatus.dev/"
+                    class="status-link"
+                    target="_blank"
+                    rel="noreferrer"
+                >
+                    LIVE OPENSTATUS ↗
+                </a>
+                <a href="/" class="back-link">
+                    ← BACK TO PORTFOLIO
+                </a>
+            </div>
         </header>
 
         <main class="mx-auto max-w-6xl px-5 lg:px-8">
@@ -82,6 +92,32 @@ const services = [
                         </small>
                     </div>
                 </div>
+            </section>
+
+            <section
+                class="openstatus-live"
+                aria-labelledby="openstatus-live-title"
+            >
+                <div class="openstatus-live-head">
+                    <div>
+                        <p class="eyebrow">
+                            <span class="prompt">&gt;_</span> LIVE PROVIDER DATA
+                        </p>
+                        <h2 id="openstatus-live-title">OpenStatus monitor</h2>
+                    </div>
+                    <a
+                        href="https://saksham.openstatus.dev/"
+                        target="_blank"
+                        rel="noreferrer"
+                    >
+                        OPEN FULL STATUS PAGE ↗
+                    </a>
+                </div>
+                <iframe
+                    src="https://saksham.openstatus.dev/"
+                    title="Live Saksham OpenStatus page"
+                    loading="lazy"
+                ></iframe>
             </section>
 
             <section class="metrics-grid" aria-label="Latest load test metrics">
@@ -260,7 +296,7 @@ const services = [
         <footer class="health-footer mx-auto max-w-6xl px-5 py-8 lg:px-8">
             <span>© 2026 SAKSHAM DUBEY</span>
             <span>
-                STATUS UPDATED <span id="clock">--:--:--</span> IST
+                STATUS UPDATED <span id="clock">--:--:--</span> UTC
             </span>
             <a href="/">HOME ↗</a>
         </footer>
@@ -273,7 +309,7 @@ const services = [
             if (clock)
                 clock.textContent = now.toLocaleTimeString("en-IN", {
                     hour12: false,
-                    timeZone: "Asia/Kolkata",
+                    timeZone: "UTC",
                 });
             if (checked) checked.textContent = "a few seconds ago";
         };
@@ -399,6 +435,19 @@ const services = [
         border-bottom: 1px solid #26343b;
         display: flex;
         justify-content: space-between;
+    }
+    .health-header-links {
+        align-items: center;
+        display: flex;
+        gap: 22px;
+    }
+    .status-link {
+        color: #a8ff60;
+        font-size: 9px;
+        letter-spacing: 0.08em;
+    }
+    .status-link:hover {
+        text-decoration: underline;
     }
     .brand {
         align-items: center;
@@ -559,6 +608,40 @@ const services = [
         display: block;
         font-size: 9px;
         margin-top: 7px;
+    }
+    .openstatus-live {
+        background: #0e1519;
+        border: 1px solid #2b3d45;
+        margin-top: 42px;
+        overflow: hidden;
+    }
+    .openstatus-live-head {
+        align-items: center;
+        display: flex;
+        justify-content: space-between;
+        padding: 22px 24px;
+    }
+    .openstatus-live-head .eyebrow {
+        margin: 0 0 8px;
+    }
+    .openstatus-live-head h2 {
+        font:
+            500 21px "Manrope",
+            sans-serif;
+        letter-spacing: -0.04em;
+    }
+    .openstatus-live-head a {
+        color: #a8ff60;
+        font-size: 8px;
+        letter-spacing: 0.08em;
+    }
+    .openstatus-live iframe {
+        background: #090b0d;
+        border: 0;
+        border-top: 1px solid #2b3d45;
+        display: block;
+        height: 520px;
+        width: 100%;
     }
     .metrics-grid {
         border-bottom: 1px solid #26343b;
@@ -970,6 +1053,19 @@ const services = [
         .health-header {
             align-items: start;
             gap: 20px;
+        }
+        .health-header-links {
+            align-items: end;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .openstatus-live-head {
+            align-items: start;
+            flex-direction: column;
+            gap: 18px;
+        }
+        .openstatus-live iframe {
+            height: 560px;
         }
         .brand-text small {
             display: block;
