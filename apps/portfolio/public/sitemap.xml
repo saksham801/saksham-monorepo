@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://demo.sakshampy.in/</loc>
+    <loc>https://sakshampy.in/</loc>
     <lastmod>2026-09-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://demo.sakshampy.in/llms.txt</loc>
+    <loc>https://sakshampy.in/llms.txt</loc>
     <lastmod>2026-09-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
