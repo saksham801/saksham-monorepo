@@ -74,7 +74,9 @@ const services = [
                 <div class="overall-status">
                     <span class="status-orb"></span>
                     <div>
-                        <strong>ALL SYSTEMS OPERATIONAL</strong>
+                        <strong id="live-status">
+                            ALL SYSTEMS OPERATIONAL
+                        </strong>
                         <small>
                             Last checked <span id="last-checked">just now</span>
                         </small>
@@ -128,7 +130,8 @@ const services = [
                         <h2>Latest load test snapshot</h2>
                     </div>
                     <span class="benchmark-source">
-                        SOURCE / BLAZEMETER EXECUTIVE SUMMARY
+                        SOURCE / BLAZEMETER EXECUTIVE SUMMARY · LIVE STATUS
+                        BELOW
                     </span>
                 </div>
                 <div class="benchmark-meta">
@@ -158,7 +161,7 @@ const services = [
                 </div>
                 <div class="service-list">
                     {services.map((service) => (
-                        <div class="service-row">
+                        <div class="service-row" data-service={service.name}>
                             <div class="service-name">
                                 <span class="check">✓</span>
                                 <div>
@@ -276,6 +279,59 @@ const services = [
         };
         updateClock();
         setInterval(updateClock, 1000);
+
+        const openStatusApi = "/api/openstatus";
+        const statusLabels: Record<string, string> = {
+            OVERALL_STATUS_OPERATIONAL: "ALL SYSTEMS OPERATIONAL",
+            OVERALL_STATUS_DEGRADED: "SYSTEMS DEGRADED",
+            OVERALL_STATUS_PARTIAL_OUTAGE: "PARTIAL OUTAGE",
+            OVERALL_STATUS_MAJOR_OUTAGE: "MAJOR OUTAGE",
+            OVERALL_STATUS_MAINTENANCE: "MAINTENANCE IN PROGRESS",
+            OVERALL_STATUS_UNKNOWN: "STATUS UNKNOWN",
+        };
+        const liveStatus = document.querySelector("#live-status");
+        const statusOrb = document.querySelector(".status-orb");
+        const serviceRows = document.querySelectorAll("[data-service]");
+
+        const updateOpenStatus = async () => {
+            try {
+                const response = await fetch(openStatusApi, {
+                    cache: "no-store",
+                });
+                if (!response.ok)
+                    throw new Error(`OpenStatus returned ${response.status}`);
+                const data = (await response.json()) as {
+                    overallStatus?: string;
+                };
+                const overall = data.overallStatus || "OVERALL_STATUS_UNKNOWN";
+                if (liveStatus)
+                    liveStatus.textContent =
+                        statusLabels[overall] || "STATUS UNKNOWN";
+                if (statusOrb)
+                    statusOrb.classList.toggle(
+                        "status-warning",
+                        overall !== "OVERALL_STATUS_OPERATIONAL",
+                    );
+
+                serviceRows.forEach((row) => {
+                    const state = row.querySelector(".operational");
+                    if (state)
+                        state.textContent =
+                            overall === "OVERALL_STATUS_OPERATIONAL"
+                                ? "OPERATIONAL"
+                                : "CHECK STATUS";
+                    row.setAttribute("data-live-status", overall);
+                });
+                const checked = document.querySelector("#last-checked");
+                if (checked) checked.textContent = "just now · OpenStatus";
+            } catch (error) {
+                if (liveStatus)
+                    liveStatus.textContent = "OPENSTATUS DATA UNAVAILABLE";
+                if (statusOrb) statusOrb.classList.add("status-warning");
+            }
+        };
+        updateOpenStatus();
+        setInterval(updateOpenStatus, 60000);
 
         const glow = document.querySelector<HTMLElement>(
             ".health-pointer-glow",
@@ -475,6 +531,15 @@ const services = [
         height: 10px;
         width: 10px;
         animation: status-pulse 2.4s ease-in-out infinite;
+    }
+    .status-orb.status-warning {
+        background: #ffb15c;
+        box-shadow:
+            0 0 0 7px rgba(255, 177, 92, 0.1),
+            0 0 20px rgba(255, 177, 92, 0.35);
+    }
+    .status-warning + div strong {
+        color: #ffb15c;
     }
     @keyframes status-pulse {
         50% {

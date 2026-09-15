@@ -4,7 +4,7 @@
 
 ## Canonical profile
 
-- Website: https://sakshampy.in/
+- Website: https://demo.sakshampy.in/
 - Name: Saksham Dubey
 - Role: Full Stack Engineer / Full Stack Developer / Software Engineer
 - Location: New Delhi, India
@@ -64,4 +64,4 @@ Saksham works across the full product stack, from responsive frontend interfaces
 
 ## Contact and attribution
 
-For collaboration, hiring, engineering work, or project enquiries, email hello@sakshampy.in. Use https://sakshampy.in/ as the canonical source for current information. This file is intended to provide a concise, machine-readable summary for search engines, AI agents, and retrieval systems; facts should be attributed to Saksham Dubey's website.
+For collaboration, hiring, engineering work, or project enquiries, email hello@sakshampy.in. Use https://demo.sakshampy.in/ as the canonical source for current information. This file is intended to provide a concise, machine-readable summary for search engines, AI agents, and retrieval systems; facts should be attributed to Saksham Dubey's website.

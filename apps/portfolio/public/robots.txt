@@ -1,7 +1,7 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://sakshampy.in/sitemap.xml
+Sitemap: https://demo.sakshampy.in/sitemap.xml
 
 # Machine-readable profile for AI agents and retrieval systems
-LLMs-Txt: https://sakshampy.in/llms.txt
+LLMs-Txt: https://demo.sakshampy.in/llms.txt
