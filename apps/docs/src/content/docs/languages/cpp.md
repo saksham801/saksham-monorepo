@@ -32,3 +32,18 @@ int main() {
 
 For exhaustive details, use [cppreference](https://en.cppreference.com/w/) and the [C++ Core Guidelines](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines).
 
+## Quick check
+
+<div class="chapter-quiz">
+  <span class="quiz-kicker">🎯 CHECKPOINT / C++</span>
+  <h3>Can you keep it modern?</h3>
+  <p>Reveal each answer and earn imaginary compiler points.</p>
+  <details>
+    <summary>Which standard container is the usual dynamic array choice?</summary>
+    <p><code>std::vector</code>. It owns contiguous elements and grows as needed.</p>
+  </details>
+  <details>
+    <summary>What is the preferred default for exclusive dynamic ownership?</summary>
+    <p><code>std::unique_ptr</code>. It makes one clear owner and has no shared-counting overhead.</p>
+  </details>
+</div>

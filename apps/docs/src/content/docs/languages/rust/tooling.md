@@ -16,3 +16,18 @@ Keep dependencies in `Cargo.toml`, commit `Cargo.lock` for applications, and use
 
 Useful ecosystem tools include `rust-analyzer`, `cargo-nextest`, `cargo-audit`, and `cargo-deny`. Review their output in CI rather than relying only on local checks.
 
+## Quick check
+
+<div class="chapter-quiz">
+  <span class="quiz-kicker">🛠️ TOOLCHAIN ARCADE</span>
+  <h3>Ship it or skip it?</h3>
+  <p>Two tiny questions before your next deploy.</p>
+  <details>
+    <summary>Which command catches compile errors without producing a binary?</summary>
+    <p><code>cargo check</code>. It is faster than a full build and ideal for tight feedback loops.</p>
+  </details>
+  <details>
+    <summary>What should CI do with Clippy warnings?</summary>
+    <p>Run Clippy and treat warnings as errors when the project is ready for a strict production gate.</p>
+  </details>
+</div>

@@ -176,7 +176,210 @@ starlight-theme-select label {
 }
 
 .sl-container {
-  max-width: 80rem;
+  max-width: 78rem;
+}
+
+.sidebar {
+  border-inline-end: 1px solid #202a30;
+  background: rgb(9 11 13 / 0.55);
+}
+
+.sidebar-content {
+  padding-block: 1.25rem;
+}
+
+.sidebar a,
+.sidebar summary {
+  border-inline-start: 2px solid transparent;
+  color: #91a2aa;
+  font-size: 0.68rem;
+  letter-spacing: 0.03em;
+  transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease;
+}
+
+.sidebar a:hover,
+.sidebar summary:hover,
+.sidebar a[aria-current='page'] {
+  background: #101a20;
+  border-inline-start-color: #a8ff60;
+  color: #a8ff60;
+}
+
+.right-sidebar {
+  border-inline-start: 1px solid #202a30;
+  padding-inline-start: 1.25rem;
+}
+
+.right-sidebar a {
+  color: #63757d;
+  font-size: 0.65rem;
+  transition: color 180ms ease;
+}
+
+.right-sidebar a:hover,
+.right-sidebar a[aria-current='true'] {
+  color: #a8ff60;
+}
+
+.content-panel > .sl-container > h1 {
+  color: #e8edf0;
+  font-family: 'Manrope', sans-serif;
+  font-size: clamp(2.6rem, 6vw, 5.5rem);
+  font-weight: 800;
+  letter-spacing: -0.08em;
+  line-height: 0.95;
+  max-width: 12ch;
+  padding-block: clamp(3rem, 8vw, 6.5rem) 2.5rem;
+}
+
+.sl-markdown-content {
+  color: #b3c0c5;
+  font-size: 0.85rem;
+  line-height: 1.9;
+}
+
+.sl-markdown-content > p:first-child {
+  color: #dce7eb;
+  font-size: 1rem;
+}
+
+.sl-markdown-content h2,
+.sl-markdown-content h3 {
+  scroll-margin-top: 6rem;
+}
+
+.sl-markdown-content h2 {
+  font-size: clamp(1.7rem, 3vw, 2.8rem);
+  margin-top: 3.5rem;
+}
+
+.sl-markdown-content h3 {
+  color: #dce7eb;
+  font-family: 'Manrope', sans-serif;
+  font-size: 1.25rem;
+  letter-spacing: -0.04em;
+  margin-top: 2.25rem;
+}
+
+.sl-markdown-content blockquote {
+  border-inline-start: 2px solid #a8ff60;
+  background: #101a20;
+  color: #c2d0d5;
+  margin-block: 1.75rem;
+  padding: 1rem 1.25rem;
+}
+
+.chapter-quiz {
+  background: linear-gradient(135deg, #101a20, #0e1519);
+  border: 1px solid #3b4b53;
+  box-shadow: 10px 10px 0 #0d171c;
+  margin: 3rem 0 1rem;
+  padding: clamp(1.25rem, 4vw, 2rem);
+  position: relative;
+}
+
+.chapter-quiz::before {
+  background: #a8ff60;
+  content: '';
+  height: 100%;
+  inset-inline-start: 0;
+  position: absolute;
+  top: 0;
+  width: 3px;
+}
+
+.quiz-kicker {
+  color: #a8ff60;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+}
+
+.chapter-quiz h3 {
+  color: #e8edf0;
+  font-family: 'Manrope', sans-serif;
+  font-size: clamp(1.35rem, 3vw, 2rem);
+  margin: 0.65rem 0 0.35rem;
+}
+
+.chapter-quiz > p {
+  color: #91a2aa;
+  margin: 0 0 1.25rem;
+}
+
+.chapter-quiz details {
+  border-top: 1px solid #26343b;
+  padding: 0.9rem 0;
+}
+
+.chapter-quiz details:last-child {
+  padding-bottom: 0;
+}
+
+.chapter-quiz summary {
+  color: #c2d0d5;
+  cursor: pointer;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 600;
+  list-style: none;
+  padding-inline-end: 1.5rem;
+  position: relative;
+}
+
+.chapter-quiz summary::-webkit-details-marker {
+  display: none;
+}
+
+.chapter-quiz summary::after {
+  color: #a8ff60;
+  content: '+';
+  font-family: 'DM Mono', monospace;
+  font-size: 1.2rem;
+  position: absolute;
+  inset-inline-end: 0;
+  top: -0.25rem;
+}
+
+.chapter-quiz details[open] summary::after {
+  content: '−';
+}
+
+.chapter-quiz details[open] summary {
+  color: #a8ff60;
+}
+
+.chapter-quiz details p {
+  color: #91a2aa;
+  font-size: 0.8rem;
+  margin: 0.65rem 0 0;
+  padding-inline-end: 1rem;
+}
+
+.sl-markdown-content :not(pre) > code {
+  background: #101a20;
+  border: 1px solid #26343b;
+  color: #a8ff60;
+  padding: 0.15em 0.35em;
+}
+
+.expressive-code {
+  margin-block: 1.5rem;
+}
+
+.expressive-code .frame {
+  border: 1px solid #30434d;
+  box-shadow: 10px 10px 0 #0d171c;
+}
+
+.pagination-links a {
+  background: #0e1519;
+  border: 1px solid #2b3d45;
+  transition: border-color 180ms ease, transform 180ms ease;
+}
+
+.pagination-links a:hover {
+  border-color: #a8ff60;
+  transform: translateY(-2px);
 }
 
 .portfolio-home {

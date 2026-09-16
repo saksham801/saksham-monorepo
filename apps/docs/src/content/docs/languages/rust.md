@@ -35,3 +35,18 @@ fn main() {
 
 For exhaustive language and standard-library coverage, use the [Rust Book](https://doc.rust-lang.org/book/), [Rust Reference](https://doc.rust-lang.org/reference/), and [standard library docs](https://doc.rust-lang.org/std/).
 
+## Quick check
+
+<div class="chapter-quiz">
+  <span class="quiz-kicker">⚡ CHECKPOINT / RUST</span>
+  <h3>Can you beat the borrow checker?</h3>
+  <p>Pick an answer, then reveal the explanation.</p>
+  <details>
+    <summary>What does <code>Result&lt;T, E&gt;</code> represent?</summary>
+    <p>A value that is either <code>Ok(T)</code> or <code>Err(E)</code>. It makes recoverable failure explicit.</p>
+  </details>
+  <details>
+    <summary>Which tool formats Rust code?</summary>
+    <p><code>cargo fmt</code>. Run <code>cargo fmt --check</code> in CI to catch formatting drift.</p>
+  </details>
+</div>

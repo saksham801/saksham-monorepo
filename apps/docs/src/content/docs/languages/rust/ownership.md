@@ -30,3 +30,18 @@ assert_eq!(length(&message), 5);
 
 These rules make data races impossible in safe code. When the compiler rejects a borrow, first reduce the lifetime of the reference or move the operation into a smaller scope instead of reaching for a clone.
 
+## Quick check
+
+<div class="chapter-quiz">
+  <span class="quiz-kicker">🦀 BORROW CHECKER BOSS FIGHT</span>
+  <h3>Who owns this value?</h3>
+  <p>Reveal the answers when you are ready.</p>
+  <details>
+    <summary>What happens when a <code>String</code> is assigned to another variable?</summary>
+    <p>It moves by default. The original binding cannot be used afterward unless the value is cloned or borrowed.</p>
+  </details>
+  <details>
+    <summary>How many mutable references can exist at one time?</summary>
+    <p>One mutable reference, with no competing references that could create a data race.</p>
+  </details>
+</div>

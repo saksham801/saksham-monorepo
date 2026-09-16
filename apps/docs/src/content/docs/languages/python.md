@@ -31,3 +31,18 @@ if __name__ == "__main__":
 
 Use the [Python documentation](https://docs.python.org/3/) for the complete language and standard-library reference.
 
+## Quick check
+
+<div class="chapter-quiz">
+  <span class="quiz-kicker">🐍 CHECKPOINT / PYTHON</span>
+  <h3>Python power-up round.</h3>
+  <p>Two quick wins before you close this chapter.</p>
+  <details>
+    <summary>What creates an isolated Python environment?</summary>
+    <p><code>python -m venv .venv</code>. It keeps project dependencies separate from the system interpreter.</p>
+  </details>
+  <details>
+    <summary>Where should application dependencies be declared?</summary>
+    <p>In <code>pyproject.toml</code>, so tools and deployment systems have one explicit source of truth.</p>
+  </details>
+</div>
