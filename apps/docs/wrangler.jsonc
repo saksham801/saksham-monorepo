@@ -7,8 +7,16 @@
 	"assets": {
 		"directory": "./dist",
 		"binding": "ASSETS"
-	},
-	"observability": {
-		"enabled": true
+	},"cache": {
+			"enabled": true
+		},
+		"observability": {
+			"logs": {
+				"enabled": true,
+				"invocation_logs": true
+			},
+			"traces": {
+				"enabled": true
+			}
+		}
 	}
-}
