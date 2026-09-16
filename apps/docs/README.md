@@ -1,49 +1,30 @@
-# Starlight Starter Kit: Basics
+# Saksham's Docs
 
-[![Built with Starlight](https://astro.badg.es/v2/built-with-starlight/tiny.svg)](https://starlight.astro.build)
+Production documentation and self-notes for Saksham Dubey, built with Astro,
+Starlight, and Tailwind CSS.
 
-```
-bun create astro@latest -- --template starlight
-```
+## Project structure
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
-
-## 🚀 Project Structure
-
-Inside of your Astro + Starlight project, you'll see the following folders and files:
-
-```
+```text
 .
 ├── public/
-├── src/
-│   ├── assets/
-│   ├── content/
-│   │   └── docs/
-│   └── content.config.ts
+├── src/content/docs/   # Markdown and MDX documentation
+├── src/styles/docs.css  # Site theme and Tailwind entrypoint
 ├── astro.config.mjs
 ├── package.json
-└── tsconfig.json
+└── wrangler.jsonc
 ```
 
-Starlight looks for `.md` or `.mdx` files in the `src/content/docs/` directory. Each file is exposed as a route based on its file name.
+## Commands
 
-Images can be added to `src/assets/` and embedded in Markdown with a relative link.
+| Command | Action |
+| --- | --- |
+| `bun install` | Install dependencies |
+| `bun dev` | Start the local site at `localhost:4321` |
+| `bun run build` | Build the production site to `./dist/` |
+| `bun run preview` | Preview the production build |
+| `bun run deploy` | Build and deploy with Wrangler |
 
-Static assets, like favicons, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `bun install`             | Installs dependencies                            |
-| `bun dev`             | Starts local dev server at `localhost:4321`      |
-| `bun build`           | Build your production site to `./dist/`          |
-| `bun preview`         | Preview your build locally, before deploying     |
-| `bun astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `bun astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Check out [Starlight’s docs](https://starlight.astro.build/), read [the Astro documentation](https://docs.astro.build), or jump into the [Astro Discord server](https://astro.build/chat).
+Deployment is configured for Cloudflare in `wrangler.jsonc`. Set the
+`CLOUDFLARE_API_TOKEN` and account configuration in your deployment
+environment rather than committing credentials.
