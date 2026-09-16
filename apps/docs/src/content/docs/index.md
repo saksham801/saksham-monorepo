@@ -55,6 +55,14 @@ template: splash
   </a>
 </div>
 
+## Language tracks
+
+Build a strong foundation in the languages behind reliable software:
+
+- [Rust](/languages/rust/) for memory-safe systems and concurrent services.
+- [C++](/languages/cpp/) for performance-sensitive applications and native tooling.
+- [Python](/languages/python/) for automation, services, data, and readable application code.
+
 ## A note on this site
 
 These docs are intentionally practical. They are written while building real things, so they may change as tools and understanding improve.
