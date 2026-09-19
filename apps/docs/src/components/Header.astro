@@ -29,6 +29,20 @@ const navLinks = [
 				),
 			)
 		}
+		<details class="docs-menu">
+			<summary>/ docs</summary>
+			<div class="docs-menu-panel">
+				<a href="/languages/rust/">/ rust</a>
+				<a href="/languages/rust/ownership/">/ rust / ownership</a>
+				<a href="/languages/rust/tooling/">/ rust / tooling</a>
+				<a href="/languages/cpp/">/ c++</a>
+				<a href="/languages/cpp/memory/">/ c++ / memory</a>
+				<a href="/languages/cpp/tooling/">/ c++ / tooling</a>
+				<a href="/languages/python/">/ python</a>
+				<a href="/languages/python/packaging/">/ python / packaging</a>
+				<a href="/languages/python/tooling/">/ python / tooling</a>
+			</div>
+		</details>
 	</nav>
 	<a href="mailto:hello@sakshampy.in" class="hire-button">WRITE ME <span>↗</span></a>
 </div>
@@ -58,6 +72,15 @@ const navLinks = [
 			color: #a8ff60;
 		}
 
+		.docs-menu { position: relative; }
+		.docs-menu summary { color: #89989f; cursor: pointer; font-size: 0.625rem; letter-spacing: 0.1em; list-style: none; text-transform: uppercase; white-space: nowrap; }
+		.docs-menu summary::-webkit-details-marker { display: none; }
+		.docs-menu summary:hover,
+		.docs-menu[open] summary { color: #a8ff60; }
+		.docs-menu-panel { background: #101a20; border: 1px solid #33464f; display: grid; gap: 0.7rem; min-width: 13rem; padding: 0.9rem; position: absolute; right: 0; top: 1.6rem; z-index: 2; }
+		.docs-menu-panel a { color: #a8ff60; font-size: 0.58rem; }
+		.docs-menu-panel a:hover { color: #e8edf0; }
+
 		.hire-button {
 			border: 1px solid #3b4b53;
 			color: #dce7eb;
@@ -82,6 +105,6 @@ const navLinks = [
 		.topline { border-bottom: 1px solid #202a30; color: #617078; display: flex; font: 0.52rem 'DM Mono', monospace; justify-content: space-between; letter-spacing: 0.1em; padding: 0.55rem 0; }
 		.topline-right { align-items: center; display: flex; gap: 0.7rem; }
 		.topline i { background: #a8ff60; border-radius: 50%; display: inline-block; height: 0.35rem; width: 0.35rem; }
-		@media (max-width: 800px) { .docs-nav, .hire-button { display: none; } .brand-copy { font-size: 0.62rem; } .topline-right { display: none; } }
+		@media (max-width: 800px) { .docs-nav { display: flex; gap: 0.75rem; } .docs-nav > a { display: none; } .hire-button { display: none; } .brand-copy { font-size: 0.62rem; } .topline-right { display: none; } }
 	}
 </style>
