@@ -1,0 +1,265 @@
+---
+import { PORTFOLIO_URL, SITE_EMAIL } from "../consts";
+
+interface Props {
+	active?: "home" | "blog" | "about" | "terms";
+}
+
+const { active = "home" } = Astro.props;
+
+const links = [
+	{ href: "/", label: "/ home", key: "home" },
+	{ href: "/blog", label: "/ blog", key: "blog" },
+	{ href: "/about", label: "/ about", key: "about" },
+	{ href: "/terms", label: "/ terms", key: "terms" },
+	{ href: PORTFOLIO_URL, label: "/ portfolio", key: "portfolio", external: true },
+] as const;
+---
+
+<div class="pointer-glow" aria-hidden="true"></div>
+<div class="topline">
+	<span>SAKSHAM.DUBEY // BLOG_V1.0</span>
+	<span class="topline-right">
+		<i></i> SYSTEMS ONLINE <b id="site-clock">--:--:-- IST</b>
+	</span>
+</div>
+<header class="header mx-auto max-w-7xl px-5 py-5 lg:px-10">
+	<a href="/" class="brand">
+		<span class="brand-mark">
+			S<span>D</span>
+		</span>
+		<span class="brand-copy">
+			SAKSHAM
+			<br />
+			<small>ENGINEERING BLOG</small>
+		</span>
+	</a>
+	<nav class="nav" aria-label="Primary">
+		{
+			links.map((link) => (
+				<a
+					href={link.href}
+					class={active === link.key ? "current" : undefined}
+					target={"external" in link && link.external ? "_blank" : undefined}
+					rel={"external" in link && link.external ? "noreferrer" : undefined}
+				>
+					{link.label}
+				</a>
+			))
+		}
+	</nav>
+	<a href={`mailto:${SITE_EMAIL}`} class="hire-button">
+		WRITE ME <span>↗</span>
+	</a>
+	<button id="menu-button" class="menu-button" type="button" aria-expanded="false">
+		[ MENU ]
+	</button>
+</header>
+<div id="mobile-menu" class="mobile-menu hidden">
+	{
+		links.map((link) => (
+			<a
+				href={link.href}
+				target={"external" in link && link.external ? "_blank" : undefined}
+				rel={"external" in link && link.external ? "noreferrer" : undefined}
+			>
+				{link.label}
+			</a>
+		))
+	}
+</div>
+
+<style>
+	.pointer-glow {
+		background: radial-gradient(
+			circle,
+			rgba(168, 255, 96, 0.12) 0,
+			rgba(101, 201, 255, 0.04) 22%,
+			transparent 60%
+		);
+		height: 460px;
+		left: calc(var(--pointer-x, 50vw) - 230px);
+		pointer-events: none;
+		position: fixed;
+		top: calc(var(--pointer-y, 40vh) - 230px);
+		width: 460px;
+		z-index: 0;
+	}
+	.topline,
+	.header,
+	.mobile-menu {
+		position: relative;
+		z-index: 1;
+	}
+	.topline {
+		border-bottom: 1px solid #202a30;
+		color: #617078;
+		display: flex;
+		justify-content: space-between;
+		font:
+			9px "DM Mono",
+			monospace;
+		letter-spacing: 0.1em;
+		padding: 9px 5vw;
+	}
+	.topline-right {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+	}
+	.topline i {
+		background: #a8ff60;
+		border-radius: 50%;
+		display: inline-block;
+		height: 6px;
+		width: 6px;
+	}
+	.topline b {
+		color: #8a989e;
+		font-weight: 400;
+	}
+	.header {
+		align-items: center;
+		border-bottom: 1px solid #202a30;
+		display: flex;
+		justify-content: space-between;
+		position: sticky;
+		top: 0;
+		z-index: 20;
+		backdrop-filter: blur(16px);
+		background: rgba(9, 11, 13, 0.78);
+	}
+	.brand {
+		align-items: center;
+		display: flex;
+		gap: 11px;
+	}
+	.brand-mark {
+		align-items: center;
+		border: 1px solid #a8ff60;
+		color: #a8ff60;
+		display: flex;
+		font:
+			700 17px "Manrope",
+			sans-serif;
+		height: 34px;
+		justify-content: center;
+		letter-spacing: -0.12em;
+		width: 34px;
+	}
+	.brand-mark span {
+		color: #dce7eb;
+	}
+	.brand-copy {
+		color: #dce7eb;
+		font:
+			600 11px/1.2 "Manrope",
+			sans-serif;
+		letter-spacing: 0.06em;
+	}
+	.brand-copy small {
+		color: #667780;
+		font:
+			8px "DM Mono",
+			monospace;
+		letter-spacing: 0.08em;
+	}
+	.nav {
+		display: flex;
+		gap: 29px;
+	}
+	.nav a,
+	.hire-button,
+	.menu-button {
+		color: #89989f;
+		font-size: 10px;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+		transition: color 0.2s;
+	}
+	.nav a:hover,
+	.nav a.current,
+	.hire-button:hover {
+		color: #a8ff60;
+	}
+	.hire-button {
+		border: 1px solid #3b4b53;
+		color: #dce7eb;
+		padding: 10px 14px;
+	}
+	.hire-button span {
+		color: #a8ff60;
+	}
+	.menu-button {
+		border: 0;
+		background: transparent;
+		cursor: pointer;
+		display: none;
+	}
+	.mobile-menu {
+		background: #101a20;
+		border-bottom: 1px solid #33464f;
+		display: flex;
+		flex-direction: column;
+		gap: 20px;
+		padding: 20px;
+	}
+	.mobile-menu.hidden {
+		display: none;
+	}
+	.mobile-menu a {
+		color: #a8ff60;
+		font-size: 11px;
+	}
+	@media (min-width: 801px) {
+		.mobile-menu {
+			display: none !important;
+		}
+	}
+	@media (max-width: 800px) {
+		.topline-right b {
+			display: none;
+		}
+		.nav,
+		.hire-button {
+			display: none;
+		}
+		.menu-button {
+			display: block;
+		}
+	}
+</style>
+
+<script>
+	const button = document.querySelector("#menu-button");
+	const menu = document.querySelector("#mobile-menu");
+	button?.addEventListener("click", () => {
+		menu?.classList.toggle("hidden");
+		button.setAttribute(
+			"aria-expanded",
+			menu?.classList.contains("hidden") ? "false" : "true",
+		);
+	});
+	menu?.querySelectorAll("a").forEach((link) =>
+		link.addEventListener("click", () => menu.classList.add("hidden")),
+	);
+
+	const glow = document.querySelector<HTMLElement>(".pointer-glow");
+	window.addEventListener("pointermove", (event) => {
+		if (glow && window.matchMedia("(pointer: fine)").matches) {
+			glow.style.setProperty("--pointer-x", `${event.clientX}px`);
+			glow.style.setProperty("--pointer-y", `${event.clientY}px`);
+		}
+	});
+
+	const clock = document.querySelector("#site-clock");
+	const tick = () => {
+		if (!clock) return;
+		clock.textContent = new Date().toLocaleTimeString("en-IN", {
+			hour12: false,
+			timeZone: "Asia/Kolkata",
+		}) + " IST";
+	};
+	tick();
+	setInterval(tick, 1000);
+</script>

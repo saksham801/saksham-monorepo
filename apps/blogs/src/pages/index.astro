@@ -1,49 +1,580 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
-import Footer from '../components/Footer.astro';
-import Header from '../components/Header.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import { getCollection } from "astro:content";
+import FormattedDate from "../components/FormattedDate.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import Layout from "../layouts/Layout.astro";
+import {
+	PORTFOLIO_URL,
+	SITE_AUTHOR,
+	SITE_DESCRIPTION,
+	SITE_EMAIL,
+	SITE_TITLE,
+	SITE_URL,
+} from "../consts";
+
+export const prerender = true;
+
+const posts = (await getCollection("blog")).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+
+const topics = [
+	{ id: "01", name: "C++", label: "SYSTEMS", accent: "lime" },
+	{ id: "02", name: "Rust", label: "SAFETY", accent: "orange" },
+	{ id: "03", name: "Python", label: "PRODUCTIVITY", accent: "blue" },
+];
+
+const jsonLd = [
+	{
+		"@context": "https://schema.org",
+		"@type": "WebSite",
+		name: SITE_TITLE,
+		url: SITE_URL,
+		description: SITE_DESCRIPTION,
+		author: {
+			"@type": "Person",
+			name: SITE_AUTHOR,
+			url: PORTFOLIO_URL,
+			email: `mailto:${SITE_EMAIL}`,
+		},
+	},
+	{
+		"@context": "https://schema.org",
+		"@type": "Blog",
+		name: SITE_TITLE,
+		url: SITE_URL,
+		description: SITE_DESCRIPTION,
+		blogPost: posts.slice(0, 10).map((post) => ({
+			"@type": "BlogPosting",
+			headline: post.data.title,
+			url: `${SITE_URL}/blog/${post.id}/`,
+			datePublished: post.data.pubDate.toISOString(),
+			description: post.data.description,
+		})),
+	},
+];
+
+const topicLabel: Record<string, string> = {
+	cpp: "C++",
+	rust: "RUST",
+	python: "PYTHON",
+	general: "GENERAL",
+};
 ---
 
-<!doctype html>
-<html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-	</head>
-	<body>
-		<Header />
-		<main>
-			<h1>🧑‍🚀 Hello, Astronaut!</h1>
-			<p>
-				Welcome to the official <a href="https://astro.build/">Astro</a> blog starter template. This template
-				serves as a lightweight, minimally-styled starting point for anyone looking to build a personal
-				website, blog, or portfolio with Astro.
-			</p>
-			<p>
-				This template comes with a few integrations already configured in your{' '}
-				<code>astro.config.mjs</code> file. You can customize your setup with{' '}
-				<a href="https://astro.build/integrations">Astro Integrations</a> to add tools like Tailwind,
-				React, or Vue to your project.
-			</p>
-			<p>Here are a few ideas on how to get started with the template:</p>
-			<ul>
-				<li>Edit this page in <code>src/pages/index.astro</code></li>
-				<li>Edit the site header items in <code>src/components/Header.astro</code></li>
-				<li>Add your name to the footer in <code>src/components/Footer.astro</code></li>
-				<li>Check out the included blog posts in <code>src/content/blog/</code></li>
-				<li>Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code></li>
-			</ul>
-			<p>
-				Have fun! If you get stuck, remember to{' '}
-				<a href="https://docs.astro.build/">read the docs</a>{' '}
-				or <a href="https://astro.build/chat">join us on Discord</a> to ask questions.
-			</p>
-			<p>
-				Looking for a blog template with a bit more personality? Check out{' '}
-				<a href="https://github.com/Charca/astro-blog-template">astro-blog-template</a>{' '}
-				by <a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-			</p>
+<Layout jsonLd={jsonLd}>
+	<div class="site-shell min-h-screen" id="top">
+		<SiteHeader active="home" />
+		<main class="mx-auto max-w-7xl px-5 lg:px-10">
+			<section class="hero reveal">
+				<div class="hero-copy reveal">
+					<p class="kicker">
+						<span class="prompt">&gt;_</span> NOTES FROM THE TERMINAL
+					</p>
+					<h1>
+						CODE THAT
+						<br />
+						<em>TEACHES</em>
+						<br />
+						CLEARLY<span class="cursor">_</span>
+					</h1>
+					<p class="hero-intro">
+						Deep dives on C++, Rust, and Python — written for engineers who
+						care about correctness, performance, and readable systems.
+					</p>
+					<div class="hero-actions">
+						<a href="/blog" class="primary-button">
+							READ THE BLOG <span>↓</span>
+						</a>
+						<a href={PORTFOLIO_URL} class="text-link" target="_blank" rel="noreferrer">
+							PORTFOLIO <span>↗</span>
+						</a>
+					</div>
+				</div>
+				<div class="terminal-card reveal reveal-delay">
+					<div class="terminal-head">
+						<span class="dots">
+							<i></i>
+							<i></i>
+							<i></i>
+						</span>
+						<span>saksham@blogs:~</span>
+						<span>⌁</span>
+					</div>
+					<div class="terminal-body">
+						<p>
+							<span class="green">const</span> blog = &#123;
+						</p>
+						<p class="indent">
+							<span class="blue">author:</span>{" "}
+							<span class="yellow">"Saksham Dubey"</span>,
+						</p>
+						<p class="indent">
+							<span class="blue">topics:</span> [
+							<span class="yellow">"cpp"</span>,{" "}
+							<span class="yellow">"rust"</span>,{" "}
+							<span class="yellow">"python"</span>],
+						</p>
+						<p class="indent">
+							<span class="blue">posts:</span>{" "}
+							<span class="purple">{posts.length}</span>,
+						</p>
+						<p class="indent">
+							<span class="blue">seo:</span>{" "}
+							<span class="yellow">"llms.txt + schema"</span>,
+						</p>
+						<p>&#125;;</p>
+						<p class="terminal-output">
+							<span class="green">✓</span> ready for readers & agents
+							<span class="blink">▌</span>
+						</p>
+					</div>
+					<div class="terminal-foot">
+						<span>UTF-8</span>
+						<span>main*</span>
+						<span>Ln 01, Col 01</span>
+					</div>
+				</div>
+			</section>
+
+			<section class="section topics-section reveal">
+				<div class="section-label">
+					<span>01</span>
+					<span>TOPICS</span>
+				</div>
+				<div>
+					<p class="section-lead">
+						Languages that
+						<br />
+						<strong>shape systems.</strong>
+					</p>
+					<div class="topic-grid">
+						{
+							topics.map((topic) => (
+								<article class={`topic-card topic-${topic.accent}`}>
+									<span class="topic-id">{topic.id}</span>
+									<p>{topic.label}</p>
+									<h3>{topic.name}</h3>
+								</article>
+							))
+						}
+					</div>
+				</div>
+			</section>
+
+			<section id="latest" class="section posts-section reveal">
+				<div class="section-label">
+					<span>02</span>
+					<span>LATEST POSTS</span>
+				</div>
+				<div class="posts-wrap">
+					<div class="work-heading">
+						<p class="section-lead">
+							Fresh notes from
+							<br />
+							<strong>the workshop.</strong>
+						</p>
+						<a href="/blog" class="text-link">VIEW ALL ↗</a>
+					</div>
+					<div class="post-list">
+						{
+							posts.map((post, index) => (
+								<a
+									href={`/blog/${post.id}/`}
+									class={`post-row reveal ${index === 0 ? "featured" : ""}`}
+								>
+									<span class="post-index">
+										{String(index + 1).padStart(2, "0")}
+									</span>
+									<div>
+										<p class="post-topic">
+											{topicLabel[post.data.topic] ?? post.data.topic}
+										</p>
+										<h3>{post.data.title}</h3>
+										<p class="post-excerpt">{post.data.description}</p>
+									</div>
+									<span class="post-date">
+										<FormattedDate date={post.data.pubDate} />
+									</span>
+								</a>
+							))
+						}
+					</div>
+				</div>
+			</section>
 		</main>
-		<Footer />
-	</body>
-</html>
+		<SiteFooter />
+	</div>
+	<script>
+		const revealItems = document.querySelectorAll(".reveal");
+		if ("IntersectionObserver" in window) {
+			const observer = new IntersectionObserver(
+				(entries) =>
+					entries.forEach((entry) => {
+						if (entry.isIntersecting) {
+							entry.target.classList.add("is-visible");
+							observer.unobserve(entry.target);
+						}
+					}),
+				{ threshold: 0.12 },
+			);
+			revealItems.forEach((item) => observer.observe(item));
+		} else {
+			revealItems.forEach((item) => item.classList.add("is-visible"));
+		}
+	</script>
+</Layout>
+
+<style>
+	.site-shell {
+		background-color: #090b0d;
+		background-image:
+			linear-gradient(rgba(73, 91, 102, 0.08) 1px, transparent 1px),
+			linear-gradient(90deg, rgba(73, 91, 102, 0.08) 1px, transparent 1px);
+		background-size: 64px 64px;
+		isolation: isolate;
+		position: relative;
+	}
+	main {
+		position: relative;
+		z-index: 1;
+	}
+	.reveal {
+		opacity: 0;
+		transform: translateY(22px);
+		transition:
+			opacity 0.75s ease,
+			transform 0.75s cubic-bezier(0.2, 0.7, 0.2, 1);
+	}
+	.reveal.is-visible {
+		opacity: 1;
+		transform: translateY(0);
+	}
+	.reveal-delay {
+		transition-delay: 0.12s;
+	}
+	.hero {
+		display: grid;
+		grid-template-columns: minmax(0, 1.1fr) minmax(340px, 0.9fr);
+		gap: 9vw;
+		min-height: 640px;
+		padding: 110px 0 85px;
+	}
+	.hero-copy {
+		align-self: center;
+	}
+	.kicker {
+		color: #82949c;
+		font-size: 10px;
+		letter-spacing: 0.13em;
+		margin: 0 0 25px;
+	}
+	.prompt {
+		color: #a8ff60;
+	}
+	h1 {
+		font:
+			800 clamp(3.4rem, 7vw, 7.2rem)/0.87 "Manrope",
+			sans-serif;
+		letter-spacing: -0.085em;
+		margin: 0;
+	}
+	h1 em,
+	.section-lead strong {
+		color: #a8ff60;
+		font-style: normal;
+	}
+	.cursor {
+		color: #a8ff60;
+	}
+	.hero-intro {
+		color: #9aabb2;
+		font:
+			14px/1.9 "DM Mono",
+			monospace;
+		margin: 32px 0 27px;
+		max-width: 470px;
+	}
+	.hero-actions {
+		align-items: center;
+		display: flex;
+		gap: 24px;
+	}
+	.primary-button {
+		background: #a8ff60;
+		color: #09100b;
+		font-size: 10px;
+		font-weight: 600;
+		letter-spacing: 0.08em;
+		padding: 15px 18px;
+		transition: transform 0.2s;
+	}
+	.primary-button:hover {
+		transform: translateY(-3px);
+	}
+	.primary-button span {
+		font-size: 17px;
+		margin-left: 12px;
+	}
+	.text-link {
+		color: #c2d0d5;
+		font-size: 10px;
+		letter-spacing: 0.08em;
+	}
+	.text-link:hover {
+		color: #a8ff60;
+	}
+	.terminal-card {
+		align-self: center;
+		border: 1px solid #30434d;
+		box-shadow: 20px 20px 0 #0d171c;
+		transform: rotate(2deg);
+		transition: transform 0.3s;
+	}
+	.terminal-card:hover {
+		transform: rotate(0) translateY(-5px);
+	}
+	.terminal-head,
+	.terminal-foot {
+		align-items: center;
+		background: #101a20;
+		color: #6e838c;
+		display: flex;
+		font-size: 9px;
+		justify-content: space-between;
+		letter-spacing: 0.04em;
+		padding: 11px 14px;
+	}
+	.dots {
+		display: flex;
+		gap: 5px;
+	}
+	.dots i {
+		background: #42545b;
+		border-radius: 50%;
+		height: 7px;
+		width: 7px;
+	}
+	.dots i:first-child {
+		background: #ff876d;
+	}
+	.dots i:nth-child(2) {
+		background: #ffd05c;
+	}
+	.terminal-body {
+		background: #0b1115;
+		color: #becbd0;
+		font-size: 11px;
+		line-height: 2.1;
+		min-height: 260px;
+		padding: 25px 21px;
+	}
+	.terminal-body p {
+		margin: 0;
+	}
+	.indent {
+		padding-left: 20px;
+	}
+	.green {
+		color: #a8ff60;
+	}
+	.blue {
+		color: #65c9ff;
+	}
+	.yellow {
+		color: #f7d06b;
+	}
+	.purple {
+		color: #d29aff;
+	}
+	.terminal-output {
+		border-top: 1px solid #1e3038;
+		color: #77909a;
+		margin-top: 20px !important;
+		padding-top: 15px;
+	}
+	.blink {
+		animation: blink 1s steps(2) infinite;
+		color: #a8ff60;
+	}
+	@keyframes blink {
+		50% {
+			opacity: 0;
+		}
+	}
+	.section {
+		border-top: 1px solid #26343b;
+		display: grid;
+		gap: 7vw;
+		grid-template-columns: 170px 1fr;
+		padding: 100px 0;
+	}
+	.section-label {
+		color: #63757d;
+		display: flex;
+		flex-direction: column;
+		font-size: 9px;
+		gap: 8px;
+		letter-spacing: 0.12em;
+	}
+	.section-label span:first-child {
+		color: #a8ff60;
+	}
+	.section-lead {
+		color: #e8edf0;
+		font:
+			500 clamp(2rem, 4vw, 4.2rem)/1.05 "Manrope",
+			sans-serif;
+		letter-spacing: -0.065em;
+		margin: 0;
+	}
+	.topic-grid {
+		display: grid;
+		gap: 12px;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		margin-top: 42px;
+	}
+	.topic-card {
+		background: #0e1519;
+		border: 1px solid #2b3d45;
+		min-height: 170px;
+		padding: 22px;
+		transition:
+			border-color 0.25s,
+			transform 0.25s;
+	}
+	.topic-card:hover {
+		border-color: #a8ff60;
+		transform: translateY(-4px);
+	}
+	.topic-id {
+		color: #63757d;
+		font-size: 9px;
+	}
+	.topic-card p {
+		color: #a8ff60;
+		font-size: 8px;
+		letter-spacing: 0.1em;
+		margin: 28px 0 10px;
+	}
+	.topic-card h3 {
+		font:
+			600 28px "Manrope",
+			sans-serif;
+		letter-spacing: -0.05em;
+		margin: 0;
+	}
+	.topic-orange p {
+		color: #ff9c68;
+	}
+	.topic-blue p {
+		color: #65c9ff;
+	}
+	.work-heading {
+		align-items: end;
+		display: flex;
+		justify-content: space-between;
+		margin-bottom: 42px;
+	}
+	.post-list {
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+	}
+	.post-row {
+		align-items: start;
+		background: #0e1519;
+		border: 1px solid #2b3d45;
+		display: grid;
+		gap: 24px;
+		grid-template-columns: 52px 1fr auto;
+		padding: 24px 22px;
+		transition:
+			border-color 0.25s,
+			transform 0.25s;
+	}
+	.post-row:hover {
+		border-color: #a8ff60;
+		transform: translateY(-3px);
+	}
+	.post-row.featured {
+		min-height: 150px;
+	}
+	.post-index {
+		color: #a8ff60;
+		font-size: 10px;
+		padding-top: 4px;
+	}
+	.post-topic {
+		color: #82949c;
+		font-size: 9px;
+		letter-spacing: 0.1em;
+		margin: 0 0 10px;
+	}
+	.post-row h3 {
+		font:
+			600 22px "Manrope",
+			sans-serif;
+		letter-spacing: -0.04em;
+		margin: 0;
+	}
+	.post-excerpt {
+		color: #82949c;
+		font-size: 11px;
+		line-height: 1.7;
+		margin: 12px 0 0;
+		max-width: 520px;
+	}
+	.post-date {
+		color: #5c7078;
+		font-size: 9px;
+		letter-spacing: 0.08em;
+		padding-top: 6px;
+		text-transform: uppercase;
+		white-space: nowrap;
+	}
+	@media (max-width: 800px) {
+		.hero {
+			display: flex;
+			flex-direction: column;
+			gap: 60px;
+			min-height: auto;
+			padding: 70px 0;
+		}
+		.section {
+			display: block;
+			padding: 70px 0;
+		}
+		.section-label {
+			flex-direction: row;
+			gap: 12px;
+			margin-bottom: 36px;
+		}
+		.topic-grid {
+			grid-template-columns: 1fr;
+		}
+		.work-heading {
+			align-items: start;
+			flex-direction: column;
+			gap: 20px;
+		}
+		.post-row {
+			grid-template-columns: 40px 1fr;
+		}
+		.post-date {
+			grid-column: 2;
+			padding-top: 0;
+		}
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.reveal {
+			opacity: 1;
+			transform: none;
+			transition: none;
+		}
+		.blink {
+			animation: none;
+		}
+	}
+</style>

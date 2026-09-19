@@ -1,86 +1,224 @@
 ---
-import { Image } from 'astro:assets';
-import type { CollectionEntry } from 'astro:content';
-import BaseHead from '../components/BaseHead.astro';
-import Footer from '../components/Footer.astro';
-import FormattedDate from '../components/FormattedDate.astro';
-import Header from '../components/Header.astro';
+import type { CollectionEntry } from "astro:content";
+import FormattedDate from "../components/FormattedDate.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import Layout from "./Layout.astro";
+import { SITE_AUTHOR, SITE_EMAIL, SITE_URL } from "../consts";
 
-type Props = CollectionEntry<'blog'>['data'];
+type Props = CollectionEntry<"blog">["data"] & {
+	slug: string;
+};
 
-const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
+const { title, description, pubDate, updatedDate, tags, topic, slug } =
+	Astro.props;
+
+const topicLabel: Record<string, string> = {
+	cpp: "C++",
+	rust: "RUST",
+	python: "PYTHON",
+	cloudflare: "CLOUDFLARE WORKERS",
+	general: "GENERAL",
+};
+
+const jsonLd = {
+	"@context": "https://schema.org",
+	"@type": "BlogPosting",
+	headline: title,
+	description,
+	datePublished: pubDate.toISOString(),
+	dateModified: (updatedDate ?? pubDate).toISOString(),
+	author: {
+		"@type": "Person",
+		name: SITE_AUTHOR,
+		email: `mailto:${SITE_EMAIL}`,
+		url: "https://sakshampy.in/",
+	},
+	mainEntityOfPage: {
+		"@type": "WebPage",
+		"@id": `${SITE_URL}/blog/${slug}/`,
+	},
+	keywords: tags.join(", "),
+	inLanguage: "en",
+};
 ---
 
-<html lang="en">
-	<head>
-		<BaseHead title={title} description={description} />
-		<style>
-			main {
-				width: calc(100% - 2em);
-				max-width: 100%;
-				margin: 0;
-			}
-			.hero-image {
-				width: 100%;
-			}
-			.hero-image img {
-				display: block;
-				margin: 0 auto;
-				border-radius: 12px;
-				box-shadow: var(--box-shadow);
-			}
-			.prose {
-				width: 720px;
-				max-width: calc(100% - 2em);
-				margin: auto;
-				padding: 1em;
-				color: rgb(var(--gray-dark));
-			}
-			.title {
-				margin-bottom: 1em;
-				padding: 1em 0;
-				text-align: center;
-				line-height: 1;
-			}
-			.title h1 {
-				margin: 0 0 0.5em 0;
-			}
-			.date {
-				margin-bottom: 0.5em;
-				color: rgb(var(--gray));
-			}
-			.last-updated-on {
-				font-style: italic;
-			}
-		</style>
-	</head>
-
-	<body>
-		<Header />
-		<main>
-			<article>
-				<div class="hero-image">
-					{heroImage && <Image width={1020} height={510} src={heroImage} alt="" />}
-				</div>
-				<div class="prose">
-					<div class="title">
-						<div class="date">
-							<FormattedDate date={pubDate} />
-							{
-								updatedDate && (
-									<div class="last-updated-on">
-										Last updated on <FormattedDate date={updatedDate} />
-									</div>
-								)
-							}
-						</div>
-						<h1>{title}</h1>
-						<hr />
+<Layout
+	title={title}
+	description={description}
+	canonicalPath={`/blog/${slug}/`}
+	ogType="article"
+	publishedTime={pubDate}
+	tags={tags}
+	jsonLd={jsonLd}
+>
+	<div class="site-shell min-h-screen" id="top">
+		<SiteHeader active="blog" />
+		<main class="mx-auto max-w-7xl px-5 lg:px-10">
+			<article class="post reveal is-visible">
+				<header class="post-header">
+					<div class="post-meta">
+						<span class="topic">{topicLabel[topic] ?? topic}</span>
+						<span class="sep">/</span>
+						<FormattedDate date={pubDate} />
+						{
+							updatedDate && (
+								<>
+									<span class="sep">/</span>
+									<span>
+										UPDATED <FormattedDate date={updatedDate} />
+									</span>
+								</>
+							)
+						}
 					</div>
+					<h1>{title}</h1>
+					<p class="post-desc">{description}</p>
+					{
+						tags.length > 0 && (
+							<ul class="tag-list">
+								{tags.map((tag) => (
+									<li>{tag}</li>
+								))}
+							</ul>
+						)
+					}
+				</header>
+				<div class="prose">
 					<slot />
 				</div>
 			</article>
 		</main>
-		<Footer />
-	</body>
-</html>
+		<SiteFooter />
+	</div>
+</Layout>
+
+<style>
+	.site-shell {
+		background-color: #090b0d;
+		background-image:
+			linear-gradient(rgba(73, 91, 102, 0.08) 1px, transparent 1px),
+			linear-gradient(90deg, rgba(73, 91, 102, 0.08) 1px, transparent 1px);
+		background-size: 64px 64px;
+		isolation: isolate;
+		position: relative;
+	}
+	main {
+		position: relative;
+		z-index: 1;
+		padding-bottom: 80px;
+	}
+	.post {
+		max-width: 760px;
+		padding: 80px 0 40px;
+	}
+	.post-meta {
+		color: #63757d;
+		display: flex;
+		flex-wrap: wrap;
+		font-size: 10px;
+		gap: 10px;
+		letter-spacing: 0.1em;
+		margin-bottom: 28px;
+		text-transform: uppercase;
+	}
+	.topic {
+		color: #a8ff60;
+	}
+	.sep {
+		color: #3b4b53;
+	}
+	h1 {
+		font:
+			800 clamp(2.4rem, 6vw, 4.6rem)/0.95 "Manrope",
+			sans-serif;
+		letter-spacing: -0.07em;
+		margin: 0;
+	}
+	.post-desc {
+		color: #91a2aa;
+		font-size: 13px;
+		line-height: 1.9;
+		margin: 24px 0 0;
+		max-width: 560px;
+	}
+	.tag-list {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 8px;
+		list-style: none;
+		margin: 28px 0 0;
+		padding: 0;
+	}
+	.tag-list li {
+		border: 1px solid #2b3d45;
+		color: #82949c;
+		font-size: 9px;
+		letter-spacing: 0.08em;
+		padding: 7px 10px;
+		text-transform: uppercase;
+	}
+	.prose {
+		border-top: 1px solid #26343b;
+		color: #c2d0d5;
+		font-size: 13px;
+		line-height: 1.95;
+		margin-top: 48px;
+		padding-top: 42px;
+	}
+	.prose :global(h2),
+	.prose :global(h3) {
+		color: #e8edf0;
+		font-family: "Manrope", sans-serif;
+		font-weight: 700;
+		letter-spacing: -0.04em;
+		margin: 2.2em 0 0.7em;
+	}
+	.prose :global(h2) {
+		font-size: 1.7rem;
+	}
+	.prose :global(h3) {
+		font-size: 1.25rem;
+	}
+	.prose :global(p),
+	.prose :global(ul),
+	.prose :global(ol) {
+		margin: 0 0 1.35em;
+	}
+	.prose :global(a) {
+		color: #a8ff60;
+		border-bottom: 1px solid rgba(168, 255, 96, 0.35);
+	}
+	.prose :global(code) {
+		background: #101a20;
+		border: 1px solid #2b3d45;
+		color: #a8ff60;
+		font-size: 0.9em;
+		padding: 0.12em 0.4em;
+	}
+	.prose :global(pre) {
+		background: #0b1115;
+		border: 1px solid #2b3d45;
+		box-shadow: 12px 12px 0 #0d171c;
+		margin: 0 0 1.8em;
+		overflow-x: auto;
+		padding: 1.25rem 1.1rem;
+	}
+	.prose :global(pre code) {
+		background: transparent;
+		border: 0;
+		color: #becbd0;
+		padding: 0;
+	}
+	.prose :global(blockquote) {
+		border-left: 2px solid #a8ff60;
+		color: #91a2aa;
+		margin: 0 0 1.5em;
+		padding-left: 1.1em;
+	}
+	.prose :global(hr) {
+		border: 0;
+		border-top: 1px solid #26343b;
+		margin: 2.5em 0;
+	}
+</style>

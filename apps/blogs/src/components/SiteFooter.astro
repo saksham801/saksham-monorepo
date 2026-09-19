@@ -1,0 +1,40 @@
+---
+import { PORTFOLIO_URL } from "../consts";
+const year = new Date().getFullYear();
+---
+
+<footer class="footer mx-auto max-w-7xl px-5 lg:px-10">
+	<span>© {year} SAKSHAM DUBEY</span>
+	<span>
+		<a href="/terms">TERMS</a>
+		·
+		<a href="/llms.txt">LLMS.TXT</a>
+		·
+		<a href={PORTFOLIO_URL} target="_blank" rel="noreferrer">PORTFOLIO ↗</a>
+	</span>
+	<a href="#top">BACK TO TOP ↑</a>
+</footer>
+
+<style>
+	.footer {
+		border-top: 1px solid #26343b;
+		color: #5c7078;
+		display: flex;
+		font-size: 8px;
+		justify-content: space-between;
+		letter-spacing: 0.08em;
+		padding-bottom: 25px;
+		padding-top: 25px;
+		position: relative;
+		z-index: 1;
+	}
+	.footer a:hover {
+		color: #a8ff60;
+	}
+	@media (max-width: 800px) {
+		.footer {
+			flex-wrap: wrap;
+			gap: 13px;
+		}
+	}
+</style>

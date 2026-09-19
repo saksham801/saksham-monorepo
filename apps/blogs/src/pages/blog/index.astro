@@ -1,114 +1,290 @@
 ---
-import { Image } from 'astro:assets';
-import { getCollection } from 'astro:content';
-import BaseHead from '../../components/BaseHead.astro';
-import Footer from '../../components/Footer.astro';
-import FormattedDate from '../../components/FormattedDate.astro';
-import Header from '../../components/Header.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
+import { getCollection } from "astro:content";
+import FormattedDate from "../../components/FormattedDate.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
+import Layout from "../../layouts/Layout.astro";
+import { SITE_DESCRIPTION, SITE_TITLE, SITE_URL } from "../../consts";
 
-const posts = (await getCollection('blog')).sort(
+export const prerender = true;
+
+const posts = (await getCollection("blog")).sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
+
+const topicLabel: Record<string, string> = {
+	cpp: "C++",
+	rust: "RUST",
+	python: "PYTHON",
+	cloudflare: "CLOUDFLARE WORKERS",
+	general: "GENERAL",
+};
+
+const accentFor: Record<string, string> = {
+	cpp: "lime",
+	rust: "orange",
+	python: "blue",
+	cloudflare: "purple",
+	general: "purple",
+};
 ---
 
-<!doctype html>
-<html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-		<style>
-			main {
-				width: 960px;
-			}
-			ul {
-				display: flex;
-				flex-wrap: wrap;
-				gap: 2rem;
-				list-style-type: none;
-				margin: 0;
-				padding: 0;
-			}
-			ul li {
-				width: calc(50% - 1rem);
-			}
-			ul li * {
-				text-decoration: none;
-				transition: 0.2s ease;
-			}
-			ul li:first-child {
-				width: 100%;
-				margin-bottom: 1rem;
-				text-align: center;
-			}
-			ul li:first-child img {
-				width: 100%;
-			}
-			ul li:first-child .title {
-				font-size: 2.369rem;
-			}
-			ul li img {
-				margin-bottom: 0.5rem;
-				border-radius: 12px;
-			}
-			ul li a {
-				display: block;
-			}
-			.title {
-				margin: 0;
-				color: rgb(var(--black));
-				line-height: 1;
-			}
-			.date {
-				margin: 0;
-				color: rgb(var(--gray));
-			}
-			ul li a:hover h4,
-			ul li a:hover .date {
-				color: rgb(var(--accent));
-			}
-			ul a:hover img {
-				box-shadow: var(--box-shadow);
-			}
-			@media (max-width: 720px) {
-				ul {
-					gap: 0.5em;
-				}
-				ul li {
-					width: 100%;
-					text-align: center;
-				}
-				ul li:first-child {
-					margin-bottom: 0;
-				}
-				ul li:first-child .title {
-					font-size: 1.563em;
-				}
-			}
-		</style>
-	</head>
-	<body>
-		<Header />
-		<main>
-			<section>
-				<ul>
-					{
-						posts.map((post) => (
-							<li>
-								<a href={`/blog/${post.id}/`}>
-									{post.data.heroImage && (
-										<Image width={720} height={360} src={post.data.heroImage} alt="" />
+<Layout
+	title="Blog"
+	description={`All posts from ${SITE_TITLE}. ${SITE_DESCRIPTION}`}
+	canonicalPath="/blog/"
+	jsonLd={{
+		"@context": "https://schema.org",
+		"@type": "CollectionPage",
+		name: "Blog",
+		url: `${SITE_URL}/blog/`,
+		description: SITE_DESCRIPTION,
+		hasPart: posts.map((post) => ({
+			"@type": "BlogPosting",
+			headline: post.data.title,
+			url: `${SITE_URL}/blog/${post.id}/`,
+			datePublished: post.data.pubDate.toISOString(),
+		})),
+	}}
+>
+	<div class="site-shell min-h-screen" id="top">
+		<SiteHeader active="blog" />
+		<main class="mx-auto max-w-7xl px-5 lg:px-10">
+			<section class="page-hero reveal is-visible">
+				<p class="kicker">
+					<span class="prompt">&gt;_</span> ARCHIVE / ALL POSTS
+				</p>
+				<h1>
+					Engineering
+					<br />
+					<em>notes.</em>
+				</h1>
+				<p class="intro">
+					{posts.length} posts across C++, Rust, Python, and Cloudflare Workers — optimized for
+					humans, crawlers, and LLMs.
+				</p>
+			</section>
+			<section class="grid">
+				{
+					posts.map((post, index) => (
+						<a
+							href={`/blog/${post.id}/`}
+							class={`card project-${accentFor[post.data.topic] ?? "lime"} ${index === 0 ? "featured" : ""}`}
+						>
+							<div class="card-top">
+								<span>
+									{String(index + 1).padStart(2, "0")} /{" "}
+									{String(posts.length).padStart(2, "0")}
+								</span>
+								<span class="status">
+									<i /> PUBLISHED
+								</span>
+							</div>
+							<div class="card-visual">
+								<span class="bracket">{"{"}</span>
+								<span class="code">{post.data.topic}</span>
+								<span class="bracket">{"}"}</span>
+							</div>
+							<div class="card-info">
+								<p>{topicLabel[post.data.topic] ?? post.data.topic}</p>
+								<h2>{post.data.title}</h2>
+								<span class="arrow">↗</span>
+								<p class="text">{post.data.description}</p>
+								<p class="meta">
+									<FormattedDate date={post.data.pubDate} />
+									{post.data.tags.length > 0 && (
+										<> · {post.data.tags.slice(0, 3).join(" · ")}</>
 									)}
-									<h4 class="title">{post.data.title}</h4>
-									<p class="date">
-										<FormattedDate date={post.data.pubDate} />
-									</p>
-								</a>
-							</li>
-						))
-					}
-				</ul>
+								</p>
+							</div>
+						</a>
+					))
+				}
 			</section>
 		</main>
-		<Footer />
-	</body>
-</html>
+		<SiteFooter />
+	</div>
+</Layout>
+
+<style>
+	.site-shell {
+		background-color: #090b0d;
+		background-image:
+			linear-gradient(rgba(73, 91, 102, 0.08) 1px, transparent 1px),
+			linear-gradient(90deg, rgba(73, 91, 102, 0.08) 1px, transparent 1px);
+		background-size: 64px 64px;
+		isolation: isolate;
+		position: relative;
+	}
+	main {
+		position: relative;
+		z-index: 1;
+		padding-bottom: 90px;
+	}
+	.page-hero {
+		padding: 90px 0 55px;
+	}
+	.kicker {
+		color: #82949c;
+		font-size: 10px;
+		letter-spacing: 0.13em;
+		margin: 0 0 24px;
+	}
+	.prompt,
+	em {
+		color: #a8ff60;
+		font-style: normal;
+	}
+	h1 {
+		font:
+			800 clamp(3.2rem, 7vw, 6.5rem)/0.9 "Manrope",
+			sans-serif;
+		letter-spacing: -0.08em;
+		margin: 0;
+	}
+	.intro {
+		color: #91a2aa;
+		font-size: 12px;
+		line-height: 1.9;
+		margin: 24px 0 0;
+		max-width: 480px;
+	}
+	.grid {
+		display: grid;
+		gap: 12px;
+		grid-template-columns: repeat(12, minmax(0, 1fr));
+	}
+	.card {
+		background: #0e1519;
+		border: 1px solid #2b3d45;
+		display: flex;
+		flex-direction: column;
+		grid-column: span 6;
+		min-height: 390px;
+		overflow: hidden;
+		position: relative;
+		transition:
+			border-color 0.25s,
+			transform 0.25s;
+	}
+	.card.featured {
+		grid-column: 1 / -1;
+	}
+	.card:hover {
+		border-color: #a8ff60;
+		transform: translateY(-5px);
+	}
+	.card-top {
+		color: #6c7e85;
+		display: flex;
+		font-size: 9px;
+		justify-content: space-between;
+		letter-spacing: 0.1em;
+		padding: 17px;
+	}
+	.status {
+		color: #70837c;
+		font-size: 8px;
+	}
+	.status i {
+		background: #a8ff60;
+		border-radius: 50%;
+		display: inline-block;
+		height: 6px;
+		margin-right: 6px;
+		width: 6px;
+	}
+	.card-visual {
+		align-items: center;
+		background:
+			repeating-linear-gradient(
+				0deg,
+				transparent,
+				transparent 29px,
+				rgba(98, 130, 143, 0.1) 30px
+			),
+			repeating-linear-gradient(
+				90deg,
+				transparent,
+				transparent 29px,
+				rgba(98, 130, 143, 0.1) 30px
+			);
+		display: flex;
+		flex: 0 0 120px;
+		gap: 10px;
+		justify-content: center;
+	}
+	.code {
+		color: #8298a0;
+		font:
+			700 18px "DM Mono",
+			monospace;
+		letter-spacing: -0.08em;
+	}
+	.bracket {
+		color: #a8ff60;
+		font:
+			90px/1 "Manrope",
+			sans-serif;
+		opacity: 0.45;
+	}
+	.project-blue .code {
+		color: #65c9ff;
+	}
+	.project-orange .code {
+		color: #ff9c68;
+	}
+	.project-purple .code {
+		color: #d29aff;
+	}
+	.card-info {
+		display: flex;
+		flex: 1;
+		flex-direction: column;
+		padding: 24px 20px;
+		position: relative;
+	}
+	.card-info > p:first-child {
+		color: #a8ff60;
+		font-size: 8px;
+		letter-spacing: 0.1em;
+		margin: 0 0 10px;
+	}
+	.card-info h2 {
+		font:
+			600 24px "Manrope",
+			sans-serif;
+		letter-spacing: -0.05em;
+		margin: 0;
+		padding-right: 30px;
+	}
+	.arrow {
+		color: #a8ff60;
+		font-size: 22px;
+		position: absolute;
+		right: 20px;
+		top: 22px;
+	}
+	.text {
+		color: #82949c;
+		font-size: 11px;
+		line-height: 1.7;
+		margin: 15px 0 14px;
+	}
+	.meta {
+		color: #5c7078;
+		font-size: 9px;
+		letter-spacing: 0.06em;
+		margin-top: auto;
+		text-transform: uppercase;
+	}
+	@media (max-width: 800px) {
+		.grid {
+			grid-template-columns: 1fr;
+		}
+		.card,
+		.card.featured {
+			grid-column: 1;
+		}
+	}
+</style>

@@ -1,0 +1,228 @@
+---
+import SiteFooter from "../components/SiteFooter.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import Layout from "../layouts/Layout.astro";
+import { SITE_AUTHOR, SITE_EMAIL, SITE_URL } from "../consts";
+
+export const prerender = true;
+
+const updated = "September 19, 2026";
+---
+
+<Layout
+	title="Terms and Conditions"
+	description="Terms and conditions for using Saksham Dubey's engineering blog at blogs.sakshampy.in."
+	canonicalPath="/terms/"
+	jsonLd={{
+		"@context": "https://schema.org",
+		"@type": "WebPage",
+		name: "Terms and Conditions",
+		url: `${SITE_URL}/terms/`,
+		dateModified: "2026-09-19",
+		isPartOf: { "@type": "WebSite", url: SITE_URL },
+	}}
+>
+	<div class="site-shell min-h-screen" id="top">
+		<SiteHeader active="terms" />
+		<main class="mx-auto max-w-7xl px-5 lg:px-10">
+			<section class="page-hero">
+				<p class="kicker">
+					<span class="prompt">&gt;_</span> LEGAL / TERMS
+				</p>
+				<h1>
+					Terms &
+					<br />
+					<em>conditions.</em>
+				</h1>
+				<p class="intro">
+					Last updated {updated}. These terms govern your use of {SITE_URL} and
+					related content published by {SITE_AUTHOR}.
+				</p>
+			</section>
+
+			<article class="terms">
+				<section>
+					<span class="num">01</span>
+					<h2>Acceptance of terms</h2>
+					<p>
+						By accessing or using this website, you agree to these Terms and
+						Conditions. If you do not agree, please do not use the site.
+					</p>
+				</section>
+				<section>
+					<span class="num">02</span>
+					<h2>Content and purpose</h2>
+					<p>
+						This blog publishes educational and opinion content about software
+						engineering, including C++, Rust, and Python. Content is provided
+						for informational purposes and does not constitute professional
+						advice, employment offers, or warranties of fitness for a particular
+						purpose.
+					</p>
+				</section>
+				<section>
+					<span class="num">03</span>
+					<h2>Intellectual property</h2>
+					<p>
+						Unless otherwise noted, text, design, branding, and original code
+						samples on this site are owned by {SITE_AUTHOR}. You may quote short
+						excerpts with attribution and a link to the original post. You may
+						not republish full articles, scrape the site for commercial datasets
+						without permission, or present the content as your own.
+					</p>
+				</section>
+				<section>
+					<span class="num">04</span>
+					<h2>Code samples</h2>
+					<p>
+						Code snippets are offered “as is.” Review, test, and adapt them for
+						your environment before production use. {SITE_AUTHOR} is not liable
+						for damages arising from use of sample code.
+					</p>
+				</section>
+				<section>
+					<span class="num">05</span>
+					<h2>User conduct</h2>
+					<p>
+						You agree not to misuse the site, attempt unauthorized access,
+						interfere with availability, or use automated systems in ways that
+						degrade service for others. Reasonable crawling for search indexing
+						and polite LLM retrieval of public pages (including
+						<code>/llms.txt</code>) is allowed.
+					</p>
+				</section>
+				<section>
+					<span class="num">06</span>
+					<h2>External links</h2>
+					<p>
+						This site may link to third-party websites. Those sites have their
+						own terms and privacy practices. Linking does not imply endorsement.
+					</p>
+				</section>
+				<section>
+					<span class="num">07</span>
+					<h2>Disclaimer of warranties</h2>
+					<p>
+						The site is provided on an “as available” basis without warranties
+						of any kind, express or implied, including merchantability,
+						non-infringement, or uninterrupted availability.
+					</p>
+				</section>
+				<section>
+					<span class="num">08</span>
+					<h2>Limitation of liability</h2>
+					<p>
+						To the fullest extent permitted by law, {SITE_AUTHOR} shall not be
+						liable for indirect, incidental, special, consequential, or punitive
+						damages arising from your use of the site or reliance on its
+						content.
+					</p>
+				</section>
+				<section>
+					<span class="num">09</span>
+					<h2>Changes</h2>
+					<p>
+						These terms may be updated from time to time. Continued use of the
+						site after changes are posted constitutes acceptance of the revised
+						terms. The “Last updated” date above reflects the latest revision.
+					</p>
+				</section>
+				<section>
+					<span class="num">10</span>
+					<h2>Contact</h2>
+					<p>
+						Questions about these terms:{" "}
+						<a href={`mailto:${SITE_EMAIL}`}>{SITE_EMAIL}</a>
+					</p>
+				</section>
+			</article>
+		</main>
+		<SiteFooter />
+	</div>
+</Layout>
+
+<style>
+	.site-shell {
+		background-color: #090b0d;
+		background-image:
+			linear-gradient(rgba(73, 91, 102, 0.08) 1px, transparent 1px),
+			linear-gradient(90deg, rgba(73, 91, 102, 0.08) 1px, transparent 1px);
+		background-size: 64px 64px;
+		isolation: isolate;
+		position: relative;
+	}
+	main {
+		position: relative;
+		z-index: 1;
+		padding-bottom: 100px;
+	}
+	.page-hero {
+		padding: 90px 0 50px;
+	}
+	.kicker {
+		color: #82949c;
+		font-size: 10px;
+		letter-spacing: 0.13em;
+		margin: 0 0 24px;
+	}
+	.prompt,
+	em {
+		color: #a8ff60;
+		font-style: normal;
+	}
+	h1 {
+		font:
+			800 clamp(3rem, 7vw, 6rem)/0.9 "Manrope",
+			sans-serif;
+		letter-spacing: -0.08em;
+		margin: 0;
+	}
+	.intro {
+		color: #91a2aa;
+		font-size: 12px;
+		line-height: 1.9;
+		margin: 28px 0 0;
+		max-width: 560px;
+	}
+	.terms {
+		border-top: 1px solid #26343b;
+		display: grid;
+		gap: 0;
+		max-width: 760px;
+	}
+	.terms section {
+		border-bottom: 1px solid #26343b;
+		padding: 36px 0;
+	}
+	.num {
+		color: #a8ff60;
+		display: block;
+		font-size: 9px;
+		letter-spacing: 0.12em;
+		margin-bottom: 14px;
+	}
+	.terms h2 {
+		font:
+			600 22px "Manrope",
+			sans-serif;
+		letter-spacing: -0.04em;
+		margin: 0 0 14px;
+	}
+	.terms p {
+		color: #91a2aa;
+		font-size: 12px;
+		line-height: 1.95;
+		margin: 0;
+	}
+	.terms a {
+		color: #a8ff60;
+		border-bottom: 1px solid rgba(168, 255, 96, 0.35);
+	}
+	.terms code {
+		background: #101a20;
+		border: 1px solid #2b3d45;
+		color: #a8ff60;
+		font-size: 0.92em;
+		padding: 0.1em 0.35em;
+	}
+</style>
