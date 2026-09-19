@@ -380,23 +380,6 @@ nav[aria-labelledby='starlight__on-this-page--mobile'] {
   z-index: 1;
 }
 
-.pointer-glow {
-  background: radial-gradient(circle, rgb(168 255 96 / 0.12) 0, rgb(101 201 255 / 0.04) 22%, transparent 60%);
-  height: 460px;
-  pointer-events: none;
-  position: fixed;
-  left: 0;
-  top: 0;
-  transform: translate3d(
-    calc(var(--pointer-x, 50vw) - 230px),
-    calc(var(--pointer-y, 40vh) - 230px),
-    0
-  );
-  will-change: transform;
-  width: 460px;
-  z-index: -1;
-}
-
 .docs-hero {
   display: grid;
   gap: 9vw;

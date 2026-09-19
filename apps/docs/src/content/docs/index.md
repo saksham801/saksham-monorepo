@@ -6,7 +6,6 @@ editUrl: false
 ---
 
 <div class="portfolio-home">
-  <div class="pointer-glow" aria-hidden="true"></div>
   <section class="docs-hero">
     <div class="docs-hero-copy">
       <p class="kicker"><span>&gt;_</span> HELLO, WORLD. I'M SAKSHAM.</p>
@@ -67,26 +66,3 @@ Build a strong foundation in the languages behind reliable software:
 ## A note on this site
 
 These docs are intentionally practical. They are written while building real things, so they may change as tools and understanding improve. By using this site you agree to the [Terms and Conditions](/terms/).
-
-<script>
-  const glow = document.querySelector(".pointer-glow");
-  const finePointer = window.matchMedia("(pointer: fine)");
-  let frame = 0;
-  let pointerX = 0;
-  let pointerY = 0;
-
-  const updateGlow = () => {
-    frame = 0;
-    glow?.style.setProperty("--pointer-x", `${pointerX}px`);
-    glow?.style.setProperty("--pointer-y", `${pointerY}px`);
-  };
-
-  const handlePointerMove = (event) => {
-    if (!glow || !finePointer.matches) return;
-    pointerX = event.clientX;
-    pointerY = event.clientY;
-    if (!frame) frame = requestAnimationFrame(updateGlow);
-  };
-
-  window.addEventListener("pointermove", handlePointerMove, { passive: true });
-</script>
