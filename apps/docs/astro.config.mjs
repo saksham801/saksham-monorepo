@@ -38,7 +38,7 @@ export default defineConfig({
       customCss: ['./src/styles/docs.css'],
       lastUpdated: true,
       pagination: true,
-      pagefind: true,
+      pagefind: false,
       disable404Route: true,
       head: [
         {
