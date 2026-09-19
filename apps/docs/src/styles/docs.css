@@ -63,37 +63,12 @@ body::before {
   z-index: 0;
 }
 
-/* Keep Starlight's fixed header; do not override to relative/static. */
 header.header {
   border-bottom: 1px solid #202a30;
   background: rgb(9 11 13 / 0.78);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   font-family: 'DM Mono', monospace;
-}
-
-.header > .header {
-  align-items: center;
-  gap: 0.75rem;
-  height: var(--sl-nav-height);
-  margin-inline: auto;
-  max-width: 80rem;
-  min-width: 0;
-  width: 100%;
-}
-
-/* Keep Starlight sidebar toggle on-brand without changing its layout behavior */
-.sl-menu-button {
-  border: 1px solid #3b4b53 !important;
-  background: #101a20 !important;
-  border-radius: 0 !important;
-  box-shadow: none !important;
-  color: #a8ff60 !important;
-}
-
-.sl-menu-button:hover {
-  background: #101a20 !important;
-  border-color: #a8ff60 !important;
 }
 
 .title-wrapper {

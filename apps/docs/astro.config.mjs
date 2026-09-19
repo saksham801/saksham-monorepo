@@ -31,10 +31,8 @@ export default defineConfig({
         alt: 'SD — Saksham’s Docs',
       },
       components: {
-        Header: './src/components/Header.astro',
         Footer: './src/components/Footer.astro',
         PageTitle: './src/components/PageTitle.astro',
-        ThemeSelect: './src/components/ThemeSelect.astro',
       },
       customCss: ['./src/styles/docs.css'],
       lastUpdated: true,
