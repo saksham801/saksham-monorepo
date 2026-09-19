@@ -1,5 +1,6 @@
 ---
 const isSplash = Astro.locals.starlightRoute.entry.data.template === 'splash';
+const headings = Astro.locals.starlightRoute.headings ?? [];
 ---
 
 <div class="page sl-flex">
@@ -24,6 +25,12 @@ const isSplash = Astro.locals.starlightRoute.entry.data.template === 'splash';
 			<a href="/languages/python/tooling/">Tooling</a>
 		</aside>}
 		<div class="docs-content"><slot /></div>
+		{!isSplash && headings.length > 0 && <aside class="docs-toc" aria-label="On this page">
+			<p class="docs-sidebar-label">ON THIS PAGE</p>
+			{headings.filter((heading) => heading.depth <= 3).map((heading) => (
+				<a href={`#${heading.slug}`}>{heading.text}</a>
+			))}
+		</aside>}
 	</div>
 </div>
 
@@ -52,7 +59,7 @@ const isSplash = Astro.locals.starlightRoute.entry.data.template === 'splash';
 
 		.has-docs-sidebar {
 			display: grid;
-			grid-template-columns: 13rem minmax(0, 1fr);
+			grid-template-columns: 13rem minmax(0, 1fr) 11rem;
 			gap: 2rem;
 			max-width: 90rem;
 			margin-inline: auto;
@@ -72,7 +79,7 @@ const isSplash = Astro.locals.starlightRoute.entry.data.template === 'splash';
 
 		.docs-sidebar-label {
 			color: #63757d;
-			font-size: 0.5rem;
+			font-size: 0.58rem;
 			letter-spacing: 0.12em;
 			margin: 0.75rem 0 0.25rem;
 		}
@@ -80,7 +87,7 @@ const isSplash = Astro.locals.starlightRoute.entry.data.template === 'splash';
 		.docs-sidebar a,
 		.docs-sidebar strong {
 			color: #91a2aa;
-			font-size: 0.62rem;
+			font-size: 0.72rem;
 			font-weight: 400;
 			line-height: 1.5;
 			padding: 0.2rem 0.45rem;
@@ -103,12 +110,35 @@ const isSplash = Astro.locals.starlightRoute.entry.data.template === 'splash';
 			min-width: 0;
 		}
 
+		.docs-toc {
+			align-self: start;
+			display: grid;
+			gap: 0.5rem;
+			padding: 2rem 0 3rem 1rem;
+			position: sticky;
+			top: var(--sl-nav-height);
+		}
+
+		.docs-toc a {
+			color: #63757d;
+			font-size: 0.64rem;
+			line-height: 1.5;
+			text-decoration: none;
+		}
+
+		.docs-toc a:hover {
+			color: #a8ff60;
+		}
+
 		@media (max-width: 800px) {
 			.has-docs-sidebar {
 				display: block;
 				padding-inline: 0;
 			}
 			.docs-sidebar {
+				display: none;
+			}
+			.docs-toc {
 				display: none;
 			}
 		}

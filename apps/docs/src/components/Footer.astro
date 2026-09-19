@@ -1,7 +1,26 @@
 ---
 import EditLink from '@astrojs/starlight/components/EditLink.astro';
 import LastUpdated from '@astrojs/starlight/components/LastUpdated.astro';
-import Pagination from '@astrojs/starlight/components/Pagination.astro';
+
+const pages = [
+	{ href: '/guides/about/', label: 'About these notes' },
+	{ href: '/reference/toolbox/', label: 'Engineering toolbox' },
+	{ href: '/languages/rust/', label: 'Rust' },
+	{ href: '/languages/rust/ownership/', label: 'Rust ownership' },
+	{ href: '/languages/rust/tooling/', label: 'Rust tooling' },
+	{ href: '/languages/cpp/', label: 'C++' },
+	{ href: '/languages/cpp/memory/', label: 'C++ memory' },
+	{ href: '/languages/cpp/tooling/', label: 'C++ tooling' },
+	{ href: '/languages/python/', label: 'Python' },
+	{ href: '/languages/python/packaging/', label: 'Python packaging' },
+	{ href: '/languages/python/tooling/', label: 'Python tooling' },
+	{ href: '/terms/', label: 'Terms and Conditions' },
+];
+
+const currentPath = Astro.url.pathname;
+const currentIndex = pages.findIndex((page) => page.href === currentPath);
+const previousPage = currentIndex > 0 ? pages[currentIndex - 1] : undefined;
+const nextPage = currentIndex >= 0 ? pages[currentIndex + 1] : undefined;
 ---
 
 <footer class="sl-flex docs-footer">
@@ -9,7 +28,10 @@ import Pagination from '@astrojs/starlight/components/Pagination.astro';
 		<EditLink />
 		<LastUpdated />
 	</div>
-	<Pagination />
+	<nav class="page-pagination" aria-label="Page navigation">
+		{previousPage && <a href={previousPage.href} rel="prev"><small>PREVIOUS</small><strong>← {previousPage.label}</strong></a>}
+		{nextPage && <a href={nextPage.href} rel="next"><small>NEXT</small><strong>{nextPage.label} →</strong></a>}
+	</nav>
 
 	<div class="site-footer">
 		<span>© 2026 SAKSHAM DUBEY</span>
@@ -58,6 +80,13 @@ import Pagination from '@astrojs/starlight/components/Pagination.astro';
 			gap: 1.25rem;
 		}
 
+		.page-pagination { display: grid; gap: 1rem; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+		.page-pagination a { border: 1px solid #26343b; display: grid; gap: 0.35rem; padding: 1rem; text-decoration: none; }
+		.page-pagination a:last-child { text-align: right; }
+		.page-pagination small { color: #63757d; font-size: 0.5rem; letter-spacing: 0.1em; }
+		.page-pagination strong { color: #dce7eb; font: 600 0.75rem 'Manrope', sans-serif; }
+		.page-pagination a:hover { border-color: #a8ff60; }
+
 		.site-footer a {
 			color: #5c7078;
 			text-decoration: none;
@@ -66,6 +95,11 @@ import Pagination from '@astrojs/starlight/components/Pagination.astro';
 
 		.site-footer a:hover {
 			color: #a8ff60;
+		}
+
+		@media (max-width: 600px) {
+			.page-pagination { grid-template-columns: 1fr; }
+			.page-pagination a:last-child { text-align: left; }
 		}
 	}
 </style>
