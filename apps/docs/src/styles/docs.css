@@ -70,15 +70,6 @@ header.header {
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   font-family: 'DM Mono', monospace;
-  height: auto;
-  min-height: var(--sl-nav-height);
-  overflow: visible;
-  padding-inline: clamp(0.85rem, 4vw, 1.5rem);
-  position: fixed;
-  inset-block-start: 0;
-  inset-inline-start: 0;
-  width: 100%;
-  z-index: var(--sl-z-index-navbar);
 }
 
 .header > .header {
