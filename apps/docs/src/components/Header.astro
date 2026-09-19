@@ -32,15 +32,32 @@ const navLinks = [
 		<details class="docs-menu">
 			<summary>/ docs</summary>
 			<div class="docs-menu-panel">
-				<a href="/languages/rust/">/ rust</a>
-				<a href="/languages/rust/ownership/">/ rust / ownership</a>
-				<a href="/languages/rust/tooling/">/ rust / tooling</a>
-				<a href="/languages/cpp/">/ c++</a>
-				<a href="/languages/cpp/memory/">/ c++ / memory</a>
-				<a href="/languages/cpp/tooling/">/ c++ / tooling</a>
-				<a href="/languages/python/">/ python</a>
-				<a href="/languages/python/packaging/">/ python / packaging</a>
-				<a href="/languages/python/tooling/">/ python / tooling</a>
+				<div class="docs-menu-group">
+					<strong>GUIDES</strong>
+					<a href="/guides/about/">About these notes</a>
+				</div>
+				<div class="docs-menu-group">
+					<strong>REFERENCE</strong>
+					<a href="/reference/toolbox/">Engineering toolbox</a>
+				</div>
+				<div class="docs-menu-group">
+					<strong>LANGUAGES / RUST</strong>
+					<a href="/languages/rust/">Overview</a>
+					<a href="/languages/rust/ownership/">Ownership</a>
+					<a href="/languages/rust/tooling/">Tooling</a>
+				</div>
+				<div class="docs-menu-group">
+					<strong>LANGUAGES / C++</strong>
+					<a href="/languages/cpp/">Overview</a>
+					<a href="/languages/cpp/memory/">Memory</a>
+					<a href="/languages/cpp/tooling/">Tooling</a>
+				</div>
+				<div class="docs-menu-group">
+					<strong>LANGUAGES / PYTHON</strong>
+					<a href="/languages/python/">Overview</a>
+					<a href="/languages/python/packaging/">Packaging</a>
+					<a href="/languages/python/tooling/">Tooling</a>
+				</div>
 			</div>
 		</details>
 	</nav>
@@ -77,8 +94,11 @@ const navLinks = [
 		.docs-menu summary::-webkit-details-marker { display: none; }
 		.docs-menu summary:hover,
 		.docs-menu[open] summary { color: #a8ff60; }
-		.docs-menu-panel { background: #101a20; border: 1px solid #33464f; display: grid; gap: 0.7rem; min-width: 13rem; padding: 0.9rem; position: absolute; right: 0; top: 1.6rem; z-index: 2; }
-		.docs-menu-panel a { color: #a8ff60; font-size: 0.58rem; }
+		.docs-menu-panel { background: #101a20; border: 1px solid #33464f; display: grid; gap: 0.85rem; min-width: 16rem; padding: 1rem; position: absolute; right: 0; top: 1.6rem; z-index: 2; }
+		.docs-menu-group { display: grid; gap: 0.35rem; }
+		.docs-menu-group + .docs-menu-group { border-top: 1px solid #26343b; padding-top: 0.75rem; }
+		.docs-menu-group strong { color: #63757d; font-size: 0.5rem; font-weight: 400; letter-spacing: 0.1em; }
+		.docs-menu-panel a { color: #a8ff60; font-size: 0.58rem; padding-inline-start: 0.5rem; }
 		.docs-menu-panel a:hover { color: #e8edf0; }
 
 		.hire-button {
