@@ -30,11 +30,6 @@ export default defineConfig({
         src: './src/assets/logo.svg',
         alt: 'SD — Saksham’s Docs',
       },
-      components: {
-        Footer: './src/components/Footer.astro',
-        PageTitle: './src/components/PageTitle.astro',
-      },
-      customCss: ['./src/styles/docs.css'],
       lastUpdated: true,
       pagination: true,
       pagefind: true,
