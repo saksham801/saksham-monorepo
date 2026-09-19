@@ -31,6 +31,7 @@ export default defineConfig({
         alt: 'SD — Saksham’s Docs',
       },
       components: {
+        PageFrame: './src/components/PageFrame.astro',
         Header: './src/components/Header.astro',
         Footer: './src/components/Footer.astro',
         PageTitle: './src/components/PageTitle.astro',
@@ -39,6 +40,7 @@ export default defineConfig({
       lastUpdated: true,
       pagination: true,
       pagefind: false,
+      tableOfContents: false,
       disable404Route: true,
       head: [
         {
@@ -187,50 +189,7 @@ export default defineConfig({
         { icon: 'github', label: 'GitHub', href: 'https://github.com/saksham-dubey' },
         { icon: 'external', label: 'Portfolio', href: 'https://sakshampy.in/' },
       ],
-      sidebar: [
-        {
-          label: 'Start here',
-          items: [
-            { label: 'Home', slug: '' },
-            { label: 'About these notes', slug: 'guides/about' },
-            { label: 'Terms and Conditions', slug: 'terms' },
-          ],
-        },
-        {
-          label: 'Guides',
-          items: [{ autogenerate: { directory: 'guides' } }],
-        },
-        {
-          label: 'Reference',
-          items: [{ autogenerate: { directory: 'reference' } }],
-        },
-        {
-          label: 'Languages',
-          items: [
-            {
-              label: 'Rust',
-              items: [
-                { label: 'Overview', slug: 'languages/rust' },
-                { autogenerate: { directory: 'languages/rust' } },
-              ],
-            },
-            {
-              label: 'C++',
-              items: [
-                { label: 'Overview', slug: 'languages/cpp' },
-                { autogenerate: { directory: 'languages/cpp' } },
-              ],
-            },
-            {
-              label: 'Python',
-              items: [
-                { label: 'Overview', slug: 'languages/python' },
-                { autogenerate: { directory: 'languages/python' } },
-              ],
-            },
-          ],
-        },
-      ],
+      sidebar: [],
     }),
   ],
   adapter: cloudflare({

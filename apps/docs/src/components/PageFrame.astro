@@ -1,0 +1,29 @@
+<div class="page sl-flex">
+	<header class="header"><slot name="header" /></header>
+	<div class="main-frame"><slot /></div>
+</div>
+
+<style>
+	@layer starlight.core {
+		.page {
+			flex-direction: column;
+			min-height: 100vh;
+		}
+
+		.header {
+			position: fixed;
+			inset-block-start: 0;
+			inset-inline-start: 0;
+			width: 100%;
+			z-index: var(--sl-z-index-navbar);
+			height: var(--sl-nav-height);
+			padding: var(--sl-nav-pad-y) var(--sl-nav-pad-x);
+			background: var(--sl-color-bg-nav);
+			border-bottom: 1px solid var(--sl-color-hairline-shade);
+		}
+
+		.main-frame {
+			padding-top: var(--sl-nav-height);
+		}
+	}
+</style>
