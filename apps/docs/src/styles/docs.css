@@ -65,9 +65,7 @@ body::before {
 
 header.header {
   border-bottom: 1px solid #202a30;
-  background: rgb(9 11 13 / 0.78);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  background: #090b0d;
   font-family: 'DM Mono', monospace;
 }
 
@@ -211,8 +209,7 @@ starlight-theme-select label {
 mobile-starlight-toc,
 .mobile-starlight-toc,
 nav[aria-labelledby='starlight__on-this-page--mobile'] {
-  background: rgb(9 11 13 / 0.92) !important;
-  backdrop-filter: blur(12px);
+  background: #090b0d !important;
   border-color: #202a30 !important;
 }
 
