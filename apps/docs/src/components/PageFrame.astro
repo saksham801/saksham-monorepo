@@ -1,6 +1,30 @@
+---
+const isSplash = Astro.locals.starlightRoute.entry.data.template === 'splash';
+---
+
 <div class="page sl-flex">
 	<header class="header"><slot name="header" /></header>
-	<div class="main-frame"><slot /></div>
+	<div class:list={["main-frame", { "has-docs-sidebar": !isSplash }]}>
+		{!isSplash && <aside class="docs-sidebar" aria-label="Documentation navigation">
+			<p class="docs-sidebar-label">DOCUMENTATION</p>
+			<a href="/guides/about/">About these notes</a>
+			<a href="/reference/toolbox/">Engineering toolbox</a>
+			<p class="docs-sidebar-label">LANGUAGES</p>
+			<strong>Rust</strong>
+			<a href="/languages/rust/">Overview</a>
+			<a href="/languages/rust/ownership/">Ownership</a>
+			<a href="/languages/rust/tooling/">Tooling</a>
+			<strong>C++</strong>
+			<a href="/languages/cpp/">Overview</a>
+			<a href="/languages/cpp/memory/">Memory</a>
+			<a href="/languages/cpp/tooling/">Tooling</a>
+			<strong>Python</strong>
+			<a href="/languages/python/">Overview</a>
+			<a href="/languages/python/packaging/">Packaging</a>
+			<a href="/languages/python/tooling/">Tooling</a>
+		</aside>}
+		<div class="docs-content"><slot /></div>
+	</div>
 </div>
 
 <style>
@@ -24,6 +48,69 @@
 
 		.main-frame {
 			padding-top: var(--sl-nav-height);
+		}
+
+		.has-docs-sidebar {
+			display: grid;
+			grid-template-columns: 13rem minmax(0, 1fr);
+			gap: 2rem;
+			max-width: 90rem;
+			margin-inline: auto;
+			padding-inline: 1.25rem;
+			width: 100%;
+		}
+
+		.docs-sidebar {
+			align-self: start;
+			border-inline-end: 1px solid #202a30;
+			display: grid;
+			gap: 0.35rem;
+			padding: 2rem 1.25rem 3rem 0;
+			position: sticky;
+			top: var(--sl-nav-height);
+		}
+
+		.docs-sidebar-label {
+			color: #63757d;
+			font-size: 0.5rem;
+			letter-spacing: 0.12em;
+			margin: 0.75rem 0 0.25rem;
+		}
+
+		.docs-sidebar a,
+		.docs-sidebar strong {
+			color: #91a2aa;
+			font-size: 0.62rem;
+			font-weight: 400;
+			line-height: 1.5;
+			padding: 0.2rem 0.45rem;
+			text-decoration: none;
+		}
+
+		.docs-sidebar strong {
+			color: #dce7eb;
+			font-family: 'Manrope', sans-serif;
+			font-weight: 700;
+			margin-top: 0.45rem;
+		}
+
+		.docs-sidebar a:hover {
+			background: #101a20;
+			color: #a8ff60;
+		}
+
+		.docs-content {
+			min-width: 0;
+		}
+
+		@media (max-width: 800px) {
+			.has-docs-sidebar {
+				display: block;
+				padding-inline: 0;
+			}
+			.docs-sidebar {
+				display: none;
+			}
 		}
 	}
 </style>
