@@ -91,12 +91,8 @@ header.header {
   width: 100%;
 }
 
-/* Keep Starlight sidebar toggle fixed and on-brand */
+/* Keep Starlight sidebar toggle on-brand without changing its layout behavior */
 .sl-menu-button {
-  position: fixed !important;
-  top: calc((var(--sl-nav-height) - var(--sl-menu-button-size)) / 2) !important;
-  inset-inline-end: var(--sl-nav-pad-x) !important;
-  z-index: var(--sl-z-index-navbar) !important;
   border: 1px solid #3b4b53 !important;
   background: #101a20 !important;
   border-radius: 0 !important;
