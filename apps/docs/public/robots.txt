@@ -3,3 +3,5 @@ Allow: /
 
 Sitemap: https://docs.sakshampy.in/sitemap-index.xml
 
+# Machine-readable documentation index for AI agents and retrieval systems
+LLMs-Txt: https://docs.sakshampy.in/llms.txt

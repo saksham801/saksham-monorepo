@@ -1,7 +1,8 @@
 ---
 title: Saksham's Docs
-description: Working notes, engineering guides, and practical references.
+description: Working notes, engineering guides, and practical references by Saksham Dubey — full stack engineer in New Delhi.
 template: splash
+editUrl: false
 ---
 
 <div class="portfolio-home">
@@ -47,11 +48,11 @@ template: splash
     <p>Fast answers, conventions, and checklists I reach for while shipping.</p>
     <b>OPEN REFERENCE ↗</b>
   </a>
-  <a class="card" href="/guides/about/">
-    <span class="card-id">03 / SELF NOTES</span>
+  <a class="card" href="/languages/rust/">
+    <span class="card-id">03 / LANGUAGES</span>
     <h3>Keep learning.</h3>
-    <p>A public scratchpad for lessons learned, useful patterns, and things worth remembering.</p>
-    <b>READ THE NOTES ↗</b>
+    <p>Language tracks for Rust, C++, and Python — foundations for reliable software.</p>
+    <b>OPEN TRACKS ↗</b>
   </a>
 </div>
 
@@ -65,14 +66,27 @@ Build a strong foundation in the languages behind reliable software:
 
 ## A note on this site
 
-These docs are intentionally practical. They are written while building real things, so they may change as tools and understanding improve.
+These docs are intentionally practical. They are written while building real things, so they may change as tools and understanding improve. By using this site you agree to the [Terms and Conditions](/terms/).
 
 <script>
   const glow = document.querySelector(".pointer-glow");
-  window.addEventListener("pointermove", (event) => {
-    if (glow && window.matchMedia("(pointer: fine)").matches) {
-      glow.style.setProperty("--pointer-x", `${event.clientX}px`);
-      glow.style.setProperty("--pointer-y", `${event.clientY}px`);
-    }
-  });
+  const finePointer = window.matchMedia("(pointer: fine)");
+  let frame = 0;
+  let pointerX = 0;
+  let pointerY = 0;
+
+  const updateGlow = () => {
+    frame = 0;
+    glow?.style.setProperty("--pointer-x", `${pointerX}px`);
+    glow?.style.setProperty("--pointer-y", `${pointerY}px`);
+  };
+
+  const handlePointerMove = (event) => {
+    if (!glow || !finePointer.matches) return;
+    pointerX = event.clientX;
+    pointerY = event.clientY;
+    if (!frame) frame = requestAnimationFrame(updateGlow);
+  };
+
+  window.addEventListener("pointermove", handlePointerMove, { passive: true });
 </script>

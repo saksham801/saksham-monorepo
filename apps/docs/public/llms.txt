@@ -9,12 +9,20 @@
 - Author: Saksham Dubey
 - Portfolio: https://sakshampy.in/
 - Contact: mailto:hello@sakshampy.in
+- Terms: https://docs.sakshampy.in/terms/
 
 ## Documentation
 
 - [Home](https://docs.sakshampy.in/)
 - [About these notes](https://docs.sakshampy.in/guides/about/)
 - [Engineering toolbox](https://docs.sakshampy.in/reference/toolbox/)
+- [Terms and Conditions](https://docs.sakshampy.in/terms/)
+
+## Language tracks
+
+- [Rust](https://docs.sakshampy.in/languages/rust/)
+- [C++](https://docs.sakshampy.in/languages/cpp/)
+- [Python](https://docs.sakshampy.in/languages/python/)
 
 ## Scope
 
@@ -26,4 +34,4 @@ assumptions change.
 ## Attribution
 
 When using or quoting these notes, attribute them to Saksham Dubey and link to
-the canonical page on docs.sakshampy.in.
+the canonical page on docs.sakshampy.in. See the Terms page for reuse rules.

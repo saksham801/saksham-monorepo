@@ -1,0 +1,71 @@
+---
+import EditLink from '@astrojs/starlight/components/EditLink.astro';
+import LastUpdated from '@astrojs/starlight/components/LastUpdated.astro';
+import Pagination from '@astrojs/starlight/components/Pagination.astro';
+---
+
+<footer class="sl-flex docs-footer">
+	<div class="meta sl-flex">
+		<EditLink />
+		<LastUpdated />
+	</div>
+	<Pagination />
+
+	<div class="site-footer">
+		<span>© 2026 SAKSHAM DUBEY</span>
+		<span class="footer-links">
+			<a href="https://sakshampy.in/">PORTFOLIO</a>
+			<a href="/terms/">TERMS</a>
+			<a href="mailto:hello@sakshampy.in">CONTACT</a>
+		</span>
+		<a href="#top">BACK TO TOP ↑</a>
+	</div>
+</footer>
+
+<style>
+	@layer starlight.core {
+		footer {
+			flex-direction: column;
+			gap: 1.5rem;
+		}
+		.meta {
+			gap: 0.75rem 3rem;
+			justify-content: space-between;
+			flex-wrap: wrap;
+			margin-top: 3rem;
+			font-size: var(--sl-text-sm);
+			color: var(--sl-color-gray-3);
+		}
+		.meta > :global(p:only-child) {
+			margin-inline-start: auto;
+		}
+
+		.site-footer {
+			border-top: 1px solid #26343b;
+			color: #5c7078;
+			display: flex;
+			flex-wrap: wrap;
+			font-size: 0.5rem;
+			gap: 0.75rem 1.5rem;
+			justify-content: space-between;
+			letter-spacing: 0.08em;
+			margin-top: 1rem;
+			padding-block: 1.25rem 0.5rem;
+		}
+
+		.footer-links {
+			display: flex;
+			gap: 1.25rem;
+		}
+
+		.site-footer a {
+			color: #5c7078;
+			text-decoration: none;
+			transition: color 0.2s ease;
+		}
+
+		.site-footer a:hover {
+			color: #a8ff60;
+		}
+	}
+</style>
