@@ -1,25 +1,22 @@
 ---
-import LanguageSelect from '@astrojs/starlight/components/LanguageSelect.astro';
-import Search from '@astrojs/starlight/components/Search.astro';
-import SiteTitle from '@astrojs/starlight/components/SiteTitle.astro';
-import SocialIcons from '@astrojs/starlight/components/SocialIcons.astro';
-import ThemeSelect from '@astrojs/starlight/components/ThemeSelect.astro';
-
-const shouldRenderSearch = true;
-
 const navLinks = [
 	{ href: '/', label: '/ home' },
 	{ href: '/guides/about/', label: '/ guides' },
 	{ href: '/reference/toolbox/', label: '/ reference' },
-	{ href: 'https://sakshampy.in/', label: '/ portfolio', external: true },
 	{ href: '/terms/', label: '/ terms' },
+	{ href: 'https://sakshampy.in/', label: '/ portfolio', external: true },
 ];
 ---
 
+<div class="topline">
+	<span>SAKSHAM.DUBEY // DOCS_V1.0</span>
+	<span class="topline-right"><i></i> SYSTEMS ONLINE</span>
+</div>
 <div class="header">
-	<div class="title-wrapper sl-flex">
-		<SiteTitle />
-	</div>
+	<a href="/" class="brand" aria-label="Saksham's Docs home">
+		<span class="brand-mark">S<span>D</span></span>
+		<span class="brand-copy">SAKSHAM<br /><small>ENGINEERING DOCS</small></span>
+	</a>
 	<nav class="docs-nav print:hidden" aria-label="Primary">
 		{
 			navLinks.map((link) =>
@@ -33,107 +30,19 @@ const navLinks = [
 			)
 		}
 	</nav>
-	<div class="sl-flex print:hidden search-slot">
-		{shouldRenderSearch && <Search />}
-	</div>
-	<div class="sl-hidden md:sl-flex print:hidden right-group">
-		<div class="sl-flex social-icons">
-			<SocialIcons />
-		</div>
-		<span class="theme-slot" hidden aria-hidden="true">
-			<ThemeSelect />
-		</span>
-		<LanguageSelect />
-		<a href="mailto:hello@sakshampy.in" class="hire-button">
-			HIRE ME <span>↗</span>
-		</a>
-	</div>
-	<button
-		id="mobile-nav-button"
-		class="mobile-nav-button print:hidden"
-		type="button"
-		aria-expanded="false"
-		aria-controls="mobile-nav"
-	>
-		[ MENU ]
-	</button>
+	<a href="mailto:hello@sakshampy.in" class="hire-button">WRITE ME <span>↗</span></a>
 </div>
-
-<nav id="mobile-nav" class="mobile-nav print:hidden" hidden aria-label="Mobile">
-	{
-		navLinks.map((link) =>
-			link.external ? (
-				<a href={link.href} target="_blank" rel="noopener noreferrer">
-					{link.label}
-				</a>
-			) : (
-				<a href={link.href}>{link.label}</a>
-			),
-		)
-	}
-	<a href="mailto:hello@sakshampy.in" class="mobile-hire">HIRE ME ↗</a>
-</nav>
-
-<script>
-	const button = document.querySelector('#mobile-nav-button');
-	const menu = document.querySelector('#mobile-nav');
-
-	const closeMenu = () => {
-		menu?.setAttribute('hidden', '');
-		button?.setAttribute('aria-expanded', 'false');
-		if (button) button.textContent = '[ MENU ]';
-	};
-
-	const openMenu = () => {
-		menu?.removeAttribute('hidden');
-		button?.setAttribute('aria-expanded', 'true');
-		if (button) button.textContent = '[ CLOSE ]';
-	};
-
-	button?.addEventListener('click', () => {
-		const isOpen = button.getAttribute('aria-expanded') === 'true';
-		if (isOpen) closeMenu();
-		else openMenu();
-	});
-
-	menu?.querySelectorAll('a').forEach((link) => {
-		link.addEventListener('click', () => closeMenu());
-	});
-
-	window.matchMedia('(min-width: 50rem)').addEventListener('change', (event) => {
-		if (event.matches) closeMenu();
-	});
-</script>
 
 <style>
 	@layer starlight.core {
-		.header {
-			display: flex;
-			gap: var(--sl-nav-gap);
-			justify-content: space-between;
-			align-items: center;
-			height: 100%;
-			width: 100%;
-			min-width: 0;
-		}
+		.header { align-items: center; display: flex; gap: 1.5rem; justify-content: space-between; min-width: 0; }
+		.brand { align-items: center; display: flex; gap: 0.7rem; }
+		.brand-mark { align-items: center; border: 1px solid #a8ff60; color: #a8ff60; display: flex; font: 700 1.05rem 'Manrope', sans-serif; height: 2.15rem; justify-content: center; letter-spacing: -0.12em; width: 2.15rem; }
+		.brand-mark span { color: #dce7eb; }
+		.brand-copy { color: #dce7eb; font: 600 0.68rem/1.2 'Manrope', sans-serif; letter-spacing: 0.06em; white-space: nowrap; }
+		.brand-copy small { color: #667780; display: block; font: 0.48rem 'DM Mono', monospace; letter-spacing: 0.08em; margin-top: 0.25rem; }
 
-		.title-wrapper {
-			overflow: clip;
-			padding: 0.25rem;
-			margin: -0.25rem;
-			min-width: 0;
-			flex: 1 1 auto;
-		}
-
-		.search-slot {
-			flex: 0 0 auto;
-		}
-
-		.docs-nav {
-			display: none;
-			align-items: center;
-			gap: 1.5rem;
-		}
+		.docs-nav { align-items: center; display: flex; gap: 1.5rem; }
 
 		.docs-nav a {
 			color: #89989f;
@@ -170,123 +79,9 @@ const navLinks = [
 			color: #a8ff60;
 		}
 
-		.right-group,
-		.social-icons {
-			gap: 0.75rem;
-			align-items: center;
-		}
-
-		.social-icons::after {
-			display: none;
-		}
-
-		.mobile-nav-button {
-			background: transparent;
-			border: 0;
-			color: #89989f;
-			cursor: pointer;
-			display: inline-flex;
-			flex: 0 0 auto;
-			font-family: 'DM Mono', monospace;
-			font-size: 0.625rem;
-			letter-spacing: 0.1em;
-			padding: 0.4rem 0;
-			text-transform: uppercase;
-		}
-
-		.mobile-nav-button:hover,
-		.mobile-nav-button[aria-expanded='true'] {
-			color: #a8ff60;
-		}
-
-		.mobile-nav {
-			background: #101a20;
-			border-bottom: 1px solid #33464f;
-			display: flex;
-			flex-direction: column;
-			gap: 0;
-			margin-inline: calc(-1 * clamp(0.85rem, 4vw, 1.5rem));
-			width: calc(100% + 2 * clamp(0.85rem, 4vw, 1.5rem));
-		}
-
-		.mobile-nav[hidden] {
-			display: none;
-		}
-
-		.mobile-nav a {
-			border-top: 1px solid #26343b;
-			color: #a8ff60;
-			font-size: 0.7rem;
-			letter-spacing: 0.08em;
-			padding: 0.95rem 1.25rem;
-			text-decoration: none;
-			text-transform: uppercase;
-		}
-
-		.mobile-nav a:first-child {
-			border-top: 0;
-		}
-
-		.mobile-nav a:hover {
-			background: #0c1418;
-		}
-
-		.mobile-hire {
-			color: #dce7eb !important;
-		}
-
-		@media (min-width: 50rem) {
-			:global(:root[data-has-sidebar]) {
-				--__sidebar-pad: calc(2 * var(--sl-nav-pad-x));
-			}
-			:global(:root:not([data-has-toc])) {
-				--__toc-width: 0rem;
-			}
-			.mobile-nav-button,
-			.mobile-nav {
-				display: none !important;
-			}
-			.docs-nav {
-				display: flex;
-			}
-			.header {
-				--__sidebar-width: max(0rem, var(--sl-content-inline-start, 0rem) - var(--sl-nav-pad-x));
-				--__main-column-fr: calc(
-					(
-							100% + var(--__sidebar-pad, 0rem) - var(--__toc-width, var(--sl-sidebar-width)) -
-								(2 * var(--__toc-width, var(--sl-nav-pad-x))) - var(--sl-content-inline-start, 0rem) -
-								var(--sl-content-width)
-						) / 2
-				);
-				display: grid;
-				grid-template-columns:
-					minmax(
-						calc(var(--__sidebar-width) + max(0rem, var(--__main-column-fr) - var(--sl-nav-gap))),
-						auto
-					)
-					auto
-					1fr
-					auto;
-				align-content: center;
-			}
-		}
-
-		@media (max-width: 71.99rem) {
-			.hire-button {
-				display: none;
-			}
-		}
-
-		@media (min-width: 50rem) and (max-width: 71.99rem) {
-			.docs-nav a:nth-child(n + 4) {
-				display: none;
-			}
-		}
-
-		@media (min-width: 72rem) {
-			.docs-nav {
-				gap: 1.8rem;
-			}
-		}
+		.topline { border-bottom: 1px solid #202a30; color: #617078; display: flex; font: 0.52rem 'DM Mono', monospace; justify-content: space-between; letter-spacing: 0.1em; padding: 0.55rem 0; }
+		.topline-right { align-items: center; display: flex; gap: 0.7rem; }
+		.topline i { background: #a8ff60; border-radius: 50%; display: inline-block; height: 0.35rem; width: 0.35rem; }
+		@media (max-width: 800px) { .docs-nav, .hire-button { display: none; } .brand-copy { font-size: 0.62rem; } .topline-right { display: none; } }
 	}
 </style>
