@@ -265,6 +265,95 @@ monorepo, so do not deploy from it or add production credentials until an owner
 confirms the intended setup. Never change DNS, domains, or the old Workers as
 part of normal local development.
 
+### First-time manual deployment checklist
+
+This sequence deploys only the selected app's Worker. It is not a substitute
+for confirming that the existing Cloudflare Worker, custom domain, bindings,
+and account are the intended production targets.
+
+1. Publish the monorepo to its **new** GitHub repository and confirm the CI
+   workflow passes on `main`.
+2. In Cloudflare, verify the account and existing Worker (`saksham`, `docs`, or
+   `blogs`) that currently serves the intended production URL. Confirm the
+   custom domain, Worker bindings, production variables/secrets, and current
+   deployment before changing its source repository/build settings. Keep the
+   old GitHub repository and its last working commit for rollback.
+3. For a local CLI deployment, authenticate and check the account:
+
+   ```bash
+   cd /home/saksham/blogs.sakshampy.in/monorepo
+   bunx wrangler login
+   bunx wrangler whoami
+   ```
+
+   If `whoami` reports the wrong account, stop. Do not deploy.
+4. Build and dry-run only the intended Worker, from its app directory:
+
+   ```bash
+   cd /home/saksham/blogs.sakshampy.in/monorepo/apps/portfolio
+   bun run build
+   bunx wrangler deploy --dry-run
+   ```
+
+   Replace `portfolio` with `docs` or `blogs` to validate those Workers.
+   Review Wrangler's output for the expected Worker name and bindings. A dry
+   run does not publish.
+5. Only after preview/staging checks and explicit production approval, deploy
+   that one app:
+
+   ```bash
+   cd /home/saksham/blogs.sakshampy.in/monorepo/apps/portfolio
+   bun run deploy
+   ```
+
+   The script runs `astro build && wrangler deploy` using that app's
+   `wrangler.jsonc`. Repeat separately for the other apps only when approved.
+   Do not deploy all three together for the first cutover.
+6. Smoke-test the app's production homepage and important routes/assets, check
+   Worker logs and errors, and verify the old deployment can still be restored.
+   Do not delete the old repository or change DNS as a rollback shortcut.
+
+Portfolio configuration uses the existing Worker name `saksham`. Before the
+first deployment, set `OPENSTATUS_API_KEY` as a **secret** on that Worker using
+Cloudflare's secret settings (or `bunx wrangler secret put OPENSTATUS_API_KEY`
+from `apps/portfolio` after verifying the account). Set
+`OPENSTATUS_MONITOR_ID` as a non-secret Worker variable in that same Worker's
+settings. The repository deliberately does not contain either production value.
+Check and preserve any other existing production bindings/settings in the
+Cloudflare dashboard; do not infer values from the local example.
+
+### Cloudflare Workers Builds from the monorepo
+
+For automatic builds later, configure **three separate existing Worker
+projects**, not one project for all apps. Before changing a Git connection,
+confirm that each project points to the intended Worker and has a rollback
+path. Suggested build settings, after verifying Bun is available in the
+Cloudflare build environment:
+
+| Setting | Portfolio project | Docs project | Blogs project |
+| --- | --- | --- | --- |
+| Repository | New monorepo repository | New monorepo repository | New monorepo repository |
+| Root directory | Repository root (`/`) | Repository root (`/`) | Repository root (`/`) |
+| Production branch | `main` (verify before selecting) | `main` (verify before selecting) | `main` (verify before selecting) |
+| Build command | `bun install --frozen-lockfile && bunx turbo build --filter=portfolio` | `bun install --frozen-lockfile && bunx turbo build --filter=docs` | `bun install --frozen-lockfile && bunx turbo build --filter=blogs` |
+| Deploy command | `cd apps/portfolio && bunx wrangler deploy` | `cd apps/docs && bunx wrangler deploy` | `cd apps/blogs && bunx wrangler deploy` |
+
+The repository root must be used because the app package manifests refer to
+`@saksham/ui` through Bun workspaces and the one root `bun.lock`. The deploy
+command changes into the app directory so Wrangler reads that app's
+`wrangler.jsonc` and its relative `dist` paths.
+
+If the Cloudflare build environment does not provide the pinned Bun version,
+stop and configure/verify its Bun setup before enabling production builds.
+Do not silently change the lockfile or switch package managers. Configure
+preview deployments first and verify routes/assets and Worker settings before
+selecting the production branch. Ensure app deploys are triggered only for
+their own `apps/<app>/**` paths and shared `packages/ui/**` / root build config
+changes; do not trigger unrelated production deployments. The current CI
+workflow only checks code and does not publish. No Cloudflare Git connection,
+account, branch trigger, or deployment has been configured or verified by this
+repository work.
+
 ## Git, history, and rollback
 
 The monorepo Git repository is at:
