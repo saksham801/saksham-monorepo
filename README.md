@@ -26,7 +26,10 @@ bun --cwd apps/blogs run deploy
 
 There is no automatic production deployment workflow. The existing repositories
 and deployments are retained; this migration does not push to GitHub, alter
-Cloudflare, or change DNS.
+Cloudflare, or change DNS. This local monorepo has no Git remote configured.
+Create a new monorepo remote and verify branch protections before any push;
+do not point the old production repositories at it as part of the local
+migration.
 
 ## Install and develop
 

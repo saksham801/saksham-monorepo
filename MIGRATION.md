@@ -41,6 +41,11 @@ backup branch is kept as an archival branch. There are no tag-name collisions
 because no source repository has tags. No nested `.git` directories are copied
 into the app directories.
 
+The final local monorepo retains local `archive/*` branches for every imported
+app main and both Docs local branches. It has no Git remote configured; create
+a new monorepo remote separately after review. Never push this migration over
+one of the existing production repositories.
+
 ## Deployment and environment ownership
 
 - `apps/portfolio` keeps Worker `saksham`, `wrangler.jsonc`, and its
@@ -63,11 +68,26 @@ Cloudflare Worker names. The dry run imports only source files and history into
 an isolated candidate; it does not push, deploy, modify DNS, change secrets, or
 alter the original clones.
 
+### DRY RUN RESULT
+
+```text
+Git migration: PASS
+Bun workspace: PASS
+Turbo build: PASS
+Portfolio build: PASS
+Docs build: PASS
+Blogs build: PASS
+Shared UI: PASS
+Cloudflare build: PASS
+CI/CD: FAIL (checks pass; no safe production deployment workflow could be inferred)
+Rollback readiness: PASS
+```
+
 | Check | Result | Evidence |
 | --- | --- | --- |
 | Git migration | PASS | All three histories imported below `apps/`; Docs backup and local-main branches retained under `archive/docs/*`. |
 | Bun workspace | PASS | `bun install --frozen-lockfile`; one root `bun.lock`, no nested Git repos or alternate lockfiles. |
-| Turbo build/cache | PASS | All 12 lint/typecheck/build tasks passed; repeat builds hit cache. Changing the UI token invalidated all dependent app builds. |
+| Turbo build/cache | PASS | All lint/typecheck/build tasks passed; repeat builds hit cache. Changing the UI token invalidated all dependent app builds. |
 | Portfolio build | PASS | Astro production build and `wrangler deploy --dry-run`. |
 | Docs build | PASS | Astro/Pagefind production build and `wrangler deploy --dry-run`. |
 | Blogs build | PASS | Astro production build and `wrangler deploy --dry-run`. |
@@ -83,6 +103,14 @@ homepage and one representative route (`/health/`, `/guides/about/`, and
 The local Bun installation was 1.4.2. It generated the final lockfile with
 current compatible dependency versions; the package ranges retain each app's
 previous version intent and Astro integrations.
+
+Final-clone verification exposed an intermittent Astro generated-state race
+when `astro check` and `astro build` ran concurrently inside the same app.
+Turbo now makes each app's `build` depend on its own `typecheck`, preventing
+the two Astro processes from writing generated state simultaneously. After this
+ordering fix, frozen install, all workspace checks/builds, and all three
+filtered builds passed in the final monorepo clone. Wrangler dry runs passed for
+each Worker.
 
 Pagefind is the one deliberate Docs behavior addition relative to current
 GitHub `docs/main`, which explicitly disabled it. It is included because search
