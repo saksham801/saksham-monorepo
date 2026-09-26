@@ -179,7 +179,9 @@ bunx turbo check
 The combined check runs each package's lint, typecheck, and build tasks.
 Application builds depend on that app's typecheck, which avoids overlapping
 Astro generated-state writes. Turbo caches successful tasks; rerunning an
-unchanged task should report a cache hit.
+unchanged task should report a local cache hit. `turbo.json` stores that cache
+in `.turbo/cache`, keeps entries for up to 30 days, and caps it at 5 GB. The
+cache is ignored by Git.
 
 Build only one app:
 
@@ -205,6 +207,107 @@ bun run preview
 
 Replace `blogs` with `docs` or `portfolio` as needed. Builds write generated
 files under each app's ignored `dist/` and `.astro/` directories.
+
+### Local Turbo cache
+
+Local caching is automatic and requires no account or token. From the
+repository root:
+
+```bash
+bunx turbo build --filter=portfolio
+bunx turbo build --filter=portfolio
+```
+
+The second unchanged build should report `FULL TURBO` / cached tasks and
+restore declared outputs such as `apps/portfolio/dist/` from `.turbo/cache`.
+The same local cache also applies to `lint`, `typecheck`, and other cacheable
+tasks. Development and preview servers are intentionally not cached.
+
+To force a fresh execution without deleting stored artifacts:
+
+```bash
+bunx turbo build --filter=portfolio --force
+```
+
+To inspect cache-related output:
+
+```bash
+bunx turbo build --filter=portfolio --summarize
+du -sh .turbo/cache
+```
+
+### Shared Turbo Remote Cache (Vercel)
+
+Turbo's local filesystem cache only helps on the same machine. A remote cache
+lets this workstation, GitHub Actions, and other authorized developers reuse
+matching task logs and outputs. This repository uses Vercel Remote Cache, which
+is compatible with Turbo and does not require hosting these Astro sites on
+Vercel. A Vercel team, login, and token are required; none of those credentials
+are stored in this repository.
+
+#### Set up this workstation once
+
+1. Sign in to the Vercel account/team that will own the shared cache.
+2. From the monorepo root, authenticate Turbo and link this repository to that
+   Vercel team:
+
+   ```bash
+   cd /home/saksham/blogs.sakshampy.in/monorepo
+   bunx turbo login
+   bunx turbo link --scope=YOUR_VERCEL_TEAM_SLUG
+   ```
+
+   Replace `YOUR_VERCEL_TEAM_SLUG` with the actual Vercel team scope; do not
+   guess it. If the account requires SSO, use Turbo's documented
+   `bunx turbo login --sso-team=YOUR_VERCEL_TEAM_SLUG` flow. These commands
+   authenticate/link this machine and repository; they do not deploy the sites
+   or change Cloudflare.
+3. Run a cacheable task to populate the remote, then verify from another
+   machine/clean clone. To verify on this machine instead, first ensure the
+   artifact was uploaded and then clear only the local task cache:
+
+   ```bash
+   rm -rf .turbo/cache
+   bunx turbo build --filter=portfolio
+   ```
+
+   The second command should report a **remote** hit and restore the outputs.
+   This deletion is only for cache verification; keep `.turbo/cache` intact
+   for ordinary local use.
+
+If `turbo link` selects the wrong Vercel scope, stop and relink to the intended
+team rather than using a token from a different team. Authentication is stored
+outside Git by Turbo. Never commit access tokens, `.vercel` credentials, or
+`.turbo` authentication/config files.
+
+#### Enable remote cache in GitHub Actions
+
+The CI workflow already passes `TURBO_TEAM` and `TURBO_TOKEN` to Turbo:
+
+- Add a GitHub **Actions repository variable** named `TURBO_TEAM` containing
+  the Vercel team slug (not a token).
+- Add a GitHub **Actions repository secret** named `TURBO_TOKEN` containing a
+  Vercel token authorized to read/write that team's Remote Cache.
+- Keep the token scoped to the least privileges Vercel offers. Rotate it if
+  exposed. Never put it in `package.json`, `turbo.json`, `.env`, workflow
+  literals, or command-line arguments stored in shell history.
+- For pull requests from forks, GitHub does not expose repository secrets.
+  Those runs continue with local ephemeral caching only; this is expected and
+  safer than exposing a write-capable cache token to untrusted code.
+
+After setting the variable and secret, push a change that affects a cacheable
+task and inspect the GitHub Actions logs. Look for a remote cache store, then
+rerun the same unchanged commit/workflow and verify remote cache hits. A
+successful hit should identify the remote cache as the source, not only show a
+generic local hit. CI still runs Turbo and validates the task graph; remote
+caching only avoids repeated task execution when the hash and environment
+match.
+
+Remote cache is **not fully authenticated or active yet** until a Vercel team
+is selected, local Turbo is logged in/linked, and the GitHub variable/secret
+are configured. This environment did not have `TURBO_TEAM` or `TURBO_TOKEN`,
+so no remote cache login, upload, or download could be verified here. Local
+cache is configured and working independently.
 
 ## Environment variables and secrets
 

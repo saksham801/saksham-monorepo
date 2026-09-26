@@ -4,6 +4,9 @@
     "bun.lock",
     "tsconfig.json"
   ],
+  "cacheDir": ".turbo/cache",
+  "cacheMaxAge": "30d",
+  "cacheMaxSize": "5GB",
   "tasks": {
     "dev": {
       "cache": false,

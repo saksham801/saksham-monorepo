@@ -57,6 +57,10 @@ bunx turbo typecheck
 bunx turbo check
 ```
 
+Turbo caches build/check results locally in `.turbo/cache`; the optional
+shared Vercel Remote Cache setup for this workstation and GitHub Actions is
+documented in [DEVELOPMENT.md](./DEVELOPMENT.md#shared-turbo-remote-cache-vercel).
+
 Run one app at a time with Turbo filters:
 
 ```bash

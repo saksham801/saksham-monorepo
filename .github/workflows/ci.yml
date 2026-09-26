@@ -35,6 +35,9 @@ jobs:
   verify:
     name: Lint, typecheck, and build
     runs-on: ubuntu-latest
+    env:
+      TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
