@@ -1,0 +1,130 @@
+---
+const navLinks = [
+	{ href: '/', label: '/ home' },
+	{ href: '/guides/about/', label: '/ guides' },
+	{ href: '/reference/toolbox/', label: '/ reference' },
+	{ href: '/terms/', label: '/ terms' },
+	{ href: 'https://sakshampy.in/', label: '/ portfolio', external: true },
+];
+---
+
+<div class="topline">
+	<span>SAKSHAM.DUBEY // DOCS_V1.0</span>
+	<span class="topline-right"><i></i> SYSTEMS ONLINE</span>
+</div>
+<div class="header">
+	<a href="/" class="brand" aria-label="Saksham's Docs home">
+		<span class="brand-mark">S<span>D</span></span>
+		<span class="brand-copy">SAKSHAM<br /><small>ENGINEERING DOCS</small></span>
+	</a>
+	<nav class="docs-nav print:hidden" aria-label="Primary">
+		{
+			navLinks.map((link) =>
+				link.external ? (
+					<a href={link.href} target="_blank" rel="noopener noreferrer">
+						{link.label}
+					</a>
+				) : (
+					<a href={link.href}>{link.label}</a>
+				),
+			)
+		}
+		<details class="docs-menu">
+			<summary>/ docs</summary>
+			<div class="docs-menu-panel">
+				<div class="docs-menu-group">
+					<strong>GUIDES</strong>
+					<a href="/guides/about/">About these notes</a>
+				</div>
+				<div class="docs-menu-group">
+					<strong>REFERENCE</strong>
+					<a href="/reference/toolbox/">Engineering toolbox</a>
+				</div>
+				<div class="docs-menu-group">
+					<strong>LANGUAGES / RUST</strong>
+					<a href="/languages/rust/">Overview</a>
+					<a href="/languages/rust/ownership/">Ownership</a>
+					<a href="/languages/rust/tooling/">Tooling</a>
+				</div>
+				<div class="docs-menu-group">
+					<strong>LANGUAGES / C++</strong>
+					<a href="/languages/cpp/">Overview</a>
+					<a href="/languages/cpp/memory/">Memory</a>
+					<a href="/languages/cpp/tooling/">Tooling</a>
+				</div>
+				<div class="docs-menu-group">
+					<strong>LANGUAGES / PYTHON</strong>
+					<a href="/languages/python/">Overview</a>
+					<a href="/languages/python/packaging/">Packaging</a>
+					<a href="/languages/python/tooling/">Tooling</a>
+				</div>
+			</div>
+		</details>
+	</nav>
+	<a href="mailto:hello@sakshampy.in" class="hire-button">WRITE ME <span>↗</span></a>
+</div>
+
+<style>
+	@layer starlight.core {
+		.header { align-items: center; display: flex; gap: 1.5rem; justify-content: space-between; min-width: 0; }
+		.brand { align-items: center; display: flex; gap: 0.7rem; }
+		.brand-mark { align-items: center; border: 1px solid #a8ff60; color: #a8ff60; display: flex; font: 700 1.05rem 'Manrope', sans-serif; height: 2.15rem; justify-content: center; letter-spacing: -0.12em; width: 2.15rem; }
+		.brand-mark span { color: #dce7eb; }
+		.brand-copy { color: #dce7eb; font: 600 0.68rem/1.2 'Manrope', sans-serif; letter-spacing: 0.06em; white-space: nowrap; }
+		.brand-copy small { color: #667780; display: block; font: 0.48rem 'DM Mono', monospace; letter-spacing: 0.08em; margin-top: 0.25rem; }
+
+		.docs-nav { align-items: center; display: flex; gap: 1.5rem; }
+
+		.docs-nav a {
+			color: #89989f;
+			font-size: 0.625rem;
+			letter-spacing: 0.1em;
+			text-transform: uppercase;
+			text-decoration: none;
+			transition: color 0.2s ease;
+			white-space: nowrap;
+		}
+
+		.docs-nav a:hover {
+			color: #a8ff60;
+		}
+
+		.docs-menu { position: relative; }
+		.docs-menu summary { color: #89989f; cursor: pointer; font-size: 0.625rem; letter-spacing: 0.1em; list-style: none; text-transform: uppercase; white-space: nowrap; }
+		.docs-menu summary::-webkit-details-marker { display: none; }
+		.docs-menu summary:hover,
+		.docs-menu[open] summary { color: #a8ff60; }
+		.docs-menu-panel { background: #101a20; border: 1px solid #33464f; display: grid; gap: 0.85rem; min-width: 16rem; padding: 1rem; position: absolute; right: 0; top: 1.6rem; z-index: 2; }
+		.docs-menu-group { display: grid; gap: 0.35rem; }
+		.docs-menu-group + .docs-menu-group { border-top: 1px solid #26343b; padding-top: 0.75rem; }
+		.docs-menu-group strong { color: #63757d; font-size: 0.5rem; font-weight: 400; letter-spacing: 0.1em; }
+		.docs-menu-panel a { color: #a8ff60; font-size: 0.58rem; padding-inline-start: 0.5rem; }
+		.docs-menu-panel a:hover { color: #e8edf0; }
+
+		.hire-button {
+			border: 1px solid #3b4b53;
+			color: #dce7eb;
+			font-size: 0.625rem;
+			letter-spacing: 0.1em;
+			padding: 0.55rem 0.85rem;
+			text-decoration: none;
+			text-transform: uppercase;
+			transition: border-color 0.2s ease, color 0.2s ease;
+			white-space: nowrap;
+		}
+
+		.hire-button span {
+			color: #a8ff60;
+		}
+
+		.hire-button:hover {
+			border-color: #a8ff60;
+			color: #a8ff60;
+		}
+
+		.topline { border-bottom: 1px solid #202a30; color: #617078; display: flex; font: 0.52rem 'DM Mono', monospace; justify-content: space-between; letter-spacing: 0.1em; padding: 0.55rem 0; }
+		.topline-right { align-items: center; display: flex; gap: 0.7rem; }
+		.topline i { background: #a8ff60; border-radius: 50%; display: inline-block; height: 0.35rem; width: 0.35rem; }
+		@media (max-width: 800px) { .docs-nav { display: flex; gap: 0.75rem; } .docs-nav > a { display: none; } .hire-button { display: none; } .brand-copy { font-size: 0.62rem; } .topline-right { display: none; } }
+	}
+</style>

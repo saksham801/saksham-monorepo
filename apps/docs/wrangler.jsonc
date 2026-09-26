@@ -1,0 +1,22 @@
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"compatibility_date": "2026-09-15",
+	"compatibility_flags": ["global_fetch_strictly_public"],
+	"name": "docs",
+	"main": "@astrojs/cloudflare/entrypoints/server",
+	"assets": {
+		"directory": "./dist",
+		"binding": "ASSETS"
+	},"cache": {
+			"enabled": true
+		},
+		"observability": {
+			"logs": {
+				"enabled": true,
+				"invocation_logs": true
+			},
+			"traces": {
+				"enabled": true
+			}
+		}
+	}
