@@ -10,3 +10,6 @@
 .turbo/
 .DS_Store
 *.log
+
+# Turborepo
+.turbo
