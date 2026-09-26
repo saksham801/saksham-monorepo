@@ -7,6 +7,9 @@
   "cacheDir": ".turbo/cache",
   "cacheMaxAge": "30d",
   "cacheMaxSize": "5GB",
+  "remoteCache": {
+    "enabled": true
+  },
   "tasks": {
     "dev": {
       "cache": false,
