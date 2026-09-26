@@ -1,4 +1,6 @@
 ---
+import Search from '@astrojs/starlight/components/Search.astro';
+
 const navLinks = [
 	{ href: '/', label: '/ home' },
 	{ href: '/guides/about/', label: '/ guides' },
@@ -17,6 +19,7 @@ const navLinks = [
 		<span class="brand-mark">S<span>D</span></span>
 		<span class="brand-copy">SAKSHAM<br /><small>ENGINEERING DOCS</small></span>
 	</a>
+	<Search class="docs-search" />
 	<nav class="docs-nav print:hidden" aria-label="Primary">
 		{
 			navLinks.map((link) =>
@@ -74,6 +77,21 @@ const navLinks = [
 		.brand-copy small { color: #667780; display: block; font: 0.48rem 'DM Mono', monospace; letter-spacing: 0.08em; margin-top: 0.25rem; }
 
 		.docs-nav { align-items: center; display: flex; gap: 1.5rem; }
+		:global(site-search button[data-open-modal]) {
+			background: transparent;
+			border: 1px solid #3b4b53;
+			border-radius: 0;
+			color: #91a2aa;
+			font-family: 'DM Mono', monospace;
+			font-size: 0.625rem;
+			min-height: 2.15rem;
+			padding-inline: 0.65rem;
+			width: auto;
+		}
+		:global(site-search button[data-open-modal]:hover) {
+			border-color: #a8ff60;
+			color: #a8ff60;
+		}
 
 		.docs-nav a {
 			color: #89989f;

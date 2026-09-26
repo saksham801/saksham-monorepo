@@ -1,0 +1,17 @@
+:root {
+  --bg: #090b0d;
+  --bg-soft: #0e1519;
+  --fg: #e8edf0;
+  --muted: #91a2aa;
+  --dim: #63757d;
+  --line: #26343b;
+  --line-strong: #2b3d45;
+  --accent: #a8ff60;
+  --accent-ink: #09100b;
+  --blue: #65c9ff;
+  --yellow: #f7d06b;
+  --orange: #ff9c68;
+  --purple: #d29aff;
+  --font-sans: "Manrope", sans-serif;
+  --font-mono: "DM Mono", monospace;
+}

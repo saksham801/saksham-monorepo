@@ -1,0 +1,17 @@
+{
+  "name": "@saksham/ui",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./components/FormattedDate.astro": "./src/components/FormattedDate.astro",
+    "./styles/tokens.css": "./src/styles/tokens.css"
+  },
+  "scripts": {
+    "build": "tsc --ignoreConfig --declaration --emitDeclarationOnly --outDir dist --target ES2022 --module ESNext --moduleResolution Bundler --strict src/index.ts",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit -p ../../tsconfig.json",
+    "check": "tsc --noEmit -p ../../tsconfig.json"
+  }
+}

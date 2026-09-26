@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "@saksham/ui/styles/tokens.css";
 
 @theme {
   --font-sans: 'Manrope', sans-serif;
@@ -7,20 +8,20 @@
 
 :root {
   --sl-color-accent-low: #1d2911;
-  --sl-color-accent: #a8ff60;
+  --sl-color-accent: var(--accent);
   --sl-color-accent-high: #efffc6;
-  --sl-color-white: #e8edf0;
+  --sl-color-white: var(--fg);
   --sl-color-gray-1: #c2d0d5;
-  --sl-color-gray-2: #91a2aa;
-  --sl-color-gray-3: #63757d;
-  --sl-color-gray-4: #3b4b53;
-  --sl-color-gray-5: #26343b;
+  --sl-color-gray-2: var(--muted);
+  --sl-color-gray-3: var(--dim);
+  --sl-color-gray-4: var(--line-strong);
+  --sl-color-gray-5: var(--line);
   --sl-color-gray-6: #101a20;
-  --sl-color-black: #090b0d;
+  --sl-color-black: var(--bg);
   --sl-color-bg-nav: rgb(9 11 13 / 0.78);
-  --sl-font: 'DM Mono', monospace;
-  --sl-font-system: 'Manrope', sans-serif;
-  --sl-font-mono: 'DM Mono', monospace;
+  --sl-font: var(--font-mono);
+  --sl-font-system: var(--font-sans);
+  --sl-font-mono: var(--font-mono);
   --sl-nav-height: 4.25rem;
   --sl-z-index-navbar: 40;
 }
@@ -32,24 +33,24 @@
 }
 
 html {
-  background: #090b0d;
+  background: var(--bg);
 }
 
 body {
-  background: #090b0d;
-  color: #e8edf0;
-  font-family: 'DM Mono', monospace;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-mono);
   overflow-x: hidden;
 }
 
 ::selection {
-  background: #a8ff60;
-  color: #09100b;
+  background: var(--accent);
+  color: var(--accent-ink);
 }
 
 button:focus-visible,
 a:focus-visible {
-  outline: 2px solid #a8ff60;
+  outline: 2px solid var(--accent);
   outline-offset: 4px;
 }
 

@@ -317,7 +317,7 @@ const services = [
         setInterval(updateClock, 1000);
 
         const openStatusApi = "/api/openstatus";
-        const statusLabels: Record<string, string> = {
+        const statusLabels = {
             OVERALL_STATUS_OPERATIONAL: "ALL SYSTEMS OPERATIONAL",
             OVERALL_STATUS_DEGRADED: "SYSTEMS DEGRADED",
             OVERALL_STATUS_PARTIAL_OUTAGE: "PARTIAL OUTAGE",
@@ -336,13 +336,20 @@ const services = [
                 });
                 if (!response.ok)
                     throw new Error(`OpenStatus returned ${response.status}`);
-                const data = (await response.json()) as {
-                    overallStatus?: string;
-                };
-                const overall = data.overallStatus || "OVERALL_STATUS_UNKNOWN";
+                const data = await response.json();
+                const overall =
+                    typeof data === "object" &&
+                    data !== null &&
+                    "overallStatus" in data &&
+                    typeof data.overallStatus === "string"
+                        ? data.overallStatus
+                        : "OVERALL_STATUS_UNKNOWN";
+                const label =
+                    Object.entries(statusLabels).find(
+                        ([key]) => key === overall,
+                    )?.[1] || "STATUS UNKNOWN";
                 if (liveStatus)
-                    liveStatus.textContent =
-                        statusLabels[overall] || "STATUS UNKNOWN";
+                    liveStatus.textContent = label;
                 if (statusOrb)
                     statusOrb.classList.toggle(
                         "status-warning",
@@ -360,7 +367,7 @@ const services = [
                 });
                 const checked = document.querySelector("#last-checked");
                 if (checked) checked.textContent = "just now · OpenStatus";
-            } catch (error) {
+            } catch {
                 if (liveStatus)
                     liveStatus.textContent = "OPENSTATUS DATA UNAVAILABLE";
                 if (statusOrb) statusOrb.classList.add("status-warning");
@@ -369,11 +376,9 @@ const services = [
         updateOpenStatus();
         setInterval(updateOpenStatus, 60000);
 
-        const glow = document.querySelector<HTMLElement>(
-            ".health-pointer-glow",
-        );
+        const glow = document.querySelector(".health-pointer-glow");
         window.addEventListener("pointermove", (event) => {
-            if (glow && window.matchMedia("(pointer: fine)").matches) {
+            if (glow instanceof HTMLElement && window.matchMedia("(pointer: fine)").matches) {
                 glow.style.setProperty("--pointer-x", `${event.clientX}px`);
                 glow.style.setProperty("--pointer-y", `${event.clientY}px`);
             }
