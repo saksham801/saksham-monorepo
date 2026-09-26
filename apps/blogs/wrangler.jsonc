@@ -5,6 +5,10 @@
 		"global_fetch_strictly_public"
 	],
 	"name": "blogs",
+	"vars": {
+		"TURBO_TEAM": "saksham-dubeys-projects",
+		"TURBO_TEAMID": "team_xf3FXzFrtsA27OX9SDyzR5AC"
+	},
 	"main": "@astrojs/cloudflare/entrypoints/server",
 	"assets": {
 		"directory": "./dist",
