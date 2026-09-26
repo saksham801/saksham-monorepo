@@ -1,0 +1,56 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "globalDependencies": [
+    "bun.lock",
+    "tsconfig.json"
+  ],
+  "cacheDir": ".turbo/cache",
+  "cacheMaxAge": "30d",
+  "cacheMaxSize": "5GB",
+  "tasks": {
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "build": {
+      "dependsOn": [
+        "typecheck",
+        "^build"
+      ],
+      "outputs": [
+        "dist/**"
+      ]
+    },
+    "preview": {
+      "cache": false,
+      "persistent": true
+    },
+    "lint": {
+      "dependsOn": [
+        "^lint"
+      ],
+      "outputs": []
+    },
+    "typecheck": {
+      "dependsOn": [
+        "^typecheck"
+      ],
+      "outputs": []
+    },
+    "check": {
+      "dependsOn": [
+        "lint",
+        "typecheck",
+        "build"
+      ],
+      "outputs": []
+    },
+    "deploy": {
+      "cache": true,
+      "env": [
+        "CLOUDFLARE_API_TOKEN",
+        "CLOUDFLARE_ACCOUNT_ID"
+      ]
+    }
+  }
+}
