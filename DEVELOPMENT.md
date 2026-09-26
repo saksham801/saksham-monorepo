@@ -41,9 +41,9 @@ Use the root `bun install` after cloning, changing a package manifest, or
 switching branches. Do not use npm, pnpm, or yarn. The root `bun.lock` is the
 only lockfile. Commit it with package manifest changes.
 
-The repository intentionally has no Git remote configured. It is a local
-monorepo candidate; do not push it to any of the three old production
-repositories.
+The repository intentionally has no Git remote configured yet. Push it to a
+new monorepo GitHub repository; do not push this monorepo directly to any of
+the three old production repositories. See [Pushing and GitHub sync](#pushing-and-github-sync).
 
 ## Running a site locally
 
@@ -283,6 +283,66 @@ Before production cutover, keep the old repositories and Cloudflare Workers
 active. If a candidate change fails, do not alter DNS; revert the monorepo
 change or restore from its source history/backup. `MIGRATION.md` records the
 source commits, branch handling, validation evidence, and rollback procedure.
+
+## Pushing and GitHub sync
+
+### Publish the monorepo to GitHub
+
+Create a **new, empty GitHub repository** for the monorepo. Do not select one
+of the existing Portfolio, Docs, or Blogs repositories. From the monorepo:
+
+```bash
+cd /home/saksham/blogs.sakshampy.in/monorepo
+git status
+git add README.md DEVELOPMENT.md
+git commit -m "docs: add monorepo development guide"
+git remote add origin git@github.com:YOUR-ACCOUNT/YOUR-NEW-MONOREPO.git
+git ls-remote --heads origin
+git push -u origin main
+```
+
+Replace the remote URL with the URL for the new repository. The `git ls-remote`
+check should show no branches if the GitHub repository was created empty. If
+it already has a README or other commits, stop and reconcile the histories
+before pushing; do not force-push. After the first push, normal changes are
+published with:
+
+```bash
+git add <files-you-changed>
+git commit -m "describe the change"
+git push
+```
+
+GitHub Actions in this repo runs CI checks on relevant pull requests and
+`main` pushes. It does **not** deploy to Cloudflare or update any of the three
+existing repositories.
+
+### About the three existing GitHub repositories
+
+This monorepo is **not automatically synchronized** with
+`saksham801/portfolio`, `saksham801/docs`, or `saksham801/blogs`. Do not add
+those repositories as `origin`, and do not push `main`, `--all`, tags, or use
+`--force` to them. Their Git histories and root directory structures differ
+from the monorepo. In addition, each app now depends on `@saksham/ui` through
+the Bun workspace (`"workspace:*"`); copying just `apps/<app>` into an old
+standalone repository would not provide that package or necessarily build.
+
+The old repositories and their Cloudflare deployments are left untouched and
+remain the current production sources. A push to the new monorepo only backs
+up/publishes monorepo code; it does not change production.
+
+To make the monorepo the source for production later, treat that as a separate
+migration: configure and verify each existing Cloudflare project to build its
+own app from the **new monorepo** (preserving the Worker, domains, environment,
+secrets, and build command), test preview deployments, then cut over one app at
+a time. That Cloudflare/GitHub setup has not been configured or verified here.
+
+If the old GitHub repositories must receive code while remaining standalone,
+first create an app-specific export that includes or otherwise resolves the
+shared `@saksham/ui` dependency, and validate it with that repository's
+standalone install/build. Submit that export as a **new branch and pull
+request**, never directly to its production branch. This repo does not yet
+provide an export/sync script; do not assume a raw subtree push is compatible.
 
 ## CI behavior
 
