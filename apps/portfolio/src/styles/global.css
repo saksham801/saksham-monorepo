@@ -1,0 +1,6 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Manrope', sans-serif;
+  --font-mono: 'DM Mono', monospace;
+}
