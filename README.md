@@ -33,6 +33,10 @@ migration.
 
 ## Install and develop
 
+See [DEVELOPMENT.md](./DEVELOPMENT.md) for the complete guide to repository
+layout, editing application code/content, environment variables, local
+development, validation, Cloudflare dry runs, and deployment safety.
+
 ```bash
 bun install
 bun run dev
