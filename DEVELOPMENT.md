@@ -41,9 +41,9 @@ Use the root `bun install` after cloning, changing a package manifest, or
 switching branches. Do not use npm, pnpm, or yarn. The root `bun.lock` is the
 only lockfile. Commit it with package manifest changes.
 
-The repository intentionally has no Git remote configured yet. Push it to a
-new monorepo GitHub repository; do not push this monorepo directly to any of
-the three old production repositories. See [Pushing and GitHub sync](#pushing-and-github-sync).
+The monorepo's `origin` is `git@github.com:saksham801/saksham-monorepo.git`.
+Push to that repository, not the three original app repositories. See
+[Pushing and GitHub sync](#pushing-and-github-sync).
 
 ## Running a site locally
 
@@ -249,9 +249,9 @@ bunx wrangler deploy --dry-run
 Repeat in the intended app directory for Docs or Blogs. `--dry-run` does not
 deploy.
 
-The existing deploy script performs a real deployment. It must only be run
-after the intended Cloudflare account, credentials, Worker settings, and
-production cutover approval have been independently verified:
+The existing deploy script performs a real deployment. Use it for a manually
+triggered deployment only after verifying the intended Cloudflare account,
+credentials, Worker settings, and production approval:
 
 ```bash
 cd /home/saksham/blogs.sakshampy.in/monorepo/apps/portfolio
@@ -259,11 +259,11 @@ bun run deploy
 ```
 
 Use the same command from `apps/docs` or `apps/blogs` to deploy that specific
-app. There is no automatic production deploy workflow. The Cloudflare account
-and production deployment configuration have not been verified for this local
-monorepo, so do not deploy from it or add production credentials until an owner
-confirms the intended setup. Never change DNS, domains, or the old Workers as
-part of normal local development.
+app. For normal Git pushes, Cloudflare Workers Builds should build and deploy
+the matching app from the monorepo using the settings below. The build
+connection lives in Cloudflare, not in this repository, so verify each
+Worker's Git repository and settings in the Cloudflare dashboard. Never change
+DNS, domains, or Worker ownership as part of normal local development.
 
 ### First-time manual deployment checklist
 
@@ -271,13 +271,16 @@ This sequence deploys only the selected app's Worker. It is not a substitute
 for confirming that the existing Cloudflare Worker, custom domain, bindings,
 and account are the intended production targets.
 
-1. Publish the monorepo to its **new** GitHub repository and confirm the CI
-   workflow passes on `main`.
+1. Confirm the monorepo is pushed to `saksham801/saksham-monorepo` and the CI
+   check passes on `main`. Configure GitHub branch protection to require the
+   CI check before merging pull requests into `main`; Cloudflare's production
+   branch must also be `main`.
 2. In Cloudflare, verify the account and existing Worker (`saksham`, `docs`, or
    `blogs`) that currently serves the intended production URL. Confirm the
-   custom domain, Worker bindings, production variables/secrets, and current
-   deployment before changing its source repository/build settings. Keep the
-   old GitHub repository and its last working commit for rollback.
+   custom domain, Worker bindings, production variables/secrets, Git
+   connection, and current deployment before changing its source repository
+   or build settings. Keep the old GitHub repository and its last working
+   commit for rollback.
 3. For a local CLI deployment, authenticate and check the account:
 
    ```bash
@@ -324,35 +327,127 @@ Cloudflare dashboard; do not infer values from the local example.
 
 ### Cloudflare Workers Builds from the monorepo
 
-For automatic builds later, configure **three separate existing Worker
-projects**, not one project for all apps. Before changing a Git connection,
-confirm that each project points to the intended Worker and has a rollback
-path. Suggested build settings, after verifying Bun is available in the
-Cloudflare build environment:
+Configure **three separate existing Worker projects** against the same
+monorepo repository. Each Worker gets its own build settings, production
+branch, and path filters. Do not create one Worker for all three apps. Cloudflare
+Workers Builds has a build step followed by a deploy step; the build command
+uses Turbo to produce the app's `dist/`, and the deploy command runs Wrangler
+with that app's `wrangler.jsonc`.
 
-| Setting | Portfolio project | Docs project | Blogs project |
+Having a Worker connected to GitHub does not by itself make it deploy from
+this monorepo: the Worker must be connected to the specific repository
+`saksham801/saksham-monorepo`. Check its current Git repository first. If it
+still points at `saksham801/blogs`, `saksham801/docs`, or
+`saksham801/portfolio`, it is still building from that standalone repository.
+
+For each existing Worker, open **Cloudflare Dashboard → Workers & Pages →
+select the Worker → Settings → Builds** (some dashboard views label this
+section **Build**). Confirm the Worker name and current deployment before
+editing anything. In its Git/build settings, select the connected GitHub
+account and `saksham801/saksham-monorepo`, then set:
+
+| Setting | Portfolio Worker `saksham` | Docs Worker `docs` | Blogs Worker `blogs` |
 | --- | --- | --- | --- |
-| Repository | New monorepo repository | New monorepo repository | New monorepo repository |
-| Root directory | Repository root (`/`) | Repository root (`/`) | Repository root (`/`) |
-| Production branch | `main` (verify before selecting) | `main` (verify before selecting) | `main` (verify before selecting) |
+| Git repository | `saksham801/saksham-monorepo` | `saksham801/saksham-monorepo` | `saksham801/saksham-monorepo` |
+| Root directory | Repository root (`.` or `/`) | Repository root (`.` or `/`) | Repository root (`.` or `/`) |
+| Production branch | `main` | `main` | `main` |
 | Build command | `bun install --frozen-lockfile && bunx turbo build --filter=portfolio` | `bun install --frozen-lockfile && bunx turbo build --filter=docs` | `bun install --frozen-lockfile && bunx turbo build --filter=blogs` |
 | Deploy command | `cd apps/portfolio && bunx wrangler deploy` | `cd apps/docs && bunx wrangler deploy` | `cd apps/blogs && bunx wrangler deploy` |
+| Preview command (if previews enabled) | `cd apps/portfolio && bunx wrangler preview` | `cd apps/docs && bunx wrangler preview` | `cd apps/blogs && bunx wrangler preview` |
 
-The repository root must be used because the app package manifests refer to
-`@saksham/ui` through Bun workspaces and the one root `bun.lock`. The deploy
-command changes into the app directory so Wrangler reads that app's
-`wrangler.jsonc` and its relative `dist` paths.
+**Use the repository root.** The apps depend on `@saksham/ui` through Bun
+workspaces and the single root `bun.lock`. Do not set the Cloudflare root
+directory to `apps/<app>`: a root install from inside an app would not have
+the complete workspace context. The build command starts at the repository
+root; the deploy/preview commands change to the app directory so Wrangler
+loads its own configuration and relative `dist` path.
 
-If the Cloudflare build environment does not provide the pinned Bun version,
-stop and configure/verify its Bun setup before enabling production builds.
-Do not silently change the lockfile or switch package managers. Configure
-preview deployments first and verify routes/assets and Worker settings before
-selecting the production branch. Ensure app deploys are triggered only for
-their own `apps/<app>/**` paths and shared `packages/ui/**` / root build config
-changes; do not trigger unrelated production deployments. The current CI
-workflow only checks code and does not publish. No Cloudflare Git connection,
-account, branch trigger, or deployment has been configured or verified by this
-repository work.
+In the Cloudflare build settings, use the workspace install/build command
+above as the **Build command** and the app-specific Wrangler command as the
+**Deploy command**. Do not make the deploy command `bun run deploy` in this
+two-step setup: the app's script builds Astro again, even though Turbo already
+created `dist/` in the build step. Cloudflare Workers Builds can create its
+deployment token automatically; do not paste a Cloudflare token into this
+repository or a committed workflow.
+
+Verify Workers Builds can run the Bun version pinned in the root
+`package.json` (`bun@1.4.2`) and that its package installation uses the root
+`bun.lock`. If the Cloudflare build environment cannot run this workspace,
+stop and configure a supported Bun setup before enabling deployments. Do not
+switch package managers or regenerate the lockfile with npm.
+
+#### Restricting which pushes deploy each Worker
+
+By default, a push to the connected repository can trigger a build for any
+changed path. In each Worker go to **Settings → Build → Build watch paths**
+(the exact label may be **Build watch paths** below Build settings). Set the
+include paths below and leave excludes empty initially. The patterns are
+evaluated against repository-relative paths:
+
+| Worker | Include paths |
+| --- | --- |
+| Portfolio | `apps/portfolio/*`, `packages/ui/*`, `package.json`, `bun.lock`, `turbo.json`, `tsconfig.json` |
+| Docs | `apps/docs/*`, `packages/ui/*`, `package.json`, `bun.lock`, `turbo.json`, `tsconfig.json` |
+| Blogs | `apps/blogs/*`, `packages/ui/*`, `package.json`, `bun.lock`, `turbo.json`, `tsconfig.json` |
+
+Do not add the other apps' paths to a Worker. App-local changes deploy only
+that app; a shared UI or root workspace/build config change deploys all three.
+Validate the watch-path matching with harmless test commits on a branch before
+relying on it. Cloudflare may intentionally build when a push has no file
+changes or exceeds its path-filter limits; path filters are an optimization,
+not a security boundary.
+
+With these filters, the intended result for a push to `main` is:
+
+| Changed files | Workers expected to build/deploy |
+| --- | --- |
+| `apps/portfolio/**` | Portfolio only |
+| `apps/docs/**` | Docs only |
+| `apps/blogs/**` | Blogs only |
+| `packages/ui/**` or a listed root workspace/build file | All three |
+| Only `DEVELOPMENT.md` or other unlisted documentation | None |
+
+#### First-connection and cutover order
+
+If a Worker is still connected to its old standalone repository, first record
+the current repository, production branch, deploy/build/preview commands,
+watch paths, Worker settings, bindings, and current production deployment.
+Then update the Git connection on the **existing Worker** to
+`saksham801/saksham-monorepo`; do not delete/recreate the Worker or change its
+custom domain. If Cloudflare requires disconnecting before reconnecting, stop
+and confirm the existing deployed Worker remains active and that the connection
+can be restored before proceeding.
+
+Move one Worker at a time:
+
+1. Verify its new repository, root, commands, production branch, and watch
+   paths; leave the other two Workers unchanged.
+2. Run a preview build from a non-production branch if previews are enabled.
+   Configure preview bindings/secrets separately and safely; do not assume a
+   preview should inherit production secrets.
+3. Push/merge a reviewed change affecting only that app's folder. Confirm
+   Cloudflare's build log shows the expected filter, `dist/`, and Worker name.
+4. Smoke-test the preview and then the production URL after the approved
+   `main` build deploys. Verify assets, routes, logs, and the existing
+   Worker/domain/bindings.
+5. Confirm an unrelated app-only change does not trigger this Worker, and a
+   shared UI change triggers each dependent Worker.
+6. Only after this Worker is verified should you migrate the next Worker.
+   Keep the old repositories and a known-good Cloudflare deployment available
+   for rollback.
+
+The repo's GitHub Actions workflow runs CI checks only; it does not deploy.
+Cloudflare Workers Builds performs deployment on pushes to each Worker's
+selected production branch when its paths match. In GitHub, require the CI
+check and disable direct pushes to `main`; otherwise a direct push can start a
+Cloudflare production deployment before checks complete.
+
+Official Cloudflare references:
+
+- [Workers Builds configuration](https://developers.cloudflare.com/workers/ci-cd/builds/configuration/)
+- [Workers Builds monorepos](https://developers.cloudflare.com/workers/ci-cd/builds/advanced-setups/#monorepos)
+- [Build watch paths](https://developers.cloudflare.com/workers/ci-cd/builds/build-watch-paths/)
+- [Production and preview branches](https://developers.cloudflare.com/workers/ci-cd/builds/build-branches/)
 
 ## Git, history, and rollback
 
@@ -365,8 +460,9 @@ The monorepo Git repository is at:
 The old repositories (`blogs/`, `docs/`, and `saksham/` alongside the monorepo)
 were left unchanged. Full bare Git backups are in the external directory
 documented in `MIGRATION.md`. Local `archive/*` branches retain each imported
-history and the extra Docs branches. The new repository has no remote: do not
-force-push it or use it to overwrite the old repositories.
+history and the extra Docs branches. The monorepo remote is `origin`
+(`git@github.com:saksham801/saksham-monorepo.git`). Do not force-push or use it
+to overwrite the old repositories.
 
 Before production cutover, keep the old repositories and Cloudflare Workers
 active. If a candidate change fails, do not alter DNS; revert the monorepo
@@ -377,34 +473,26 @@ source commits, branch handling, validation evidence, and rollback procedure.
 
 ### Publish the monorepo to GitHub
 
-Create a **new, empty GitHub repository** for the monorepo. Do not select one
-of the existing Portfolio, Docs, or Blogs repositories. From the monorepo:
+The monorepo is already connected locally to
+`git@github.com:saksham801/saksham-monorepo.git`. Verify it with:
 
 ```bash
 cd /home/saksham/blogs.sakshampy.in/monorepo
-git status
-git add README.md DEVELOPMENT.md
-git commit -m "docs: add monorepo development guide"
-git remote add origin git@github.com:YOUR-ACCOUNT/YOUR-NEW-MONOREPO.git
-git ls-remote --heads origin
-git push -u origin main
+git remote -v
 ```
 
-Replace the remote URL with the URL for the new repository. The `git ls-remote`
-check should show no branches if the GitHub repository was created empty. If
-it already has a README or other commits, stop and reconcile the histories
-before pushing; do not force-push. After the first push, normal changes are
-published with:
+After committing local changes, push with:
 
 ```bash
 git add <files-you-changed>
 git commit -m "describe the change"
-git push
+git push origin main
 ```
 
-GitHub Actions in this repo runs CI checks on relevant pull requests and
-`main` pushes. It does **not** deploy to Cloudflare or update any of the three
-existing repositories.
+GitHub Actions runs CI checks. Cloudflare Workers Builds then deploys only the
+Worker(s) whose repository watch paths match the pushed changes and whose
+production branch is `main`. See the configuration and cutover instructions
+above. This does **not** update the three old GitHub repositories.
 
 ### About the three existing GitHub repositories
 
@@ -416,15 +504,14 @@ from the monorepo. In addition, each app now depends on `@saksham/ui` through
 the Bun workspace (`"workspace:*"`); copying just `apps/<app>` into an old
 standalone repository would not provide that package or necessarily build.
 
-The old repositories and their Cloudflare deployments are left untouched and
-remain the current production sources. A push to the new monorepo only backs
-up/publishes monorepo code; it does not change production.
-
-To make the monorepo the source for production later, treat that as a separate
-migration: configure and verify each existing Cloudflare project to build its
-own app from the **new monorepo** (preserving the Worker, domains, environment,
-secrets, and build command), test preview deployments, then cut over one app at
-a time. That Cloudflare/GitHub setup has not been configured or verified here.
+The old repositories remain intact as a rollback/source-history reference.
+Whether an old repository or the monorepo is currently the deployment source
+for a Worker is determined by that Worker's Cloudflare **Settings → Builds**
+Git connection; verify it in the dashboard. A push only auto-deploys from the
+monorepo after that Worker is connected to
+`saksham801/saksham-monorepo` and its root, branch, commands, and watch paths
+are configured as described in
+[Cloudflare Workers Builds from the monorepo](#cloudflare-workers-builds-from-the-monorepo).
 
 If the old GitHub repositories must receive code while remaining standalone,
 first create an app-specific export that includes or otherwise resolves the
@@ -436,9 +523,11 @@ provide an export/sync script; do not assume a raw subtree push is compatible.
 ## CI behavior
 
 `.github/workflows/ci.yml` runs install, lint, typecheck, and builds on relevant
-pull requests and pushes to `main`. It does not deploy. Existing production
-deployment ownership was not verifiable from the source checkouts, so
-production automation is intentionally not configured.
+pull requests and pushes to `main`. It does not deploy. Once configured, each
+Cloudflare Workers Builds connection separately deploys its Worker from
+monorepo pushes on `main` when that Worker's watch paths match. Require the CI
+check in GitHub branch protection so unvalidated changes cannot be merged to
+the production branch.
 
 ## Common workflow
 

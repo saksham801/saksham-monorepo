@@ -41,10 +41,10 @@ backup branch is kept as an archival branch. There are no tag-name collisions
 because no source repository has tags. No nested `.git` directories are copied
 into the app directories.
 
-The final local monorepo retains local `archive/*` branches for every imported
-app main and both Docs local branches. It has no Git remote configured; create
-a new monorepo remote separately after review. Never push this migration over
-one of the existing production repositories.
+The monorepo retains local `archive/*` branches for every imported app main
+and both Docs local branches. Its `origin` is
+`git@github.com:saksham801/saksham-monorepo.git`. Never push this migration
+over one of the existing production repositories.
 
 ## Deployment and environment ownership
 
@@ -54,7 +54,13 @@ one of the existing production repositories.
 - `apps/blogs` keeps Worker `blogs` and its own `wrangler.jsonc`.
 - The checked-out repositories have no GitHub Actions workflows. No deployment
   workflow, account ID, credential, or custom-domain configuration was
-  inferred or changed. CI checks only; production deploy remains manual.
+  inferred or changed by the migration.
+- The owner reports that all three Cloudflare Workers already have GitHub
+  build connections and auto-deploy when code is pushed. The account-level
+  Cloudflare dashboard settings were not accessible during this work, so the
+  connected repository, commands, production branch, and build-watch paths for
+  each Worker have not been verified. Use the per-Worker monorepo setup in
+  `DEVELOPMENT.md` before expecting pushes to `saksham-monorepo` to deploy.
 - No `.dev.vars` values or production secrets were copied.
 - Current GitHub Docs main had `pagefind: false`; the monorepo candidate enables
   Starlight Pagefind and its header search control to satisfy the requested
@@ -79,7 +85,7 @@ Docs build: PASS
 Blogs build: PASS
 Shared UI: PASS
 Cloudflare build: PASS
-CI/CD: FAIL (checks pass; no safe production deployment workflow could be inferred)
+CI/CD: PARTIAL (GitHub CI checks pass; Cloudflare connection settings need dashboard verification)
 Rollback readiness: PASS
 ```
 
@@ -93,7 +99,7 @@ Rollback readiness: PASS
 | Blogs build | PASS | Astro production build and `wrangler deploy --dry-run`. |
 | Shared UI | PASS | Shared design tokens consumed by all apps; shared `FormattedDate` consumed by Blogs. |
 | CI checks | PASS | The workflow's install/lint/typecheck/build command passed locally. |
-| Production deploy automation | BLOCKED | No prior GitHub Actions workflow exists, and Cloudflare account/credential/domain settings are not present to verify. No deploy workflow was guessed. |
+| Production deploy automation | NEEDS DASHBOARD VERIFICATION | The owner reports Cloudflare Workers Builds is active for all three Workers. The connected repository and per-Worker build/watch settings were not accessible to verify; no account settings were changed. |
 | Rollback readiness | PASS | Original clean clones and verified local/remote Git mirrors remain available. |
 
 Read-only HTTP HEAD checks on 2026-09-26 returned `200` for each production

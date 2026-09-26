@@ -14,9 +14,13 @@ Worker, environment, and Cloudflare deployment ownership.
 
 Each app's `wrangler.jsonc` remains authoritative for its Worker configuration.
 Production credentials and any custom-domain/account settings remain managed by
-Cloudflare and are not stored here. The existing deployment scripts are
-application-specific; run them manually only after selecting the intended
-Cloudflare account and verifying its credentials:
+Cloudflare and are not stored here. To have pushes to the monorepo deploy these
+Workers automatically, connect each existing Worker to this same GitHub
+repository and configure its own root, build/deploy commands, production
+branch, and path filters. The full dashboard procedure and exact settings are
+in [DEVELOPMENT.md](./DEVELOPMENT.md#cloudflare-workers-builds-from-the-monorepo).
+
+For an explicitly manual deployment, the app-specific scripts are:
 
 ```bash
 bun --cwd apps/portfolio run deploy
@@ -24,12 +28,12 @@ bun --cwd apps/docs run deploy
 bun --cwd apps/blogs run deploy
 ```
 
-There is no automatic production deployment workflow. The existing repositories
-and deployments are retained; this migration does not push to GitHub, alter
-Cloudflare, or change DNS. This local monorepo has no Git remote configured.
-Create a new monorepo remote and verify branch protections before any push;
-do not point the old production repositories at it as part of the local
-migration.
+The Git remote `origin` points to
+`git@github.com:saksham801/saksham-monorepo.git`. A push only triggers a
+Cloudflare Worker if that Worker is connected to this monorepo in Cloudflare
+Workers Builds and its configured production branch/path filters match the
+changed files. The three old GitHub repositories are not updated by the
+monorepo push.
 
 ## Install and develop
 
@@ -87,7 +91,7 @@ Docs had no application env-file names in their checked-in configuration.
 ## CI and rollback
 
 Pull-request and `main` branch checks run lint, Astro type checks, and builds.
-They do not deploy. Cloudflare deployments remain separately owned by the
-existing per-app Wrangler scripts. See [MIGRATION.md](./MIGRATION.md) for the
+They do not deploy. Cloudflare Workers Builds can perform production deployment
+separately for each connected Worker. See [MIGRATION.md](./MIGRATION.md) for the
 source commits, backup location, history procedure, validation, and rollback
 steps.
