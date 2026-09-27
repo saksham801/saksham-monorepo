@@ -8,7 +8,7 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineConfig({
   site: 'https://sakshampy.in',
   output: 'server',
-  adapter: cloudflare(),
+  adapter: cloudflare({ inspectorPort: 9232 }),
   vite: {
     plugins: [tailwindcss()]
   }

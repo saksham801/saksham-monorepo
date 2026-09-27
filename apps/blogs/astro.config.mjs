@@ -11,7 +11,7 @@ export default defineConfig({
 	site: 'https://blogs.sakshampy.in',
 	output: 'server',
 	integrations: [mdx(), sitemap()],
-	adapter: cloudflare(),
+	adapter: cloudflare({ inspectorPort: 9230 }),
 	vite: {
 		plugins: [tailwindcss()],
 	},

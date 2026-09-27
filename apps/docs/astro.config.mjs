@@ -17,6 +17,15 @@ export default defineConfig({
       cssMinify: true,
       rollupOptions: {
         external: ['@bruits/satteri-wasm32-wasi'],
+        onwarn(warning, defaultHandler) {
+          if (
+            warning.code === 'MODULE_LEVEL_DIRECTIVE' &&
+            warning.message.includes('"use astro:head-inject"')
+          ) {
+            return;
+          }
+          defaultHandler(warning);
+        },
       },
     },
   },
@@ -226,6 +235,7 @@ export default defineConfig({
     }),
   ],
   adapter: cloudflare({
+    inspectorPort: 9231,
     // Keep Astro's local dev renderer on Node. The docs are static at build
     // time, while workerd's dev runner cannot execute Vite's CommonJS shims.
     prerenderEnvironment: 'node',

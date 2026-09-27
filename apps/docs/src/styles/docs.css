@@ -23,13 +23,19 @@
   --sl-font: var(--font-mono);
   --sl-font-system: var(--font-sans);
   --sl-font-mono: var(--font-mono);
-  --sl-nav-height: 4.25rem;
+  --sl-nav-height: 5.25rem;
   --sl-z-index-navbar: 40;
 }
 
 @media (min-width: 50rem) {
   :root {
-    --sl-nav-height: 4.5rem;
+    --sl-nav-height: 7rem;
+  }
+}
+
+@media (max-width: 50rem) {
+  :root {
+    --sl-nav-height: 5.25rem;
   }
 }
 

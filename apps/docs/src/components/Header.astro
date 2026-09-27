@@ -67,8 +67,15 @@ const navLinks = [
 
 <style>
 	@layer starlight.core {
-		.header { align-items: center; display: flex; gap: 1.5rem; justify-content: space-between; min-width: 0; }
-		.docs-nav { align-items: center; display: flex; gap: 1.5rem; }
+		.header {
+			align-items: center;
+			display: grid;
+			gap: clamp(0.75rem, 1.5vw, 1.5rem);
+			grid-template-columns: auto auto minmax(0, 1fr) auto;
+			min-width: 0;
+		}
+		.docs-search { justify-self: start; }
+		.docs-nav { align-items: center; display: flex; gap: clamp(0.75rem, 1.25vw, 1.25rem); justify-content: flex-end; min-width: 0; }
 		:global(site-search button[data-open-modal]) {
 			background: transparent;
 			border: 1px solid #3b4b53;
@@ -132,9 +139,21 @@ const navLinks = [
 			color: #a8ff60;
 		}
 
-		.topline { border-bottom: 1px solid #202a30; color: #617078; display: flex; font: 0.52rem 'DM Mono', monospace; justify-content: space-between; letter-spacing: 0.1em; padding: 0.55rem 0; }
+		.topline { align-items: center; border-bottom: 1px solid #202a30; color: #617078; display: flex; font: 0.52rem 'DM Mono', monospace; justify-content: space-between; letter-spacing: 0.1em; min-height: 1.875rem; }
 		.topline-right { align-items: center; display: flex; gap: 0.7rem; }
 		.topline i { background: #a8ff60; border-radius: 50%; display: inline-block; height: 0.35rem; width: 0.35rem; }
-		@media (max-width: 800px) { .docs-nav { display: flex; gap: 0.75rem; } .docs-nav > a { display: none; } .hire-button { display: none; } .ui-brand-copy { font-size: 0.62rem; } .topline-right { display: none; } }
+		@media (max-width: 950px) {
+			.header { grid-template-columns: auto auto minmax(0, 1fr); }
+			.docs-nav { grid-column: 3; }
+			.docs-nav > a { display: none; }
+			.hire-button { display: none; }
+		}
+		@media (max-width: 800px) {
+			.topline { display: none; }
+			.header { grid-template-columns: max-content auto max-content; justify-content: space-between; }
+			.docs-search { justify-self: end; }
+			.docs-nav { grid-column: auto; }
+			.ui-brand-copy { font-size: 0.62rem; }
+		}
 	}
 </style>
