@@ -1,0 +1,40 @@
+@import "./tokens.css";
+
+@theme {
+	--color-ui-bg: var(--bg);
+	--color-ui-surface: var(--bg-soft);
+	--color-ui-raised: #101a20;
+	--color-ui-fg: var(--fg);
+	--color-ui-muted: var(--muted);
+	--color-ui-dim: var(--dim);
+	--color-ui-line: var(--line);
+	--color-ui-line-strong: var(--line-strong);
+	--color-ui-accent: var(--accent);
+	--color-ui-accent-ink: var(--accent-ink);
+	--color-ui-blue: var(--blue);
+	--color-ui-yellow: var(--yellow);
+	--color-ui-orange: var(--orange);
+	--color-ui-purple: var(--purple);
+	--font-ui-sans: "Manrope", sans-serif;
+	--font-ui-mono: "DM Mono", monospace;
+	--text-ui-2xs: 0.5rem;
+	--text-ui-xs: 0.5625rem;
+	--text-ui-sm: 0.625rem;
+	--text-ui-md: 0.75rem;
+	--text-ui-base: 0.875rem;
+	--shadow-ui-card: 10px 10px 0 #0d171c;
+	--shadow-ui-terminal: 20px 20px 0 #0d171c;
+	--radius-ui: 0;
+	--breakpoint-ui-mobile: 50rem;
+	--z-index-ui-content: 1;
+	--z-index-ui-header: 20;
+	--z-index-ui-popover: 40;
+	--container-ui: 80rem;
+}
+
+@utility ui-grid-background {
+	background-image:
+		linear-gradient(rgb(73 91 102 / 8%) 1px, transparent 1px),
+		linear-gradient(90deg, rgb(73 91 102 / 8%) 1px, transparent 1px);
+	background-size: 64px 64px;
+}

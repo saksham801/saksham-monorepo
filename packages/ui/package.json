@@ -5,6 +5,8 @@
   "type": "module",
   "exports": {
     ".": "./src/index.ts",
+    "./components/*": "./src/components/*",
+    "./styles/*": "./src/styles/*",
     "./components/FormattedDate.astro": "./src/components/FormattedDate.astro",
     "./styles/tokens.css": "./src/styles/tokens.css"
   },

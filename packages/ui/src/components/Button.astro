@@ -1,0 +1,40 @@
+---
+interface Props extends astroHTML.JSX.ButtonHTMLAttributes {
+	href?: string;
+	variant?: "primary" | "secondary";
+	class?: string;
+}
+
+const {
+	href,
+	variant = "primary",
+	class: className,
+	type = "button",
+	...attributes
+} = Astro.props;
+const variantClasses = {
+	primary:
+		"bg-ui-accent text-ui-accent-ink hover:-translate-y-[3px] hover:text-ui-accent-ink",
+	secondary:
+		"border-ui-line-strong text-ui-fg hover:border-ui-accent hover:text-ui-accent",
+};
+const classes = [
+	"inline-flex items-center justify-center gap-3 border px-[1.125rem] py-[0.9375rem] font-ui-mono text-ui-sm font-semibold tracking-[0.08em] uppercase no-underline transition duration-200 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ui-accent disabled:pointer-events-none disabled:opacity-50 aria-busy:cursor-wait motion-reduce:transition-none",
+	variantClasses[variant],
+	className,
+]
+	.filter(Boolean)
+	.join(" ");
+---
+
+{
+	href ? (
+		<a class={classes} href={href} {...attributes}>
+			<slot />
+		</a>
+	) : (
+		<button class={classes} type={type} {...attributes}>
+			<slot />
+		</button>
+	)
+}

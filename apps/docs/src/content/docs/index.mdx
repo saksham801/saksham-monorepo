@@ -5,6 +5,10 @@ template: splash
 editUrl: false
 ---
 
+import Button from "@saksham/ui/components/Button.astro";
+import Badge from "@saksham/ui/components/Badge.astro";
+import Card from "@saksham/ui/components/Card.astro";
+
 <div class="portfolio-home">
   <section class="docs-hero">
     <div class="docs-hero-copy">
@@ -12,19 +16,19 @@ editUrl: false
       <h1>DOCUMENTING<br /><em>IDEAS</em> INTO<br />SYSTEMS<span>_</span></h1>
       <p class="hero-intro">A practical engineering notebook for building scalable products, clean interfaces, and systems that do the heavy lifting.</p>
       <div class="hero-actions">
-        <a href="/guides/about/" class="primary-button">EXPLORE THE NOTES <span>↓</span></a>
+        <Button href="/guides/about/">EXPLORE THE NOTES <span>↓</span></Button>
         <a href="/reference/toolbox/" class="text-link">OPEN THE TOOLBOX <span>↗</span></a>
       </div>
     </div>
     <div class="terminal-card">
       <div class="terminal-head"><span class="dots"><i></i><i></i><i></i></span><span>saksham@docs:~</span><span>⌁</span></div>
       <div class="terminal-body">
-        <p><span class="green">const</span> docs = {</p>
+        <p><span class="green">const</span> docs = &#123;</p>
         <p class="indent"><span class="blue">purpose:</span> <span class="yellow">"share what works"</span>,</p>
         <p class="indent"><span class="blue">topics:</span> [<span class="yellow">"systems"</span>, <span class="yellow">"interfaces"</span>],</p>
         <p class="indent"><span class="blue">format:</span> <span class="purple">"clear and useful"</span>,</p>
         <p class="indent"><span class="blue">status:</span> <span class="yellow">"always evolving"</span></p>
-        <p>};</p>
+        <p>&#125;;</p>
         <p class="terminal-output"><span class="green">✓</span> ready to share useful notes<span class="blink">▌</span></p>
       </div>
       <div class="terminal-foot"><span>UTF-8</span><span>main*</span><span>docs.md</span></div>
@@ -35,24 +39,24 @@ editUrl: false
 ## Find your way around
 
 <div class="card-grid">
-  <a class="card" href="/guides/about/">
-    <span class="card-id">01 / GUIDES</span>
+  <Card class="card" href="/guides/about/">
+    <Badge class="card-id">01 / GUIDES</Badge>
     <h3>Build with intent.</h3>
     <p>Step-by-step playbooks for turning an idea into a maintainable product.</p>
     <b>OPEN GUIDE ↗</b>
-  </a>
-  <a class="card" href="/reference/toolbox/">
-    <span class="card-id">02 / REFERENCE</span>
+  </Card>
+  <Card class="card" href="/reference/toolbox/">
+    <Badge class="card-id">02 / REFERENCE</Badge>
     <h3>Ship with confidence.</h3>
     <p>Fast answers, conventions, and checklists I reach for while shipping.</p>
     <b>OPEN REFERENCE ↗</b>
-  </a>
-  <a class="card" href="/languages/rust/">
-    <span class="card-id">03 / LANGUAGES</span>
+  </Card>
+  <Card class="card" href="/languages/rust/">
+    <Badge class="card-id">03 / LANGUAGES</Badge>
     <h3>Keep learning.</h3>
     <p>Language tracks for Rust, C++, and Python — foundations for reliable software.</p>
     <b>OPEN TRACKS ↗</b>
-  </a>
+  </Card>
 </div>
 
 ## Language tracks

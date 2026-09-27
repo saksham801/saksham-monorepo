@@ -1,0 +1,67 @@
+---
+interface Link {
+	href: string;
+	label: string;
+	external?: boolean;
+}
+
+interface Props {
+	links?: Link[];
+	copyright?: string;
+	year?: number;
+	showBackToTop?: boolean;
+	class?: string;
+	container?: boolean;
+	note?: string;
+	element?: "footer" | "div";
+}
+
+const {
+	links = [],
+	copyright = "SAKSHAM DUBEY",
+	year = new Date().getFullYear(),
+	showBackToTop = true,
+	class: className,
+	container = true,
+	note,
+	element = "footer",
+} = Astro.props;
+const Tag = element;
+---
+
+<Tag
+	class:list={[
+		"relative z-ui-content flex justify-between border-t border-ui-line py-6 font-ui-mono text-ui-2xs tracking-[0.08em] text-[#5c7078] max-[50rem]:flex-wrap max-[50rem]:gap-x-6 max-[50rem]:gap-y-3",
+		container && "mx-auto w-full max-w-container-ui px-5 lg:px-10",
+		className,
+	]}
+>
+	<span>© {year} {copyright}</span>
+	{note && <span class="text-ui-dim">{note}</span>}
+	<slot />
+	{links.length > 0 && (
+		<nav class="flex flex-wrap items-center gap-x-3 gap-y-2" aria-label="Footer">
+			{links.map(({ href, label, external }, index) => (
+				<>
+					<a
+						class="text-inherit no-underline transition-colors duration-200 hover:text-ui-accent focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ui-accent motion-reduce:transition-none"
+						href={href}
+						target={external ? "_blank" : undefined}
+						rel={external ? "noopener noreferrer" : undefined}
+					>
+						{label}
+					</a>
+					{index < links.length - 1 && <span aria-hidden="true">·</span>}
+				</>
+			))}
+		</nav>
+	)}
+	{showBackToTop && (
+		<a
+			class="text-inherit no-underline transition-colors duration-200 hover:text-ui-accent focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ui-accent motion-reduce:transition-none"
+			href="#top"
+		>
+			BACK TO TOP ↑
+		</a>
+	)}
+</Tag>

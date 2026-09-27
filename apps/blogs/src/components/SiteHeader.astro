@@ -1,5 +1,6 @@
 ---
 import { PORTFOLIO_URL, SITE_EMAIL } from "../consts";
+import Brand from "@saksham/ui/components/Brand.astro";
 
 interface Props {
 	active?: "home" | "blog" | "about" | "terms";
@@ -16,30 +17,32 @@ const links = [
 ] as const;
 ---
 
-<div class="pointer-glow" aria-hidden="true"></div>
-<div class="topline">
+<div
+	class="pointer-events-none fixed top-[calc(var(--pointer-y,40vh)-230px)] left-[calc(var(--pointer-x,50vw)-230px)] z-0 size-[460px] bg-[radial-gradient(circle,rgba(168,255,96,0.12)_0,rgba(101,201,255,0.04)_22%,transparent_60%)]"
+	aria-hidden="true"
+></div>
+<div
+	class="relative z-ui-content flex justify-between border-b border-[#202a30] px-[5vw] py-[9px] font-ui-mono text-[9px] tracking-[0.1em] text-[#617078]"
+>
 	<span>SAKSHAM.DUBEY // BLOG_V1.0</span>
-	<span class="topline-right">
-		<i></i> SYSTEMS ONLINE <b id="site-clock">--:--:-- IST</b>
+	<span class="flex items-center gap-3 max-[50rem]:[&>b]:hidden">
+		<i class="inline-block size-1.5 rounded-full bg-ui-accent"></i> SYSTEMS ONLINE <b
+			id="site-clock"
+			class="font-normal text-[#8a989e] max-[50rem]:hidden">--:--:-- IST</b
+		>
 	</span>
 </div>
-<header class="header mx-auto max-w-7xl px-5 py-5 lg:px-10">
-	<a href="/" class="brand">
-		<span class="brand-mark">
-			S<span>D</span>
-		</span>
-		<span class="brand-copy">
-			SAKSHAM
-			<br />
-			<small>ENGINEERING BLOG</small>
-		</span>
-	</a>
-	<nav class="nav" aria-label="Primary">
+<header
+	class="sticky top-0 z-ui-header mx-auto flex max-w-7xl items-center justify-between border-b border-[#202a30] bg-[rgba(9,11,13,0.78)] px-5 py-5 backdrop-blur-[16px] lg:px-10"
+>
+	<Brand subtitle="ENGINEERING BLOG" />
+	<nav class="flex gap-[29px] max-[50rem]:hidden" aria-label="Primary">
 		{
 			links.map((link) => (
 				<a
 					href={link.href}
-					class={active === link.key ? "current" : undefined}
+					class="font-ui-mono text-ui-sm tracking-[0.1em] text-[#89989f] uppercase no-underline transition-colors hover:text-ui-accent focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ui-accent aria-[current=page]:text-ui-accent"
+					aria-current={active === link.key ? "page" : undefined}
 					target={"external" in link && link.external ? "_blank" : undefined}
 					rel={"external" in link && link.external ? "noreferrer" : undefined}
 				>
@@ -48,18 +51,32 @@ const links = [
 			))
 		}
 	</nav>
-	<a href={`mailto:${SITE_EMAIL}`} class="hire-button">
+	<a
+		href={`mailto:${SITE_EMAIL}`}
+		class="border border-[#3b4b53] px-3.5 py-2.5 font-ui-mono text-ui-sm tracking-[0.1em] text-[#dce7eb] uppercase no-underline transition-colors hover:border-ui-accent hover:text-ui-accent focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ui-accent max-[50rem]:hidden"
+	>
 		WRITE ME <span>↗</span>
 	</a>
-	<button id="menu-button" class="menu-button" type="button" aria-expanded="false">
-		[ MENU ]
+	<button
+		id="menu-button"
+		class="hidden cursor-pointer border-0 bg-transparent font-ui-mono text-ui-sm tracking-[0.1em] text-[#89989f] uppercase hover:text-ui-accent focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ui-accent max-[50rem]:block"
+		type="button"
+		aria-controls="mobile-menu"
+		aria-expanded="false"
+	>
+		<span id="menu-label">[ MENU ]</span>
 	</button>
 </header>
-<div id="mobile-menu" class="mobile-menu hidden">
+<nav
+	id="mobile-menu"
+	class="relative z-ui-content hidden flex-col gap-5 border-b border-[#33464f] bg-ui-raised p-5"
+	aria-label="Mobile primary"
+>
 	{
 		links.map((link) => (
 			<a
 				href={link.href}
+				class="font-ui-mono text-ui-sm text-ui-accent no-underline hover:text-ui-fg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ui-accent"
 				target={"external" in link && link.external ? "_blank" : undefined}
 				rel={"external" in link && link.external ? "noreferrer" : undefined}
 			>
@@ -67,186 +84,38 @@ const links = [
 			</a>
 		))
 	}
-</div>
-
-<style>
-	.pointer-glow {
-		background: radial-gradient(
-			circle,
-			rgba(168, 255, 96, 0.12) 0,
-			rgba(101, 201, 255, 0.04) 22%,
-			transparent 60%
-		);
-		height: 460px;
-		left: calc(var(--pointer-x, 50vw) - 230px);
-		pointer-events: none;
-		position: fixed;
-		top: calc(var(--pointer-y, 40vh) - 230px);
-		width: 460px;
-		z-index: 0;
-	}
-	.topline,
-	.header,
-	.mobile-menu {
-		position: relative;
-		z-index: 1;
-	}
-	.topline {
-		border-bottom: 1px solid #202a30;
-		color: #617078;
-		display: flex;
-		justify-content: space-between;
-		font:
-			9px "DM Mono",
-			monospace;
-		letter-spacing: 0.1em;
-		padding: 9px 5vw;
-	}
-	.topline-right {
-		display: flex;
-		align-items: center;
-		gap: 12px;
-	}
-	.topline i {
-		background: #a8ff60;
-		border-radius: 50%;
-		display: inline-block;
-		height: 6px;
-		width: 6px;
-	}
-	.topline b {
-		color: #8a989e;
-		font-weight: 400;
-	}
-	.header {
-		align-items: center;
-		border-bottom: 1px solid #202a30;
-		display: flex;
-		justify-content: space-between;
-		position: sticky;
-		top: 0;
-		z-index: 20;
-		backdrop-filter: blur(16px);
-		background: rgba(9, 11, 13, 0.78);
-	}
-	.brand {
-		align-items: center;
-		display: flex;
-		gap: 11px;
-	}
-	.brand-mark {
-		align-items: center;
-		border: 1px solid #a8ff60;
-		color: #a8ff60;
-		display: flex;
-		font:
-			700 17px "Manrope",
-			sans-serif;
-		height: 34px;
-		justify-content: center;
-		letter-spacing: -0.12em;
-		width: 34px;
-	}
-	.brand-mark span {
-		color: #dce7eb;
-	}
-	.brand-copy {
-		color: #dce7eb;
-		font:
-			600 11px/1.2 "Manrope",
-			sans-serif;
-		letter-spacing: 0.06em;
-	}
-	.brand-copy small {
-		color: #667780;
-		font:
-			8px "DM Mono",
-			monospace;
-		letter-spacing: 0.08em;
-	}
-	.nav {
-		display: flex;
-		gap: 29px;
-	}
-	.nav a,
-	.hire-button,
-	.menu-button {
-		color: #89989f;
-		font-size: 10px;
-		letter-spacing: 0.1em;
-		text-transform: uppercase;
-		transition: color 0.2s;
-	}
-	.nav a:hover,
-	.nav a.current,
-	.hire-button:hover {
-		color: #a8ff60;
-	}
-	.hire-button {
-		border: 1px solid #3b4b53;
-		color: #dce7eb;
-		padding: 10px 14px;
-	}
-	.hire-button span {
-		color: #a8ff60;
-	}
-	.menu-button {
-		border: 0;
-		background: transparent;
-		cursor: pointer;
-		display: none;
-	}
-	.mobile-menu {
-		background: #101a20;
-		border-bottom: 1px solid #33464f;
-		display: flex;
-		flex-direction: column;
-		gap: 20px;
-		padding: 20px;
-	}
-	.mobile-menu.hidden {
-		display: none;
-	}
-	.mobile-menu a {
-		color: #a8ff60;
-		font-size: 11px;
-	}
-	@media (min-width: 801px) {
-		.mobile-menu {
-			display: none !important;
-		}
-	}
-	@media (max-width: 800px) {
-		.topline-right b {
-			display: none;
-		}
-		.nav,
-		.hire-button {
-			display: none;
-		}
-		.menu-button {
-			display: block;
-		}
-	}
-</style>
+</nav>
 
 <script>
 	const button = document.querySelector("#menu-button");
 	const menu = document.querySelector("#mobile-menu");
+	const label = document.querySelector("#menu-label");
+	const setMenuOpen = (isOpen: boolean) => {
+		menu?.classList.toggle("hidden", !isOpen);
+		menu?.classList.toggle("flex", isOpen);
+		button?.setAttribute("aria-expanded", String(isOpen));
+		if (label) label.textContent = isOpen ? "[ CLOSE ]" : "[ MENU ]";
+	};
 	button?.addEventListener("click", () => {
-		menu?.classList.toggle("hidden");
-		button.setAttribute(
-			"aria-expanded",
-			menu?.classList.contains("hidden") ? "false" : "true",
-		);
+		setMenuOpen(menu?.classList.contains("hidden") ?? false);
 	});
 	menu?.querySelectorAll("a").forEach((link) =>
-		link.addEventListener("click", () => menu.classList.add("hidden")),
+		link.addEventListener("click", () => setMenuOpen(false)),
 	);
+	document.addEventListener("keydown", (event) => {
+		if (event.key === "Escape" && menu && !menu.classList.contains("hidden")) {
+			setMenuOpen(false);
+			if (button instanceof HTMLButtonElement) button.focus();
+		}
+	});
 
 	const glow = document.querySelector(".pointer-glow");
 	window.addEventListener("pointermove", (event) => {
-		if (glow instanceof HTMLElement && window.matchMedia("(pointer: fine)").matches) {
+		if (
+			glow instanceof HTMLElement &&
+			window.matchMedia("(pointer: fine)").matches &&
+			!window.matchMedia("(prefers-reduced-motion: reduce)").matches
+		) {
 			glow.style.setProperty("--pointer-x", `${event.clientX}px`);
 			glow.style.setProperty("--pointer-y", `${event.clientY}px`);
 		}

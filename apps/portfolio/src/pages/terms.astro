@@ -1,0 +1,67 @@
+---
+import Brand from "@saksham/ui/components/Brand.astro";
+import SiteFooter from "@saksham/ui/components/SiteFooter.astro";
+import TermsContent from "@saksham/ui/components/TermsContent.astro";
+import Layout from "../layouts/Layout.astro";
+
+export const prerender = true;
+
+const updated = "September 19, 2026";
+---
+
+<Layout
+	title="Terms and Conditions"
+	description="Terms and conditions for the Saksham portfolio, engineering blog, and documentation sites."
+	canonicalPath="/terms/"
+>
+	<div class="ui-grid-background min-h-screen bg-ui-bg pt-px" id="top">
+		<header
+			class="sticky top-0 z-ui-header flex items-center justify-between border-b border-ui-line bg-ui-bg/80 px-5 py-4 backdrop-blur-[16px] sm:px-[5vw]"
+		>
+			<Brand subtitle="FULL STACK ENGINEER" />
+			<nav class="flex gap-6 max-[50rem]:hidden" aria-label="Primary">
+				<a class="font-ui-mono text-ui-sm tracking-[0.1em] text-ui-muted no-underline hover:text-ui-accent" href="/">/ home</a>
+				<a class="font-ui-mono text-ui-sm tracking-[0.1em] text-ui-muted no-underline hover:text-ui-accent" href="https://blogs.sakshampy.in/">/ blog</a>
+				<a class="font-ui-mono text-ui-sm tracking-[0.1em] text-ui-muted no-underline hover:text-ui-accent" href="https://docs.sakshampy.in/">/ docs</a>
+			</nav>
+			<a
+				class="border border-ui-line-strong px-3.5 py-2.5 font-ui-mono text-ui-sm tracking-[0.1em] text-ui-fg no-underline transition-colors hover:border-ui-accent hover:text-ui-accent max-[50rem]:hidden"
+				href="mailto:hello@sakshampy.in"
+			>
+				CONTACT ↗
+			</a>
+		</header>
+		<a
+			class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:bg-ui-accent focus:px-4 focus:py-3 focus:font-ui-mono focus:text-ui-sm focus:text-ui-accent-ink"
+			href="#main-content"
+		>
+			Skip to main content
+		</a>
+		<main
+			id="main-content"
+			tabindex="-1"
+			class="mx-auto w-full max-w-container-ui px-5 pb-24 lg:px-10"
+		>
+			<section class="py-16 sm:py-[5.5rem]">
+				<p class="mb-6 font-ui-mono text-ui-sm tracking-[0.13em] text-[#82949c]">
+					<span class="text-ui-accent">&gt;_</span> LEGAL / TERMS
+				</p>
+				<h1 class="m-0 font-ui-sans text-[clamp(3rem,7vw,6rem)] leading-[0.9] font-extrabold tracking-[-0.08em] text-ui-fg">
+					Terms &amp;<br /><em class="text-ui-accent not-italic">conditions.</em>
+				</h1>
+				<p class="mt-7 max-w-[35rem] text-ui-md leading-[1.9] text-ui-muted">
+					Last updated {updated}. These terms govern the portfolio, engineering
+					blog, and documentation published by Saksham Dubey.
+				</p>
+			</section>
+			<TermsContent />
+		</main>
+		<SiteFooter
+			links={[
+				{ href: "/terms/", label: "TERMS" },
+				{ href: "https://blogs.sakshampy.in/terms/", label: "BLOGS", external: true },
+				{ href: "https://docs.sakshampy.in/terms/", label: "DOCS", external: true },
+			]}
+		/>
+	</div>
+</Layout>

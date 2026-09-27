@@ -1,7 +1,8 @@
 ---
 import { getCollection } from "astro:content";
+import Button from "@saksham/ui/components/Button.astro";
 import FormattedDate from "@saksham/ui/components/FormattedDate.astro";
-import SiteFooter from "../components/SiteFooter.astro";
+import SiteFooter from "@saksham/ui/components/SiteFooter.astro";
 import SiteHeader from "../components/SiteHeader.astro";
 import Layout from "../layouts/Layout.astro";
 import {
@@ -84,9 +85,9 @@ const topicLabel: Record<string, string> = {
 						care about correctness, performance, and readable systems.
 					</p>
 					<div class="hero-actions">
-						<a href="/blog" class="primary-button">
+						<Button href="/blog">
 							READ THE BLOG <span>↓</span>
-						</a>
+						</Button>
 						<a href={PORTFOLIO_URL} class="text-link" target="_blank" rel="noreferrer">
 							PORTFOLIO <span>↗</span>
 						</a>
@@ -204,7 +205,13 @@ const topicLabel: Record<string, string> = {
 				</div>
 			</section>
 		</main>
-		<SiteFooter />
+		<SiteFooter
+			links={[
+				{ href: "/terms", label: "TERMS" },
+				{ href: "/llms.txt", label: "LLMS.TXT" },
+				{ href: PORTFOLIO_URL, label: "PORTFOLIO ↗", external: true },
+			]}
+		/>
 	</div>
 	<script>
 		const revealItems = document.querySelectorAll(".reveal");
@@ -300,22 +307,6 @@ const topicLabel: Record<string, string> = {
 		align-items: center;
 		display: flex;
 		gap: 24px;
-	}
-	.primary-button {
-		background: #a8ff60;
-		color: #09100b;
-		font-size: 10px;
-		font-weight: 600;
-		letter-spacing: 0.08em;
-		padding: 15px 18px;
-		transition: transform 0.2s;
-	}
-	.primary-button:hover {
-		transform: translateY(-3px);
-	}
-	.primary-button span {
-		font-size: 17px;
-		margin-left: 12px;
 	}
 	.text-link {
 		color: #c2d0d5;

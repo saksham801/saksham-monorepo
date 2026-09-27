@@ -1,5 +1,6 @@
 @import "tailwindcss";
-@import "@saksham/ui/styles/tokens.css";
+@import "@saksham/ui/styles/globals.css";
+@source "../../../packages/ui/src";
 
 @theme {
   --font-sans: 'Manrope', sans-serif;
@@ -228,7 +229,7 @@ nav[aria-labelledby='starlight__on-this-page--mobile'] {
 
 .sl-markdown-content {
   color: #b3c0c5;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   line-height: 1.9;
 }
 
@@ -261,6 +262,41 @@ nav[aria-labelledby='starlight__on-this-page--mobile'] {
   color: #c2d0d5;
   margin-block: 1.75rem;
   padding: 1rem 1.25rem;
+}
+
+.sl-markdown-content :is(h2, h3, h4) {
+  scroll-margin-top: calc(var(--sl-nav-height) + 1.5rem);
+}
+
+.sl-markdown-content table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.sl-markdown-content th {
+  color: var(--color-foreground);
+  font-family: var(--font-family-sans);
+}
+
+.sl-markdown-content :is(th, td) {
+  border-color: var(--color-border);
+}
+
+.sl-markdown-content hr {
+  border-color: var(--color-border);
+}
+
+.sl-markdown-content :not(pre) > code {
+  border-radius: var(--radius-sm);
+}
+
+.sl-markdown-content img {
+  border: 1px solid var(--color-border-strong);
+}
+
+.sl-markdown-content :is(input[type='checkbox'], input[type='radio']) {
+  accent-color: var(--color-accent);
 }
 
 .chapter-quiz {
@@ -365,15 +401,38 @@ nav[aria-labelledby='starlight__on-this-page--mobile'] {
   box-shadow: 10px 10px 0 #0d171c;
 }
 
+.expressive-code pre {
+  background: #0b1115 !important;
+  border-radius: 0;
+  color: #becbd0;
+  font-family: var(--font-family-mono);
+}
+
+.expressive-code .code span {
+  color: var(--0) !important;
+}
+
+.expressive-code .frame .header {
+  background: #101a20;
+  color: #6e838c;
+}
+
 .pagination-links a {
-  background: #0e1519;
-  border: 1px solid #2b3d45;
-  transition: border-color 180ms ease, transform 180ms ease;
+  background: var(--color-background-soft);
+  border: 1px solid var(--color-border-strong);
+  transition: border-color var(--transition-fast), transform var(--transition-fast);
 }
 
 .pagination-links a:hover {
-  border-color: #a8ff60;
+  border-color: var(--color-accent);
   transform: translateY(-2px);
+}
+
+.sl-markdown-content :is(a, button, summary):focus-visible,
+.sidebar :is(a, summary):focus-visible,
+.right-sidebar a:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
 }
 
 .portfolio-home {
@@ -410,7 +469,7 @@ nav[aria-labelledby='starlight__on-this-page--mobile'] {
 .docs-hero h1 {
   color: #e8edf0;
   font-family: 'Manrope', sans-serif;
-  font-size: clamp(3.4rem, 7vw, 7rem);
+  font-size: clamp(3.4rem, 6vw, 6rem);
   font-weight: 800;
   letter-spacing: -0.085em;
   line-height: 0.87;
@@ -432,22 +491,7 @@ nav[aria-labelledby='starlight__on-this-page--mobile'] {
   gap: 24px;
 }
 
-.primary-button {
-  background: #a8ff60;
-  color: #09100b;
-  font-size: 0.65rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  padding: 15px 18px;
-  transition: transform 0.2s;
-}
-
-.primary-button:hover {
-  color: #09100b;
-  transform: translateY(-3px);
-}
-
-.primary-button span,
+.hero-actions a span,
 .text-link span {
   color: #a8ff60;
   margin-left: 10px;
@@ -560,14 +604,10 @@ nav[aria-labelledby='starlight__on-this-page--mobile'] {
 }
 
 .card {
-  background: #0e1519;
-  border: 1px solid #2b3d45;
-  color: #e8edf0;
   display: flex;
   flex-direction: column;
   min-height: 250px;
   padding: 17px;
-  transition: border-color 180ms ease, transform 180ms ease;
   overflow: hidden;
   position: relative;
 }
@@ -583,9 +623,7 @@ nav[aria-labelledby='starlight__on-this-page--mobile'] {
 }
 
 .card:hover {
-  border-color: #a8ff60;
-  color: #e8edf0;
-  transform: translateY(-3px);
+  color: var(--color-foreground);
 }
 
 .card:hover::after {
@@ -759,8 +797,7 @@ nav[aria-labelledby='starlight__on-this-page--mobile'] {
     width: 100%;
   }
 
-  .primary-button,
-  .text-link {
+  .hero-actions > a {
     display: inline-flex;
     justify-content: center;
     text-align: center;

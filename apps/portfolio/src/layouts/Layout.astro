@@ -4,8 +4,10 @@ import "../styles/global.css";
 const {
     title = "Saksham Dubey — Full Stack Engineer",
     description = "Saksham Dubey is a Full Stack Engineer in New Delhi building scalable web applications with React, Angular, Next.js, Node.js and NestJS.",
+    canonicalPath = Astro.url.pathname,
 } = Astro.props;
-const canonical = "https://sakshampy.in/";
+const siteUrl = "https://sakshampy.in";
+const canonical = new URL(canonicalPath, siteUrl).href;
 ---
 
 <!doctype html>
@@ -79,7 +81,7 @@ const canonical = "https://sakshampy.in/";
             })}
         ></script>
     </head>
-    <body class="bg-[#101010] text-[#f1f0eb] antialiased selection:bg-[#d8ff63] selection:text-[#101010]">
+    <body class="bg-[#090b0d] text-[#e8edf0] antialiased selection:bg-[#a8ff60] selection:text-[#090b0d]">
         <slot />
     </body>
 </html>

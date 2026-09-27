@@ -1,7 +1,7 @@
 ---
 import type { CollectionEntry } from "astro:content";
 import FormattedDate from "@saksham/ui/components/FormattedDate.astro";
-import SiteFooter from "../components/SiteFooter.astro";
+import SiteFooter from "@saksham/ui/components/SiteFooter.astro";
 import SiteHeader from "../components/SiteHeader.astro";
 import Layout from "./Layout.astro";
 import { SITE_AUTHOR, SITE_EMAIL, SITE_URL } from "../consts";
@@ -89,7 +89,13 @@ const jsonLd = {
 				</div>
 			</article>
 		</main>
-		<SiteFooter />
+		<SiteFooter
+			links={[
+				{ href: "/terms", label: "TERMS" },
+				{ href: "/llms.txt", label: "LLMS.TXT" },
+				{ href: "https://sakshampy.in", label: "PORTFOLIO ↗", external: true },
+			]}
+		/>
 	</div>
 </Layout>
 

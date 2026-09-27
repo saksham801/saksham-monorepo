@@ -1,0 +1,115 @@
+---
+interface Props {
+	email?: string;
+}
+
+const { email = "hello@sakshampy.in" } = Astro.props;
+
+const sections = [
+	{
+		title: "Acceptance of terms",
+		paragraphs: [
+			"By accessing or using any of the websites in the Saksham ecosystem, including sakshampy.in, blogs.sakshampy.in, and docs.sakshampy.in, you agree to these Terms and Conditions. If you do not agree, please do not use the sites.",
+		],
+	},
+	{
+		title: "Content and purpose",
+		paragraphs: [
+			"The sites publish portfolio information, engineering articles, educational notes, and reference material. Content is provided for informational purposes only and does not constitute professional advice, an employment offer, or a warranty of fitness for a particular purpose.",
+		],
+	},
+	{
+		title: "Intellectual property",
+		paragraphs: [
+			"Unless otherwise noted, text, design, branding, and original code samples on these sites are owned by the author. You may quote short excerpts with attribution and a link to the original page. For substantial reuse or commercial redistribution, please contact the author first.",
+		],
+	},
+	{
+		title: "Code samples",
+		paragraphs: [
+			"Code snippets are offered “as is.” Review, test, and adapt them for your environment before production use. The author is not liable for damages arising from use of sample code.",
+		],
+	},
+	{
+		title: "Acceptable use",
+		paragraphs: [
+			"You agree not to misuse the sites, attempt unauthorized access, interfere with availability, or use automated systems in ways that degrade service for others. Reasonable crawling for search indexing is allowed.",
+		],
+	},
+	{
+		title: "External links",
+		paragraphs: [
+			"The sites may link to third-party websites, libraries, or services. Those resources have their own terms and privacy practices. Linking does not imply endorsement, and the author is not responsible for third-party content or availability.",
+		],
+	},
+	{
+		title: "Disclaimer of warranties",
+		paragraphs: [
+			"The sites are provided on an “as available” basis without warranties of any kind, express or implied, including merchantability, non-infringement, accuracy, or uninterrupted availability.",
+		],
+	},
+	{
+		title: "Limitation of liability",
+		paragraphs: [
+			"To the fullest extent permitted by law, the author shall not be liable for indirect, incidental, special, consequential, or punitive damages arising from your use of the sites or reliance on their content.",
+		],
+	},
+	{
+		title: "Privacy",
+		paragraphs: [
+			"The sites are primarily static. Hosting or content-delivery providers may process standard technical request data, such as IP address, user agent, and request paths, in accordance with their own policies. Do not submit sensitive personal information through public pages.",
+		],
+	},
+	{
+		title: "Changes",
+		paragraphs: [
+			"These terms may be updated from time to time. The “Last updated” date above reflects the latest revision. Continued use of the sites after changes are posted constitutes acceptance of the revised terms.",
+		],
+	},
+];
+---
+
+<article
+	class="max-w-[47.5rem] border-t border-ui-line"
+	aria-label="Terms and Conditions"
+>
+	{sections.map(({ title, paragraphs }, index) => (
+		<section class="border-b border-ui-line py-9">
+			<span
+				class="mb-3.5 block font-ui-mono text-ui-xs tracking-[0.12em] text-ui-accent"
+			>
+				{String(index + 1).padStart(2, "0")}
+			</span>
+			<h2
+				class="mb-3.5 font-ui-sans text-[1.375rem] leading-normal font-semibold tracking-[-0.04em] text-ui-fg"
+			>
+				{title}
+			</h2>
+			{paragraphs.map((paragraph, paragraphIndex) => (
+				<p
+					class:list={[
+						"text-ui-md leading-[1.9] text-ui-muted",
+						paragraphIndex > 0 && "mt-3",
+					]}
+				>
+					{paragraph}
+				</p>
+			))}
+		</section>
+	))}
+	<section class="border-b border-ui-line py-9">
+		<span class="mb-3.5 block font-ui-mono text-ui-xs tracking-[0.12em] text-ui-accent">11</span>
+		<h2 class="mb-3.5 font-ui-sans text-[1.375rem] leading-normal font-semibold tracking-[-0.04em] text-ui-fg">
+			Contact
+		</h2>
+		<p class="text-ui-md leading-[1.9] text-ui-muted">
+			Questions about these terms:
+			<a
+				class="border-b border-[rgb(168_255_96_/_35%)] text-ui-accent"
+				href={`mailto:${email}`}
+			>
+				{email}
+			</a>
+		</p>
+	</section>
+</article>

@@ -1,4 +1,7 @@
 ---
+import Button from "@saksham/ui/components/Button.astro";
+import Brand from "@saksham/ui/components/Brand.astro";
+import SiteFooter from "@saksham/ui/components/SiteFooter.astro";
 import Layout from "../layouts/Layout.astro";
 
 export const prerender = true;
@@ -91,16 +94,7 @@ const experience = [
             </span>
         </div>
         <header class="header mx-auto max-w-7xl px-5 py-5 lg:px-10">
-            <a href="#top" class="brand">
-                <span class="brand-mark">
-                    S<span>D</span>
-                </span>
-                <span class="brand-copy">
-                    SAKSHAM
-                    <br />
-                    <small>FULL STACK ENGINEER</small>
-                </span>
-            </a>
+            <Brand href="#top" subtitle="FULL STACK ENGINEER" />
             <nav class="nav">
                 <a href="#about">/ about</a>
                 <a href="#work">/ work</a>
@@ -112,7 +106,13 @@ const experience = [
             <a href="mailto:hello@sakshampy.in" class="hire-button">
                 HIRE ME <span>↗</span>
             </a>
-            <button id="menu-button" class="menu-button">
+            <button
+                id="menu-button"
+                class="menu-button"
+                type="button"
+                aria-controls="mobile-menu"
+                aria-expanded="false"
+            >
                 [ MENU ]
             </button>
         </header>
@@ -144,9 +144,9 @@ const experience = [
                         clean interfaces and systems that do the heavy lifting.
                     </p>
                     <div class="hero-actions">
-                        <a href="#work" class="primary-button">
+                        <Button href="#work">
                             EXPLORE MY WORK <span>↓</span>
-                        </a>
+                        </Button>
                         <a href="mailto:hello@sakshampy.in" class="text-link">
                             LET'S CONNECT <span>↗</span>
                         </a>
@@ -285,7 +285,7 @@ const experience = [
                 <div class="project-grid">
                     {projects.map((project, index) => (
                         <article
-                            class={`project project-${project.accent} reveal ${index === 0 ? "project-featured" : ""}`}
+                            class={`ui-card project project-${project.accent} reveal ${index === 0 ? "project-featured" : ""}`}
                         >
                             <div class="project-top">
                                 <span class="project-id">
@@ -392,23 +392,42 @@ const experience = [
                 </div>
             </section>
         </main>
-        <footer class="footer mx-auto max-w-7xl px-5 lg:px-10">
-            <span>© 2026 SAKSHAM DUBEY</span>
-            <span>
-                DESIGNED + BUILT WITH <b>♥</b> AND TYPESCRIPT
-            </span>
-            <a href="#top">BACK TO TOP ↑</a>
-        </footer>
+        <SiteFooter
+            note="DESIGNED + BUILT WITH ♥ AND TYPESCRIPT"
+            links={[
+                { href: "/terms/", label: "TERMS" },
+                { href: "https://blogs.sakshampy.in/terms/", label: "BLOGS", external: true },
+                { href: "https://docs.sakshampy.in/terms/", label: "DOCS", external: true },
+            ]}
+        />
     </div>
     <script>
         const button = document.querySelector("#menu-button");
         const menu = document.querySelector("#mobile-menu");
-        button?.addEventListener("click", () =>
-            menu?.classList.toggle("hidden"),
-        );
+        button?.addEventListener("click", () => {
+            menu?.classList.toggle("hidden");
+            button.setAttribute(
+                "aria-expanded",
+                menu?.classList.contains("hidden") ? "false" : "true",
+            );
+        });
         menu?.querySelectorAll("a").forEach((link) =>
-            link.addEventListener("click", () => menu.classList.add("hidden")),
+            link.addEventListener("click", () => {
+                menu.classList.add("hidden");
+                button?.setAttribute("aria-expanded", "false");
+            }),
         );
+        document.addEventListener("keydown", (event) => {
+            if (
+                event.key === "Escape" &&
+                menu &&
+                !menu.classList.contains("hidden")
+            ) {
+                menu.classList.add("hidden");
+                button?.setAttribute("aria-expanded", "false");
+                if (button instanceof HTMLButtonElement) button.focus();
+            }
+        });
 
         const glow = document.querySelector(".pointer-glow");
         window.addEventListener("pointermove", (event) => {
@@ -672,22 +691,6 @@ const experience = [
         display: flex;
         gap: 24px;
     }
-    .primary-button {
-        background: #a8ff60;
-        color: #09100b;
-        font-size: 10px;
-        font-weight: 600;
-        letter-spacing: 0.08em;
-        padding: 15px 18px;
-        transition: transform 0.2s;
-    }
-    .primary-button:hover {
-        transform: translateY(-3px);
-    }
-    .primary-button span {
-        font-size: 17px;
-        margin-left: 12px;
-    }
     .text-link {
         color: #c2d0d5;
         font-size: 10px;
@@ -897,8 +900,6 @@ const experience = [
         align-items: stretch;
     }
     .project {
-        background: #0e1519;
-        border: 1px solid #2b3d45;
         display: flex;
         flex-direction: column;
         grid-column: span 6;
@@ -906,9 +907,6 @@ const experience = [
         min-width: 0;
         overflow: hidden;
         position: relative;
-        transition:
-            border-color 0.25s,
-            transform 0.25s;
     }
     .project-featured {
         grid-column: 1 / -1;
@@ -1264,8 +1262,7 @@ const experience = [
         .blink {
             animation: none;
         }
-        .project,
-        .primary-button {
+        .project {
             transition: none;
         }
     }
@@ -1295,9 +1292,6 @@ const experience = [
         .hero-actions {
             align-items: stretch;
             flex-direction: column;
-        }
-        .primary-button {
-            text-align: center;
         }
     }
 </style>

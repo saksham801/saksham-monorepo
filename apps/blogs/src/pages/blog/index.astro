@@ -1,7 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 import FormattedDate from "@saksham/ui/components/FormattedDate.astro";
-import SiteFooter from "../../components/SiteFooter.astro";
+import SiteFooter from "@saksham/ui/components/SiteFooter.astro";
 import SiteHeader from "../../components/SiteHeader.astro";
 import Layout from "../../layouts/Layout.astro";
 import { SITE_DESCRIPTION, SITE_TITLE, SITE_URL } from "../../consts";
@@ -69,7 +69,7 @@ const accentFor: Record<string, string> = {
 					posts.map((post, index) => (
 						<a
 							href={`/blog/${post.id}/`}
-							class={`card project-${accentFor[post.data.topic] ?? "lime"} ${index === 0 ? "featured" : ""}`}
+							class={`ui-card card project-${accentFor[post.data.topic] ?? "lime"} ${index === 0 ? "featured" : ""}`}
 						>
 							<div class="card-top">
 								<span>
@@ -102,7 +102,13 @@ const accentFor: Record<string, string> = {
 				}
 			</section>
 		</main>
-		<SiteFooter />
+		<SiteFooter
+			links={[
+				{ href: "/terms", label: "TERMS" },
+				{ href: "/llms.txt", label: "LLMS.TXT" },
+				{ href: "https://sakshampy.in", label: "PORTFOLIO ↗", external: true },
+			]}
+		/>
 	</div>
 </Layout>
 
@@ -155,23 +161,17 @@ const accentFor: Record<string, string> = {
 		grid-template-columns: repeat(12, minmax(0, 1fr));
 	}
 	.card {
-		background: #0e1519;
-		border: 1px solid #2b3d45;
 		display: flex;
 		flex-direction: column;
 		grid-column: span 6;
 		min-height: 390px;
 		overflow: hidden;
 		position: relative;
-		transition:
-			border-color 0.25s,
-			transform 0.25s;
 	}
 	.card.featured {
 		grid-column: 1 / -1;
 	}
 	.card:hover {
-		border-color: #a8ff60;
 		transform: translateY(-5px);
 	}
 	.card-top {

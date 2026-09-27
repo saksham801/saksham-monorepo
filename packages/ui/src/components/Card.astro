@@ -1,0 +1,26 @@
+---
+interface Props extends astroHTML.JSX.HTMLAttributes {
+	href?: string;
+	class?: string;
+}
+
+const { href, class: className, ...attributes } = Astro.props;
+const classes = [
+	"border border-ui-line-strong bg-ui-surface text-ui-fg transition duration-200 hover:-translate-y-[3px] hover:border-ui-accent hover:text-ui-fg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ui-accent motion-reduce:transition-none",
+	className,
+]
+	.filter(Boolean)
+	.join(" ");
+---
+
+{
+	href ? (
+		<a class={classes} href={href} {...attributes}>
+			<slot />
+		</a>
+	) : (
+		<article class={classes} {...attributes}>
+			<slot />
+		</article>
+	)
+}

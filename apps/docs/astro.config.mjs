@@ -31,7 +31,6 @@ export default defineConfig({
         alt: 'SD — Saksham’s Docs',
       },
       components: {
-        PageFrame: './src/components/PageFrame.astro',
         Header: './src/components/Header.astro',
         Footer: './src/components/Footer.astro',
         PageTitle: './src/components/PageTitle.astro',
@@ -40,7 +39,7 @@ export default defineConfig({
       lastUpdated: true,
       pagination: true,
       pagefind: true,
-      tableOfContents: false,
+      tableOfContents: true,
       disable404Route: true,
       head: [
         {
@@ -189,7 +188,41 @@ export default defineConfig({
         { icon: 'github', label: 'GitHub', href: 'https://github.com/saksham-dubey' },
         { icon: 'external', label: 'Portfolio', href: 'https://sakshampy.in/' },
       ],
-      sidebar: [],
+      sidebar: [
+        {
+          label: 'Documentation',
+          items: [
+            { label: 'Welcome', slug: 'index' },
+            { label: 'About these notes', slug: 'guides/about' },
+            { label: 'Engineering toolbox', slug: 'reference/toolbox' },
+          ],
+        },
+        {
+          label: 'Rust',
+          items: [
+            { label: 'Overview', slug: 'languages/rust' },
+            { label: 'Ownership', slug: 'languages/rust/ownership' },
+            { label: 'Tooling', slug: 'languages/rust/tooling' },
+          ],
+        },
+        {
+          label: 'C++',
+          items: [
+            { label: 'Overview', slug: 'languages/cpp' },
+            { label: 'Memory', slug: 'languages/cpp/memory' },
+            { label: 'Tooling', slug: 'languages/cpp/tooling' },
+          ],
+        },
+        {
+          label: 'Python',
+          items: [
+            { label: 'Overview', slug: 'languages/python' },
+            { label: 'Packaging', slug: 'languages/python/packaging' },
+            { label: 'Tooling', slug: 'languages/python/tooling' },
+          ],
+        },
+        { label: 'Terms and Conditions', slug: 'terms' },
+      ],
     }),
   ],
   adapter: cloudflare({

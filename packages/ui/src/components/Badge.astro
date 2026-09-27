@@ -1,0 +1,15 @@
+---
+interface Props extends astroHTML.JSX.HTMLAttributes {
+	class?: string;
+}
+
+const { class: className, ...attributes } = Astro.props;
+const classes = [
+	"inline-flex border border-ui-line-strong px-2 py-1 font-ui-mono text-ui-xs uppercase tracking-[0.08em] text-ui-muted",
+	className,
+]
+	.filter(Boolean)
+	.join(" ");
+---
+
+<span class={classes} {...attributes}><slot /></span>

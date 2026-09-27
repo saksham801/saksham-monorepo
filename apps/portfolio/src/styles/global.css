@@ -1,5 +1,6 @@
 @import "tailwindcss";
-@import "@saksham/ui/styles/tokens.css";
+@import "@saksham/ui/styles/globals.css";
+@source "../../../packages/ui/src";
 
 @theme {
   --font-sans: 'Manrope', sans-serif;
