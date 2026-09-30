@@ -13,3 +13,9 @@
 
 # Turborepo
 .turbo
+
+#Custom
+apps/blogs/## User.md
+
+# Cloudflare CLI build output
+**/.cloudflare/

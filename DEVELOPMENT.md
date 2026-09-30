@@ -1,14 +1,15 @@
 # Development and operations guide
 
 This is the day-to-day guide for running, coding, checking, and safely preparing
-the three Astro sites. The complete application code is in this repository:
+the Astro applications. The complete application code is in this repository:
 
 ```text
 /home/saksham/blogs.sakshampy.in/monorepo/
 ├── apps/
 │   ├── portfolio/   # https://sakshampy.in
 │   ├── docs/        # https://docs.sakshampy.in
-│   └── blogs/       # https://blogs.sakshampy.in
+│   ├── blogs/       # https://blogs.sakshampy.in
+│   └── report/      # Worker URL not recorded
 ├── packages/
 │   └── ui/          # shared design tokens and Astro primitives
 ├── .github/workflows/ci.yml
@@ -25,7 +26,7 @@ that is genuinely shared belongs in `packages/ui`.
 ## Requirements and first setup
 
 - Bun `1.4.2` (the version recorded in the root `package.json`)
-- Node.js `22.12+` for the Astro applications
+- Node.js `22.18+` for Cloudflare CLI configuration loading and app commands
 - Git
 
 In a terminal:
@@ -91,8 +92,8 @@ daily work, prefer one filtered app so its port and logs are clear.
 - Layout and page metadata: `apps/portfolio/src/layouts/Layout.astro`
 - Styles: `apps/portfolio/src/styles/global.css` and page/component styles
 - Public static files: `apps/portfolio/public/`
-- Astro and Worker setup: `apps/portfolio/astro.config.mjs`,
-  `apps/portfolio/wrangler.jsonc`
+- Astro setup: `apps/portfolio/astro.config.mjs`
+- Cloudflare CLI setup: `apps/portfolio/cloudflare.config.ts`
 
 ### Docs
 
@@ -102,7 +103,7 @@ daily work, prefer one filtered app so its port and logs are clear.
 - Header, footer, title, and page frame: `apps/docs/src/components/`
 - Docs theme: `apps/docs/src/styles/docs.css`
 - Public static files: `apps/docs/public/`
-- Cloudflare Worker setup: `apps/docs/wrangler.jsonc`
+- Cloudflare CLI setup: `apps/docs/cloudflare.config.ts`
 
 To add a page, create a Markdown or MDX file under `src/content/docs/`; its
 path becomes its route. Update the sidebar/navigation in `astro.config.mjs` or
@@ -120,10 +121,17 @@ Starlight, and its navigation and page layout are intentionally Docs-specific.
 - Layouts: `apps/blogs/src/layouts/`
 - Theme: `apps/blogs/src/styles/global.css`
 - Public static files: `apps/blogs/public/`
-- Cloudflare Worker setup: `apps/blogs/wrangler.jsonc`
+- Cloudflare CLI setup: `apps/blogs/cloudflare.config.ts`
 
 Add an article as a Markdown/MDX file in `src/content/blog/` and follow the
 frontmatter/schema used by the existing articles.
+
+### Report
+
+- Cloudflare Worker package: `apps/report/`
+- Worker configuration: `apps/report/cloudflare.config.ts`
+- The production URL and dashboard ownership have not been recorded; confirm
+  both before connecting or deploying this Worker.
 
 ### Shared UI
 
@@ -329,19 +337,33 @@ real `.dev.vars` file to a commit. Blogs and Docs had no app-specific env-file
 names in the inspected configuration. Cloudflare account credentials are not
 stored in this repository.
 
-## Cloudflare builds and production deployment
+## Cloudflare configuration and production deployment
 
-Each app retains its own Worker, Wrangler config, domain, and deployment
-ownership:
+All four app configurations have been migrated to typed
+`cloudflare.config.ts` files using Cloudflare's official `cf migrate` command
+and follow-up guidance. `cf workers types` succeeds for each app. However,
+Portfolio's `cf build` currently fails after the Astro build because the Astro
+Cloudflare adapter does not produce the Build Output that `cf deploy`
+requires. `cf` is in beta, so this migration is not ready for production
+deployment; verify the `cf` build and dry run for every app before cutover.
+
+For safety, the existing `wrangler.jsonc` files and Wrangler-based deployment
+scripts remain active. `wrangler.config.ts` is retained for the `cf` migration
+and build settings; Wrangler deployments continue to use `wrangler.jsonc`.
+Do not replace the deployment commands or remove these compatibility files
+until Cloudflare CLI can build and dry-run each Astro Worker successfully.
+Node.js 22.18+ is required to load `cloudflare.config.ts`; Bun remains the
+package manager and workspace runner.
 
 | App directory | Worker name | Production URL |
 | --- | --- | --- |
 | `apps/portfolio` | `saksham` | <https://sakshampy.in> |
 | `apps/docs` | `docs` | <https://docs.sakshampy.in> |
 | `apps/blogs` | `blogs` | <https://blogs.sakshampy.in> |
+| `apps/report` | `report` | Not recorded; confirm before deployment |
 
-The Wrangler files are `apps/<app>/wrangler.jsonc`. To assemble and validate a
-Worker bundle without publishing it:
+To validate the current production deployment path without publishing, run
+these commands from only the app being checked:
 
 ```bash
 cd /home/saksham/blogs.sakshampy.in/monorepo/apps/portfolio
@@ -349,93 +371,52 @@ bun run build
 bunx wrangler deploy --dry-run
 ```
 
-Repeat in the intended app directory for Docs or Blogs. `--dry-run` does not
-deploy.
+This dry run does not publish. Review output for the expected Worker name,
+bindings, routes, and assets. Repeat for `docs`, `blogs`, or `report` only
+when needed. `bun run cf-typegen` exercises the migrated `cf` configuration
+without deploying.
 
-The existing deploy script performs a real deployment. Use it for a manually
-triggered deployment only after verifying the intended Cloudflare account,
-credentials, Worker settings, and production approval:
+The existing `deploy` script still runs Astro build plus Wrangler deploy. It
+performs a real deployment. Use it for one app at a time and only after the
+existing Cloudflare Worker, target account, domains, bindings, production
+variables/secrets, and current deployment have been verified in Cloudflare.
+Never change DNS, domains, Worker ownership, or secrets as part of local
+migration work. Cloudflare Workers Builds settings live in Cloudflare and are
+not changed by this repository.
 
-```bash
-cd /home/saksham/blogs.sakshampy.in/monorepo/apps/portfolio
-bun run deploy
-```
+### Safe production cutover checklist
 
-Use the same command from `apps/docs` or `apps/blogs` to deploy that specific
-app. For normal Git pushes, Cloudflare Workers Builds should build and deploy
-the matching app from the monorepo using the settings below. The build
-connection lives in Cloudflare, not in this repository, so verify each
-Worker's Git repository and settings in the Cloudflare dashboard. Never change
-DNS, domains, or Worker ownership as part of normal local development.
+1. Confirm the monorepo CI checks pass on the intended production branch.
+2. In Cloudflare, verify the account, existing Worker name, custom domains,
+   bindings, production variables/secrets, Git connection, and current
+   deployment. For `report`, do not deploy until its production URL and target
+   Worker settings are confirmed. Keep the old GitHub repositories and last
+   working commits available for rollback.
+3. Run `bun run cf-typegen`, `bun run build`, and
+   `bunx wrangler deploy --dry-run` from that app's directory. Stop if output
+   does not match the verified Worker.
+4. Test a preview/staging version and its important routes/assets. Authenticate
+   with `bunx wrangler login` and verify the account with `bunx wrangler whoami`
+   before a real deployment.
+5. After explicit production approval, run `bun run deploy` from that one app.
+   Smoke-test production and inspect Worker logs/errors. Keep the prior Worker
+   and repo available; do not deploy all apps together for the first cutover.
 
-### First-time manual deployment checklist
-
-This sequence deploys only the selected app's Worker. It is not a substitute
-for confirming that the existing Cloudflare Worker, custom domain, bindings,
-and account are the intended production targets.
-
-1. Confirm the monorepo is pushed to `saksham801/saksham-monorepo` and the CI
-   check passes on `main`. Configure GitHub branch protection to require the
-   CI check before merging pull requests into `main`; Cloudflare's production
-   branch must also be `main`.
-2. In Cloudflare, verify the account and existing Worker (`saksham`, `docs`, or
-   `blogs`) that currently serves the intended production URL. Confirm the
-   custom domain, Worker bindings, production variables/secrets, Git
-   connection, and current deployment before changing its source repository
-   or build settings. Keep the old GitHub repository and its last working
-   commit for rollback.
-3. For a local CLI deployment, authenticate and check the account:
-
-   ```bash
-   cd /home/saksham/blogs.sakshampy.in/monorepo
-   bunx wrangler login
-   bunx wrangler whoami
-   ```
-
-   If `whoami` reports the wrong account, stop. Do not deploy.
-4. Build and dry-run only the intended Worker, from its app directory:
-
-   ```bash
-   cd /home/saksham/blogs.sakshampy.in/monorepo/apps/portfolio
-   bun run build
-   bunx wrangler deploy --dry-run
-   ```
-
-   Replace `portfolio` with `docs` or `blogs` to validate those Workers.
-   Review Wrangler's output for the expected Worker name and bindings. A dry
-   run does not publish.
-5. Only after preview/staging checks and explicit production approval, deploy
-   that one app:
-
-   ```bash
-   cd /home/saksham/blogs.sakshampy.in/monorepo/apps/portfolio
-   bun run deploy
-   ```
-
-   The script runs `astro build && wrangler deploy` using that app's
-   `wrangler.jsonc`. Repeat separately for the other apps only when approved.
-   Do not deploy all three together for the first cutover.
-6. Smoke-test the app's production homepage and important routes/assets, check
-   Worker logs and errors, and verify the old deployment can still be restored.
-   Do not delete the old repository or change DNS as a rollback shortcut.
-
-Portfolio configuration uses the existing Worker name `saksham`. Before the
-first deployment, set `OPENSTATUS_API_KEY` as a **secret** on that Worker using
-Cloudflare's secret settings (or `bunx wrangler secret put OPENSTATUS_API_KEY`
-from `apps/portfolio` after verifying the account). Set
-`OPENSTATUS_MONITOR_ID` as a non-secret Worker variable in that same Worker's
-settings. The repository deliberately does not contain either production value.
-Check and preserve any other existing production bindings/settings in the
-Cloudflare dashboard; do not infer values from the local example.
+Portfolio configuration continues to use Worker `saksham`. Preserve
+`OPENSTATUS_API_KEY` as a **secret** and `OPENSTATUS_MONITOR_ID` as a
+non-secret Worker variable in Cloudflare. The repository deliberately does
+not contain either production value. Check and preserve all existing production
+bindings/settings in the dashboard; do not infer values from the local example.
 
 ### Cloudflare Workers Builds from the monorepo
 
-Configure **three separate existing Worker projects** against the same
-monorepo repository. Each Worker gets its own build settings, production
-branch, and path filters. Do not create one Worker for all three apps. Cloudflare
-Workers Builds has a build step followed by a deploy step; the build command
-uses Turbo to produce the app's `dist/`, and the deploy command runs Wrangler
-with that app's `wrangler.jsonc`.
+Configure each verified existing Worker separately against the monorepo.
+Do not create a replacement Worker or change domains. Cloudflare Workers
+Builds settings live in the dashboard; this repository migration does not
+change them. Until `cf build` supports the Astro Cloudflare adapter here, keep
+the current Wrangler build/deploy commands. Do not change a production
+Workers Builds configuration to `cf deploy` before the `cf` build and
+non-publishing dry run both succeed for that app.
 
 Having a Worker connected to GitHub does not by itself make it deploy from
 this monorepo: the Worker must be connected to the specific repository
@@ -449,34 +430,28 @@ section **Build**). Confirm the Worker name and current deployment before
 editing anything. In its Git/build settings, select the connected GitHub
 account and `saksham801/saksham-monorepo`, then set:
 
-| Setting | Portfolio Worker `saksham` | Docs Worker `docs` | Blogs Worker `blogs` |
-| --- | --- | --- | --- |
-| Git repository | `saksham801/saksham-monorepo` | `saksham801/saksham-monorepo` | `saksham801/saksham-monorepo` |
-| Root directory | Repository root (`.` or `/`) | Repository root (`.` or `/`) | Repository root (`.` or `/`) |
-| Production branch | `main` | `main` | `main` |
-| Build command | `bun install --frozen-lockfile && bunx turbo build --filter=portfolio` | `bun install --frozen-lockfile && bunx turbo build --filter=docs` | `bun install --frozen-lockfile && bunx turbo build --filter=blogs` |
-| Deploy command | `cd apps/portfolio && bunx wrangler deploy` | `cd apps/docs && bunx wrangler deploy` | `cd apps/blogs && bunx wrangler deploy` |
-| Preview command (if previews enabled) | `cd apps/portfolio && bunx wrangler preview` | `cd apps/docs && bunx wrangler preview` | `cd apps/blogs && bunx wrangler preview` |
+| Setting | Portfolio `saksham` | Docs `docs` | Blogs `blogs` | Report `report` |
+| --- | --- | --- | --- | --- |
+| Git repository | `saksham801/saksham-monorepo` | `saksham801/saksham-monorepo` | `saksham801/saksham-monorepo` | Verify before connecting |
+| Root directory | Repository root | Repository root | Repository root | Verify before connecting |
+| Production branch | `main` | `main` | `main` | Verify before connecting |
+| Build command | `bun install --frozen-lockfile && bunx turbo build --filter=portfolio` | `bun install --frozen-lockfile && bunx turbo build --filter=docs` | `bun install --frozen-lockfile && bunx turbo build --filter=blogs` | Verify before connecting |
+| Deploy command | `cd apps/portfolio && bunx wrangler deploy` | `cd apps/docs && bunx wrangler deploy` | `cd apps/blogs && bunx wrangler deploy` | Only after target verification |
+| Preview command (if enabled) | `cd apps/portfolio && bunx wrangler preview` | `cd apps/docs && bunx wrangler preview` | `cd apps/blogs && bunx wrangler preview` | Only after target verification |
 
 **Use the repository root.** The apps depend on `@saksham/ui` through Bun
 workspaces and the single root `bun.lock`. Do not set the Cloudflare root
 directory to `apps/<app>`: a root install from inside an app would not have
-the complete workspace context. The build command starts at the repository
-root; the deploy/preview commands change to the app directory so Wrangler
-loads its own configuration and relative `dist` path.
-
-In the Cloudflare build settings, use the workspace install/build command
-above as the **Build command** and the app-specific Wrangler command as the
-**Deploy command**. Do not make the deploy command `bun run deploy` in this
-two-step setup: the app's script builds Astro again, even though Turbo already
-created `dist/` in the build step. Cloudflare Workers Builds can create its
-deployment token automatically; do not paste a Cloudflare token into this
+the complete workspace context. Build commands start at the repository root;
+deploy/preview commands change to the app directory so Wrangler loads the
+correct config and relative output paths. Cloudflare Workers Builds can create
+its deployment token automatically; do not paste a Cloudflare token into this
 repository or a committed workflow.
 
-Verify Workers Builds can run the Bun version pinned in the root
-`package.json` (`bun@1.4.2`) and that its package installation uses the root
+Verify Workers Builds can run Node.js 22.18+ and the Bun version pinned in the
+root `package.json` (`bun@1.4.2`), and that package installation uses the root
 `bun.lock`. If the Cloudflare build environment cannot run this workspace,
-stop and configure a supported Bun setup before enabling deployments. Do not
+stop and configure a supported runtime before enabling deployments. Do not
 switch package managers or regenerate the lockfile with npm.
 
 #### Restricting which pushes deploy each Worker
@@ -492,9 +467,11 @@ evaluated against repository-relative paths:
 | Portfolio | `apps/portfolio/*`, `packages/ui/*`, `package.json`, `bun.lock`, `turbo.json`, `tsconfig.json` |
 | Docs | `apps/docs/*`, `packages/ui/*`, `package.json`, `bun.lock`, `turbo.json`, `tsconfig.json` |
 | Blogs | `apps/blogs/*`, `packages/ui/*`, `package.json`, `bun.lock`, `turbo.json`, `tsconfig.json` |
+| Report | `apps/report/*`, `package.json`, `bun.lock`, `turbo.json`, `tsconfig.json` |
 
 Do not add the other apps' paths to a Worker. App-local changes deploy only
-that app; a shared UI or root workspace/build config change deploys all three.
+that app; a shared UI or root workspace/build config change deploys all
+connected apps.
 Validate the watch-path matching with harmless test commits on a branch before
 relying on it. Cloudflare may intentionally build when a push has no file
 changes or exceeds its path-filter limits; path filters are an optimization,
@@ -507,7 +484,8 @@ With these filters, the intended result for a push to `main` is:
 | `apps/portfolio/**` | Portfolio only |
 | `apps/docs/**` | Docs only |
 | `apps/blogs/**` | Blogs only |
-| `packages/ui/**` or a listed root workspace/build file | All three |
+| `apps/report/**` | Report only, if connected after verification |
+| `packages/ui/**` or a listed root workspace/build file | All connected apps |
 | Only `DEVELOPMENT.md` or other unlisted documentation | None |
 
 #### First-connection and cutover order
@@ -643,5 +621,7 @@ the production branch.
    `bunx turbo build --filter=<app>`.
 5. Review `git diff`, make sure no secrets/generated files are staged, and
    preserve the app-specific Cloudflare configuration.
-6. Use Wrangler dry run for deployment bundle validation. Do not publish until
-   production account/configuration and approval are confirmed.
+6. Run `bun run cf-typegen`, `bun run build`, and
+   `bunx wrangler deploy --dry-run` in the app for deployment validation. Do
+   not publish until the production account, Worker configuration, and
+   approval are confirmed.

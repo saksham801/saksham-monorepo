@@ -1,8 +1,8 @@
 # Saksham sites monorepo
 
 Independent Astro applications managed with Bun workspaces and Turborepo. Each
-application retains its own routes, Astro integrations, Wrangler configuration,
-Worker, environment, and Cloudflare deployment ownership.
+application retains its own routes, Astro integrations, Cloudflare Worker,
+environment, and deployment ownership.
 
 ## Applications and deployments
 
@@ -11,11 +11,16 @@ Worker, environment, and Cloudflare deployment ownership.
 | `apps/portfolio` | `saksham801/portfolio` | `saksham` | <https://sakshampy.in> |
 | `apps/docs` | `saksham801/docs` | `docs` | <https://docs.sakshampy.in> |
 | `apps/blogs` | `saksham801/blogs` | `blogs` | <https://blogs.sakshampy.in> |
+| `apps/report` | — | `report` | Not recorded |
 
-Each app's `wrangler.jsonc` remains authoritative for its Worker configuration.
-Production credentials and any custom-domain/account settings remain managed by
-Cloudflare and are not stored here. To have pushes to the monorepo deploy these
-
+Each app has a typed `cloudflare.config.ts` for Cloudflare CLI commands and
+keeps its Wrangler config for the active Astro build/deployment path. The
+`cf` migration is staged but not deployed: `cf build` currently fails because
+the Astro Cloudflare adapter does not emit the Build Output required by
+`cf deploy`. Do not switch deployment commands until this succeeds. Production
+credentials and custom-domain/account settings remain managed by Cloudflare
+and are not stored here. `cf` requires Node.js 22.18+; Bun remains the package
+manager. To have pushes to the monorepo deploy these
 
 
 Workers automatically, connect each existing Worker to this same GitHub
@@ -29,7 +34,12 @@ For an explicitly manual deployment, the app-specific scripts are:
 bun --cwd apps/portfolio run deploy
 bun --cwd apps/docs run deploy
 bun --cwd apps/blogs run deploy
+bun --cwd apps/report run deploy
 ```
+
+These commands perform real deployments. Run the app build and
+`wrangler deploy --dry-run` from the selected app first; see
+[DEVELOPMENT.md](./DEVELOPMENT.md#cloudflare-cli-builds-and-production-deployment).
 
 The Git remote `origin` points to
 `git@github.com:saksham801/saksham-monorepo.git`. A push only triggers a

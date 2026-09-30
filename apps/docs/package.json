@@ -2,6 +2,9 @@
 	"name": "docs",
 	"type": "module",
 	"version": "0.0.1",
+	"engines": {
+		"node": ">=22.18.0"
+	},
 	"scripts": {
 		"dev": "astro dev",
 		"start": "astro dev",
@@ -11,9 +14,9 @@
 		"typecheck": "astro check",
 		"check": "astro check",
 		"astro": "astro",
-		"generate-types": "wrangler types",
+		"generate-types": "cf workers types",
 		"deploy": "astro build && wrangler deploy",
-		"cf-typegen": "wrangler types"
+		"cf-typegen": "cf workers types"
 	},
 	"dependencies": {
 		"@saksham/ui": "workspace:*",
@@ -32,6 +35,7 @@
 	"devDependencies": {
 		"@types/node": "^22.20.3",
 		"playwright": "^1.63.0",
+		"cf": "^1.0.0-beta.7",
 		"wrangler": "^4.132.0"
 	}
 }

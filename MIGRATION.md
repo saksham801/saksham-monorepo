@@ -48,10 +48,27 @@ over one of the existing production repositories.
 
 ## Deployment and environment ownership
 
-- `apps/portfolio` keeps Worker `saksham`, `wrangler.jsonc`, and its
+- `apps/portfolio` keeps Worker `saksham` and its
   `OPENSTATUS_API_KEY` secret / `OPENSTATUS_MONITOR_ID` variable.
-- `apps/docs` keeps Worker `docs` and its own `wrangler.jsonc`.
-- `apps/blogs` keeps Worker `blogs` and its own `wrangler.jsonc`.
+- `apps/docs` keeps Worker `docs`.
+- `apps/blogs` keeps Worker `blogs`.
+- `apps/report` has a Worker config named `report`; its production URL and
+  dashboard ownership have not been verified.
+- Each app now has a `cloudflare.config.ts` used by Cloudflare CLI (`cf`).
+  Wrangler JSON configs are retained as rollback artifacts, and
+  `wrangler.config.ts` provides build settings to `cf`'s Wrangler bundler.
+  `cf` is beta; no production deployment, DNS change, secret change, or
+  Cloudflare dashboard edit was made as part of this config migration.
+- The Blogs custom domains declared in Wrangler map to `worker.domains`;
+  `previewUrls: false` preserves the disabled preview setting. This mapping
+  is local configuration only and must still be confirmed against the live
+  Worker before deployment.
+- Validation confirmed `cf workers types` works for all four app configs.
+  Portfolio's `cf build` runs the Astro build but then fails because the
+  adapter does not emit the Build Output required by `cf deploy`. Keep the
+  existing Wrangler build/deploy scripts and dashboard settings until a future
+  `cf` release supports this Astro output and all four non-publishing dry runs
+  pass.
 - The checked-out repositories have no GitHub Actions workflows. No deployment
   workflow, account ID, credential, or custom-domain configuration was
   inferred or changed by the migration.

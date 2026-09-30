@@ -5,6 +5,7 @@ export default tseslint.config(
   {
     ignores: [
       "**/dist/**",
+      "**/.cloudflare/**",
       "**/.astro/**",
       "**/.wrangler/**",
       "**/node_modules/**",
