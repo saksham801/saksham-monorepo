@@ -45,6 +45,14 @@
       ],
       "outputs": []
     },
+    "test:e2e": {
+      "cache": false,
+      "outputs": ["tests/browser-load/reports/**"]
+    },
+    "test:load": {
+      "cache": false,
+      "outputs": ["tests/browser-load/reports/**"]
+    },
     "deploy": {
       "cache": true,
       "env": [

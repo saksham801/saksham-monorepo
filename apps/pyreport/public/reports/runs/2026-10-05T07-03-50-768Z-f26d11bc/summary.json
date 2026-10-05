@@ -1,0 +1,302 @@
+{
+  "runId": "2026-10-05T07-03-50-768Z-f26d11bc",
+  "users": 25,
+  "durationSeconds": 300,
+  "pagesVisited": 1349,
+  "successfulSessions": 254,
+  "failedSessions": 0,
+  "errorRate": 0,
+  "navigation": {
+    "p50": 955.6000000000931,
+    "p75": 1401.7000000001863,
+    "p95": 2322.5,
+    "p99": 2985,
+    "max": 6098.5
+  },
+  "slowRoutes": [
+    {
+      "app": "blogs",
+      "path": "/",
+      "p95": 2679.2999999998137
+    },
+    {
+      "app": "docs",
+      "path": "/",
+      "p95": 2631
+    },
+    {
+      "app": "portfolio",
+      "path": "/",
+      "p95": 2598.2000000001863
+    },
+    {
+      "app": "portfolio",
+      "path": "/health/",
+      "p95": 2565.399999999907
+    },
+    {
+      "app": "docs",
+      "path": "/languages/cpp/",
+      "p95": 2253.6999999997206
+    },
+    {
+      "app": "docs",
+      "path": "/terms/",
+      "p95": 2183.899999999907
+    },
+    {
+      "app": "docs",
+      "path": "/languages/python/tooling/",
+      "p95": 2118.9000000003725
+    },
+    {
+      "app": "docs",
+      "path": "/languages/rust/tooling/",
+      "p95": 2076.100000000093
+    },
+    {
+      "app": "docs",
+      "path": "/reference/toolbox/",
+      "p95": 1938.5
+    },
+    {
+      "app": "docs",
+      "path": "/languages/python/",
+      "p95": 1912
+    }
+  ],
+  "brokenRoutes": [
+    {
+      "url": "https://sakshampy.in/api/openstatus",
+      "status": 502
+    },
+    {
+      "url": "https://sakshampy.in/api/openstatus",
+      "status": 502
+    },
+    {
+      "url": "https://sakshampy.in/api/openstatus",
+      "status": 502
+    },
+    {
+      "url": "https://sakshampy.in/api/openstatus",
+      "status": 502
+    },
+    {
+      "url": "https://sakshampy.in/api/openstatus",
+      "status": 502
+    },
+    {
+      "url": "https://sakshampy.in/api/openstatus",
+      "status": 502
+    },
+    {
+      "url": "https://sakshampy.in/api/openstatus",
+      "status": 502
+    },
+    {
+      "url": "https://sakshampy.in/api/openstatus",
+      "status": 502
+    },
+    {
+      "url": "https://sakshampy.in/api/openstatus",
+      "status": 502
+    },
+    {
+      "url": "https://sakshampy.in/api/openstatus",
+      "status": 502
+    },
+    {
+      "url": "https://sakshampy.in/api/openstatus",
+      "status": 502
+    },
+    {
+      "url": "https://sakshampy.in/api/openstatus",
+      "status": 502
+    },
+    {
+      "url": "https://sakshampy.in/api/openstatus",
+      "status": 502
+    },
+    {
+      "url": "https://sakshampy.in/api/openstatus",
+      "status": 502
+    },
+    {
+      "url": "https://sakshampy.in/api/openstatus",
+      "status": 502
+    },
+    {
+      "url": "https://sakshampy.in/api/openstatus",
+      "status": 502
+    },
+    {
+      "url": "https://sakshampy.in/api/openstatus",
+      "status": 502
+    },
+    {
+      "url": "https://sakshampy.in/api/openstatus",
+      "status": 502
+    },
+    {
+      "url": "https://sakshampy.in/api/openstatus",
+      "status": 502
+    },
+    {
+      "url": "https://sakshampy.in/api/openstatus",
+      "status": 502
+    },
+    {
+      "url": "https://sakshampy.in/api/openstatus",
+      "status": 502
+    },
+    {
+      "url": "https://sakshampy.in/api/openstatus",
+      "status": 502
+    },
+    {
+      "url": "https://sakshampy.in/api/openstatus",
+      "status": 502
+    },
+    {
+      "url": "https://sakshampy.in/api/openstatus",
+      "status": 502
+    },
+    {
+      "url": "https://sakshampy.in/api/openstatus",
+      "status": 502
+    },
+    {
+      "url": "https://sakshampy.in/api/openstatus",
+      "status": 502
+    },
+    {
+      "url": "https://sakshampy.in/api/openstatus",
+      "status": 502
+    },
+    {
+      "url": "https://sakshampy.in/api/openstatus",
+      "status": 502
+    },
+    {
+      "url": "https://sakshampy.in/api/openstatus",
+      "status": 502
+    },
+    {
+      "url": "https://sakshampy.in/api/openstatus",
+      "status": 502
+    },
+    {
+      "url": "https://sakshampy.in/api/openstatus",
+      "status": 502
+    },
+    {
+      "url": "https://sakshampy.in/api/openstatus",
+      "status": 502
+    },
+    {
+      "url": "https://sakshampy.in/api/openstatus",
+      "status": 502
+    },
+    {
+      "url": "https://sakshampy.in/api/openstatus",
+      "status": 502
+    },
+    {
+      "url": "https://sakshampy.in/api/openstatus",
+      "status": 502
+    },
+    {
+      "url": "https://sakshampy.in/api/openstatus",
+      "status": 502
+    },
+    {
+      "url": "https://sakshampy.in/api/openstatus",
+      "status": 502
+    },
+    {
+      "url": "https://sakshampy.in/api/openstatus",
+      "status": 502
+    },
+    {
+      "url": "https://sakshampy.in/api/openstatus",
+      "status": 502
+    },
+    {
+      "url": "https://sakshampy.in/api/openstatus",
+      "status": 502
+    },
+    {
+      "url": "https://sakshampy.in/api/openstatus",
+      "status": 502
+    },
+    {
+      "url": "https://sakshampy.in/api/openstatus",
+      "status": 502
+    },
+    {
+      "url": "https://sakshampy.in/api/openstatus",
+      "status": 502
+    },
+    {
+      "url": "https://sakshampy.in/api/openstatus",
+      "status": 502
+    },
+    {
+      "url": "https://sakshampy.in/api/openstatus",
+      "status": 502
+    },
+    {
+      "url": "https://sakshampy.in/api/openstatus",
+      "status": 502
+    },
+    {
+      "url": "https://sakshampy.in/api/openstatus",
+      "status": 502
+    },
+    {
+      "url": "https://sakshampy.in/api/openstatus",
+      "status": 502
+    },
+    {
+      "url": "https://sakshampy.in/api/openstatus",
+      "status": 502
+    },
+    {
+      "url": "https://sakshampy.in/api/openstatus",
+      "status": 502
+    },
+    {
+      "url": "https://sakshampy.in/api/openstatus",
+      "status": 502
+    },
+    {
+      "url": "https://sakshampy.in/api/openstatus",
+      "status": 502
+    },
+    {
+      "url": "https://sakshampy.in/api/openstatus",
+      "status": 502
+    },
+    {
+      "url": "https://sakshampy.in/api/openstatus",
+      "status": 502
+    },
+    {
+      "url": "https://sakshampy.in/api/openstatus",
+      "status": 502
+    },
+    {
+      "url": "https://sakshampy.in/api/openstatus",
+      "status": 502
+    },
+    {
+      "url": "https://sakshampy.in/api/openstatus",
+      "status": 502
+    }
+  ],
+  "kind": "load",
+  "timestamp": "2026-10-05T07:03:52.070Z",
+  "target": "production",
+  "archiveId": "2026-10-05T07-03-50-768Z-f26d11bc"
+}

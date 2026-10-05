@@ -1,0 +1,346 @@
+{
+  "config": {
+    "argv": [
+      "/home/saksham/.local/nodejs/bin/node",
+      "/home/saksham/sakshampy.in/monorepo/tests/browser-load/node_modules/.bin/playwright",
+      "test",
+      "--config=playwright.config.ts",
+      "--grep-invert",
+      "@load"
+    ],
+    "configFile": "/home/saksham/sakshampy.in/monorepo/tests/browser-load/playwright.config.ts",
+    "rootDir": "/home/saksham/sakshampy.in/monorepo/tests/browser-load/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 2
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/home/saksham/sakshampy.in/monorepo/tests/browser-load/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/home/saksham/sakshampy.in/monorepo/tests/browser-load/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 45000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "html",
+        {
+          "outputFolder": "reports/playwright",
+          "open": "never"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "reports/playwright-results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 2,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "journeys.spec.ts",
+      "file": "journeys.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "virtual user completes a realistic, bounded journey",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "timedOut",
+                  "duration": 45241,
+                  "error": {
+                    "message": "\u001b[31mTest timeout of 45000ms exceeded.\u001b[39m",
+                    "stack": "\u001b[31mTest timeout of 45000ms exceeded.\u001b[39m"
+                  },
+                  "errors": [
+                    {
+                      "message": "\u001b[31mTest timeout of 45000ms exceeded.\u001b[39m"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T07:07:48.568Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/home/saksham/sakshampy.in/monorepo/tests/browser-load/test-results/journeys-virtual-user-completes-a-realistic-bounded-journey-chromium/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/home/saksham/sakshampy.in/monorepo/tests/browser-load/test-results/journeys-virtual-user-completes-a-realistic-bounded-journey-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/home/saksham/sakshampy.in/monorepo/tests/browser-load/test-results/journeys-virtual-user-completes-a-realistic-bounded-journey-chromium/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "aa09586c1d16412a1f00-987444b0508911f2adaa",
+          "file": "journeys.spec.ts",
+          "line": 7,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "smoke.spec.ts",
+      "file": "smoke.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "all configured application homepages respond",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 9668,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T07:07:47.851Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4219922fea2e2bd3c691-2eb5d612bb2877ae1cde",
+          "file": "smoke.spec.ts",
+          "line": 5,
+          "column": 1
+        },
+        {
+          "title": "discovered public routes are reachable",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "timedOut",
+                  "duration": 46297,
+                  "error": {
+                    "message": "\u001b[31mTest timeout of 45000ms exceeded.\u001b[39m",
+                    "stack": "\u001b[31mTest timeout of 45000ms exceeded.\u001b[39m"
+                  },
+                  "errors": [
+                    {
+                      "message": "\u001b[31mTest timeout of 45000ms exceeded.\u001b[39m"
+                    },
+                    {
+                      "location": {
+                        "file": "/home/saksham/sakshampy.in/monorepo/tests/browser-load/tests/smoke.spec.ts",
+                        "column": 32,
+                        "line": 19
+                      },
+                      "message": "Error: browser.newPage: Test ended.\nBrowser logs:\n\n<launching> /home/saksham/.cache/ms-playwright/chromium_headless_shell-1243/chrome-headless-shell-linux64/chrome-headless-shell --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,Translate,AutoDeElevate,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/tmp/playwright_chromiumdev_profile-4VRila --remote-debugging-pipe --no-startup-window\n<launched> pid=44851\n[pid=44851][err] Fontconfig warning: We will not regenerate the cache because some cache files were generated by a newer version (0x2012003) of Fontconfig. Please regenerate the cache with the latest version of Fontconfig to avoid any unexpected behavior. (current version: 0x2012001)\n[pid=44851][err] [1005/123748.725412:WARNING:components/dbus/xdg/portal.cc:126] Failed to register with org.freedesktop.host.portal.Registry\n[pid=44851][err] [1005/123749.038900:WARNING:sandbox/policy/linux/sandbox_linux.cc:405] InitializeSandbox() called with multiple threads in process gpu-process.\n[pid=44851] <gracefully close start>\n\n  17 |   expect(routes.length).toBeGreaterThan(0);\n  18 |   for (const route of routes.slice(0, Number(process.env.SMOKE_ROUTE_LIMIT ?? 30))) {\n> 19 |     const page = await browser.newPage();\n     |                                ^\n  20 |     const response = await page.goto(route.url, { waitUntil: 'domcontentloaded', timeout: 20_000 }).catch(() => null);\n  21 |     expect(response?.status(), `${route.app} ${route.path}`).toBeLessThan(400);\n  22 |     await page.close();\n    at /home/saksham/sakshampy.in/monorepo/tests/browser-load/tests/smoke.spec.ts:19:32"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T07:07:58.479Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/home/saksham/sakshampy.in/monorepo/tests/browser-load/test-results/smoke-discovered-public-routes-are-reachable-chromium/test-failed-2.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/home/saksham/sakshampy.in/monorepo/tests/browser-load/test-results/smoke-discovered-public-routes-are-reachable-chromium/test-failed-3.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/home/saksham/sakshampy.in/monorepo/tests/browser-load/test-results/smoke-discovered-public-routes-are-reachable-chromium/test-failed-4.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/home/saksham/sakshampy.in/monorepo/tests/browser-load/test-results/smoke-discovered-public-routes-are-reachable-chromium/test-failed-5.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/home/saksham/sakshampy.in/monorepo/tests/browser-load/test-results/smoke-discovered-public-routes-are-reachable-chromium/test-failed-6.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/home/saksham/sakshampy.in/monorepo/tests/browser-load/test-results/smoke-discovered-public-routes-are-reachable-chromium/test-failed-7.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/home/saksham/sakshampy.in/monorepo/tests/browser-load/test-results/smoke-discovered-public-routes-are-reachable-chromium/test-failed-8.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/home/saksham/sakshampy.in/monorepo/tests/browser-load/test-results/smoke-discovered-public-routes-are-reachable-chromium/test-failed-9.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/home/saksham/sakshampy.in/monorepo/tests/browser-load/test-results/smoke-discovered-public-routes-are-reachable-chromium/test-failed-10.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/home/saksham/sakshampy.in/monorepo/tests/browser-load/test-results/smoke-discovered-public-routes-are-reachable-chromium/test-failed-11.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/home/saksham/sakshampy.in/monorepo/tests/browser-load/test-results/smoke-discovered-public-routes-are-reachable-chromium/test-failed-12.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/home/saksham/sakshampy.in/monorepo/tests/browser-load/test-results/smoke-discovered-public-routes-are-reachable-chromium/test-failed-13.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/home/saksham/sakshampy.in/monorepo/tests/browser-load/test-results/smoke-discovered-public-routes-are-reachable-chromium/test-failed-14.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/home/saksham/sakshampy.in/monorepo/tests/browser-load/test-results/smoke-discovered-public-routes-are-reachable-chromium/test-failed-15.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/home/saksham/sakshampy.in/monorepo/tests/browser-load/test-results/smoke-discovered-public-routes-are-reachable-chromium/test-failed-16.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/home/saksham/sakshampy.in/monorepo/tests/browser-load/test-results/smoke-discovered-public-routes-are-reachable-chromium/test-failed-17.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/home/saksham/sakshampy.in/monorepo/tests/browser-load/test-results/smoke-discovered-public-routes-are-reachable-chromium/test-failed-18.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/home/saksham/sakshampy.in/monorepo/tests/browser-load/test-results/smoke-discovered-public-routes-are-reachable-chromium/test-failed-19.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/home/saksham/sakshampy.in/monorepo/tests/browser-load/test-results/smoke-discovered-public-routes-are-reachable-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/home/saksham/sakshampy.in/monorepo/tests/browser-load/test-results/smoke-discovered-public-routes-are-reachable-chromium/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "4219922fea2e2bd3c691-a3d07ad446bcc7845aef",
+          "file": "smoke.spec.ts",
+          "line": 15,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-05T07:07:45.127Z",
+    "duration": 63592.835,
+    "expected": 1,
+    "skipped": 0,
+    "unexpected": 2,
+    "flaky": 0
+  }
+}

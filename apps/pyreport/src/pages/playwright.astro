@@ -1,0 +1,52 @@
+---
+const title = 'Playwright report — Pyreport';
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#090b0d" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="Back to Pyreport dashboard"><span class="brand-mark">P<span>.</span></span><span>PYREPORT <small>TEST INTELLIGENCE</small></span></a>
+      <div class="top-actions"><span class="report-name"><i></i> PLAYWRIGHT TEST REPORT</span><a class="back-link" href="/">← Back to dashboard</a></div>
+    </header>
+    <main>
+      <div class="report-heading"><div><div class="eyebrow">BROWSER AUTOMATION / CHROMIUM</div><h1>Playwright <em>execution.</em></h1><p id="report-description">Loading the latest detailed test report…</p></div><a id="open-standalone" href="/reports/playwright/index.html" target="_blank" rel="noreferrer">Open standalone ↗</a></div>
+      <div class="report-frame"><iframe id="report-frame" title="Detailed Playwright test report" src="/reports/playwright/index.html"></iframe></div>
+      <footer><span>PYREPORT <b>·</b> PLAYWRIGHT HTML REPORT</span><a href="/">Return to report overview ↗</a></footer>
+    </main>
+    <script>
+      const candidate = new URLSearchParams(location.search).get('run');
+      const runId = candidate && /^[a-zA-Z0-9_-]+$/.test(candidate) ? candidate : undefined;
+      const reportPath = runId ? `/reports/runs/${encodeURIComponent(runId)}/playwright/index.html` : '/reports/playwright/index.html';
+      const frame = document.getElementById('report-frame') as HTMLIFrameElement;
+      const standalone = document.getElementById('open-standalone') as HTMLAnchorElement;
+      frame.src = reportPath;
+      standalone.href = reportPath;
+      if (runId) document.getElementById('report-description')!.textContent = `Archived execution · ${runId}`;
+      frame.addEventListener('error', () => { document.getElementById('report-description')!.textContent = 'This run does not include a Playwright HTML report.'; });
+    </script>
+  </body>
+</html>
+<style>
+  :global(*) { box-sizing: border-box; }
+  :global(html), :global(body) { min-width: 360px; min-height: 100%; margin: 0; background: #090b0d; color: #e8edf0; font-family: 'Manrope', sans-serif; }
+  :global(body) { height: 100vh; overflow: hidden; background: radial-gradient(ellipse at 78% -8%, rgba(168,255,96,.075), transparent 35%), #090b0d; }
+  .topbar { position: relative; z-index: 1; height: 68px; padding: 0 clamp(18px, 4vw, 60px); display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #202629; background: rgba(9,11,13,.96); }
+  .brand { display: flex; align-items: center; gap: 11px; color: #e8edf0; text-decoration: none; font-size: 11px; font-weight: 800; letter-spacing: .13em; }.brand small { display: block; margin-top: 3px; color: #778187; font: 9px 'DM Mono', monospace; letter-spacing: .12em; }
+  .brand-mark { display: grid; place-items: center; width: 32px; height: 32px; border: 1px solid #a8ff60; color: #a8ff60; font: 700 17px 'DM Mono', monospace; }.brand-mark span { color: white; }
+  .top-actions { display: flex; align-items: center; gap: 22px; }.report-name, .eyebrow, footer { font: 9px 'DM Mono', monospace; letter-spacing: .1em; color: #899499; }.report-name i { display: inline-block; width: 6px; height: 6px; margin-right: 7px; border-radius: 50%; background: #a8ff60; }
+  .back-link { color: #a8ff60; text-decoration: none; font: 10px 'DM Mono', monospace; }
+  main { display: flex; height: calc(100vh - 68px); flex-direction: column; padding: 0 clamp(18px, 4vw, 60px) 13px; }.report-heading { display: flex; flex: 0 0 auto; align-items: end; justify-content: space-between; gap: 20px; padding: 24px 0 18px; }.eyebrow { color: #a8ff60; }
+  h1 { margin: 7px 0 4px; font-size: clamp(23px, 3vw, 35px); letter-spacing: -.05em; font-weight: 600; }h1 em { color: #a8ff60; font-style: normal; }p { margin: 0; color: #849095; font-size: 11px; }
+  #open-standalone { margin-bottom: 3px; color: #a8ff60; text-decoration: none; font: 10px 'DM Mono', monospace; white-space: nowrap; }.report-frame { min-height: 0; flex: 1; overflow: hidden; border: 1px solid #283033; background: #fff; }.report-frame iframe { display: block; width: 100%; height: 100%; border: 0; background: #fff; }
+  footer { display: flex; flex: 0 0 auto; justify-content: space-between; padding: 10px 2px 0; color: #667177; }footer b { color: #a8ff60; }footer a { color: #869196; text-decoration: none; }
+  @media (max-width: 560px) { .report-name { display: none; }main { padding-inline: 12px; }.report-heading { align-items: start; }#open-standalone { font-size: 9px; } }
+</style>

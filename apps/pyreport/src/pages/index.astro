@@ -1,0 +1,143 @@
+---
+const title = 'Pyreport — Browser Test Intelligence';
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#090b0d" />
+    <meta name="description" content="Playwright browser test and virtual user performance reports." />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="/" aria-label="Pyreport home"><span class="brand-mark">P<span>.</span></span><span>PYREPORT <small>TEST INTELLIGENCE</small></span></a>
+        <div class="top-actions"><span class="status"><i></i> BROWSER PIPELINE</span><button id="refresh" class="refresh" type="button"><span>↻</span> Refresh data</button></div>
+      </header>
+      <main>
+        <section class="intro">
+          <div><div class="eyebrow">QUALITY / PERFORMANCE / REPLAY</div><h1>Browser test <em>reports.</em></h1><p class="lede">A complete view of Playwright checks and real-browser virtual user runs.</p></div>
+          <div class="latest-box"><span class="eyebrow">LATEST RUN</span><strong id="latest-time">Waiting for run data</strong><span id="run-id" class="mono">RUN —</span></div>
+        </section>
+
+        <section id="empty-state" class="empty-state" hidden>
+          <span class="empty-glyph">↗</span><div><h2>No reports published yet</h2><p>Run the Playwright smoke suite or a load profile. Reports will be archived here automatically.</p><code>bun run test:e2e</code></div>
+        </section>
+        <section id="dashboard" hidden>
+          <div class="metrics-grid">
+            <article class="metric-card"><div class="metric-label">PAGES VISITED <span>↗</span></div><strong id="pages-value">—</strong><small id="pages-caption">Across the latest run</small></article>
+            <article class="metric-card"><div class="metric-label">SESSION SUCCESS <span>✓</span></div><strong id="success-value">—</strong><small id="success-caption">Virtual user sessions</small></article>
+            <article class="metric-card"><div class="metric-label">NAVIGATION P95 <span>◷</span></div><strong id="p95-value">—</strong><small>Browser navigation duration</small></article>
+            <article class="metric-card"><div class="metric-label">BROKEN ROUTES <span>!</span></div><strong id="broken-value">—</strong><small id="broken-caption">4xx / 5xx route responses</small></article>
+          </div>
+
+          <section class="panel run-overview">
+            <div class="panel-head"><div><div class="eyebrow">RUN OVERVIEW</div><h2>Latest execution</h2></div><a id="html-report" class="action-link" href="#" target="_blank" rel="noreferrer" hidden>Open Playwright report <span>↗</span></a></div>
+            <div class="run-facts">
+              <div><span>RUN TYPE</span><strong id="run-kind">—</strong></div><div><span>TARGET</span><strong id="run-target">—</strong></div><div><span>VIRTUAL USERS</span><strong id="run-users">—</strong></div><div><span>DURATION</span><strong id="run-duration">—</strong></div><div><span>REQUESTS</span><strong id="run-requests">—</strong></div><div><span>SEED</span><strong id="run-seed">—</strong></div>
+            </div>
+          </section>
+
+          <div class="content-grid">
+            <section class="panel routes-panel"><div class="panel-head"><div><div class="eyebrow">ROUTE PERFORMANCE</div><h2>Slowest pages</h2></div><span class="small-note">P95 · milliseconds</span></div><div class="table-scroll"><table><thead><tr><th>APPLICATION / ROUTE</th><th>VISITS</th><th>P95</th><th>ERRORS</th></tr></thead><tbody id="routes-body"></tbody></table></div><div id="routes-empty" class="table-empty" hidden>No navigation samples recorded in this run.</div></section>
+            <section class="panel history-panel"><div class="panel-head"><div><div class="eyebrow">ARCHIVE</div><h2>Recent runs</h2></div><span id="history-count" class="history-count">0</span></div><div id="history-list" class="history-list"></div></section>
+          </div>
+          <footer><span>PYREPORT <b>·</b> CHROMIUM BROWSER METRICS</span><a href="/reports/data/latest.json" target="_blank" rel="noreferrer">Raw latest JSON ↗</a></footer>
+        </section>
+      </main>
+    </div>
+    <script>
+      type RunSummary = { runId?: string; kind?: string; timestamp?: string; target?: string; users?: number; durationSeconds?: number; pagesVisited?: number; successfulSessions?: number; failedSessions?: number; errorRate?: number; navigation?: { p50?: number | null; p95?: number | null; p99?: number | null }; passed?: number; failed?: number; skipped?: number; flaky?: number; reportUrl?: string; archiveId?: string };
+      type Latest = RunSummary & { requests?: number; seed?: number; brokenRoutes?: Array<unknown>; routeGroups?: Record<string, Record<string, { requests: number; p95: number | null; errors: number }>>; };
+      const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
+      const text = (id: string, value: unknown) => { $(id).textContent = value === undefined || value === null || value === '' ? '—' : String(value); };
+      const number = (value: number | null | undefined) => value === null || value === undefined ? '—' : new Intl.NumberFormat().format(value);
+      const date = (value?: string) => value ? new Date(value).toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' }) : 'Timestamp unavailable';
+      const escapeHtml = (value: string) => value.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#39;');
+
+      async function loadReports() {
+        const [latestResponse, runsResponse, metricsResponse] = await Promise.all([
+          fetch('/reports/data/latest.json', { cache: 'no-store' }), fetch('/reports/runs.json', { cache: 'no-store' }), fetch('/reports/metrics.json', { cache: 'no-store' }).catch(() => undefined),
+        ]);
+        if (!latestResponse.ok || !runsResponse.ok) throw new Error('No reports published');
+        const latest = await latestResponse.json() as Latest;
+        const runs = await runsResponse.json() as RunSummary[];
+        const metrics = metricsResponse?.ok ? await metricsResponse.json() as { routes?: Record<string, Record<string, { requests: number; p95: number | null; errors: number }>> } : undefined;
+        $('empty-state').hidden = true; $('dashboard').hidden = false;
+        text('latest-time', date(latest.timestamp)); text('run-id', `RUN ${latest.runId ?? '—'}`);
+        const loadRun = latest.kind === 'load' || typeof latest.users === 'number';
+        text('pages-value', number(latest.pagesVisited)); text('pages-caption', loadRun ? `${number(latest.users)} virtual users · ${number(latest.durationSeconds)}s` : 'Browser test execution');
+        if (loadRun) { text('success-value', `${((1 - (latest.errorRate ?? 0)) * 100).toFixed(1)}%`); text('success-caption', `${number(latest.successfulSessions)} successful · ${number(latest.failedSessions)} failed`); }
+        else { text('success-value', number(latest.passed)); text('success-caption', `${number(latest.failed)} failed · ${number(latest.skipped)} skipped · ${number(latest.flaky)} flaky`); }
+        text('p95-value', latest.navigation?.p95 == null ? '—' : `${number(Math.round(latest.navigation.p95))} ms`);
+        const broken = Array.isArray(latest.brokenRoutes) ? latest.brokenRoutes.length : 0;
+        text('broken-value', number(broken)); text('broken-caption', broken ? 'Investigate route failures' : 'No broken routes reported');
+        text('run-kind', loadRun ? 'VIRTUAL USER LOAD' : 'PLAYWRIGHT E2E'); text('run-target', latest.target ?? 'CI / configured URLs');
+        text('run-users', loadRun ? number(latest.users) : '—'); text('run-duration', loadRun ? `${number(latest.durationSeconds)} sec` : '—');
+        text('run-requests', number(latest.requests)); text('run-seed', latest.seed === undefined ? '—' : latest.seed);
+        const reportLink = $('html-report') as HTMLAnchorElement;
+        const currentRun = runs.find((run) => run.runId === latest.runId && run.kind === (loadRun ? 'load' : 'e2e'));
+        if (currentRun?.reportUrl && !loadRun) { reportLink.href = '/playwright'; reportLink.hidden = false; } else reportLink.hidden = true;
+        const routeGroups = loadRun ? (metrics?.routes ?? latest.routeGroups) : latest.routeGroups;
+        const routeRows = Object.entries(routeGroups ?? {}).flatMap(([app, routes]) => Object.entries(routes).map(([path, value]) => ({ app, path, ...value })))
+          .filter((route) => route.p95 !== null).sort((a, b) => (b.p95 ?? 0) - (a.p95 ?? 0)).slice(0, 12);
+        const body = $('routes-body');
+        body.innerHTML = routeRows.map((route) => `<tr><td><span class="app-tag">${escapeHtml(route.app.toUpperCase())}</span><span class="route-name">${escapeHtml(route.path)}</span></td><td class="mono-cell">${escapeHtml(number(route.requests))}</td><td class="time-cell">${escapeHtml(`${number(Math.round(route.p95 ?? 0))} ms`)}</td><td class="mono-cell">${escapeHtml(number(route.errors))}</td></tr>`).join('');
+        $('routes-empty').hidden = routeRows.length > 0;
+        const history = $('history-list'); text('history-count', runs.length);
+        history.innerHTML = runs.slice(0, 12).map((run) => {
+          const title = run.kind === 'load' ? `${number(run.users)} users · ${number(run.durationSeconds)}s` : 'Playwright E2E';
+          const outcome = run.kind === 'load' ? `${number(run.pagesVisited)} pages` : `${number(run.passed)} passed`;
+          const href = run.kind === 'e2e' ? `/playwright?run=${encodeURIComponent(run.archiveId ?? run.runId ?? '')}` : `/reports/latest.json?run=${encodeURIComponent(run.archiveId ?? run.runId ?? '')}`;
+          return `<a class="history-item" href="${escapeHtml(href)}"><i class="run-indicator ${run.kind === 'load' ? 'load' : 'e2e'}"></i><span class="history-details"><strong>${escapeHtml(title)}</strong><small>${escapeHtml(date(run.timestamp))}</small></span><span class="history-outcome">${escapeHtml(outcome)}</span></a>`;
+        }).join('');
+      }
+      const load = () => loadReports().catch(() => { $('dashboard').hidden = true; $('empty-state').hidden = false; });
+      $('refresh').addEventListener('click', load); void load();
+    </script>
+  </body>
+</html>
+
+<style>
+  :global(*) { box-sizing: border-box; }
+  :global(html) { min-width: 360px; background: #090b0d; color: #e8edf0; font-family: 'Manrope', sans-serif; }
+  :global(body) { margin: 0; min-height: 100vh; background: radial-gradient(ellipse at 78% -8%, rgba(168,255,96,.075), transparent 35%), #090b0d; }
+  :global(button), :global(a) { font: inherit; }
+  .app-shell { min-height: 100vh; }
+  .topbar { height: 76px; padding: 0 clamp(22px, 5vw, 76px); display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #202629; background: rgba(9,11,13,.88); }
+  .brand { display: flex; gap: 12px; align-items: center; color: #e8edf0; text-decoration: none; font-size: 12px; font-weight: 800; letter-spacing: .13em; }
+  .brand small { display: block; margin-top: 3px; color: #778187; font: 9px 'DM Mono', monospace; letter-spacing: .12em; }
+  .brand-mark { display: grid; place-items: center; width: 34px; height: 34px; border: 1px solid #a8ff60; color: #a8ff60; font: 700 18px 'DM Mono', monospace; }
+  .brand-mark span { color: white; }
+  .top-actions { display: flex; align-items: center; gap: 26px; }
+  .status, .eyebrow, .metric-label, .run-facts span, th, footer { font: 10px 'DM Mono', monospace; letter-spacing: .09em; }
+  .status { color: #aab3b7; }.status i { display: inline-block; width: 6px; height: 6px; margin-right: 7px; border-radius: 50%; background: #a8ff60; box-shadow: 0 0 12px #a8ff6070; }
+  .refresh { padding: 8px 11px; border: 1px solid #30383b; background: transparent; color: #c5cdd0; cursor: pointer; font-size: 11px; }.refresh span { margin-right: 5px; color: #a8ff60; font-size: 16px; vertical-align: -1px; }
+  main { width: min(1280px, calc(100% - 48px)); margin: 0 auto; padding: 61px 0 30px; }
+  .intro { display: flex; justify-content: space-between; align-items: end; gap: 24px; margin-bottom: 35px; }
+  .eyebrow { color: #a8ff60; }
+  h1 { margin: 13px 0 8px; font-size: clamp(35px, 5vw, 58px); line-height: 1.06; letter-spacing: -.055em; font-weight: 600; }
+  h1 em { color: #a8ff60; font-style: normal; }
+  .lede { margin: 0; color: #8e999e; font-size: 14px; }
+  .latest-box { display: flex; min-width: 205px; flex-direction: column; gap: 7px; padding: 14px 17px; border-left: 1px solid #a8ff60; background: linear-gradient(90deg, rgba(168,255,96,.055), transparent); }
+  .latest-box strong { font-size: 12px; font-weight: 600; }.mono, .mono-cell { font: 10px 'DM Mono', monospace; color: #849096; }
+  .metrics-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 15px; }
+  .metric-card, .panel, .empty-state { border: 1px solid #232a2d; background: linear-gradient(140deg, rgba(20,25,27,.94), rgba(13,16,18,.94)); }
+  .metric-card { min-height: 142px; padding: 18px 19px; }.metric-label { display: flex; justify-content: space-between; color: #8c979c; }.metric-label span { color: #a8ff60; }
+  .metric-card strong { display: block; margin: 17px 0 3px; font: 500 31px 'DM Mono', monospace; letter-spacing: -.06em; }.metric-card small { color: #7f8a8f; font-size: 11px; }
+  .panel { padding: 22px 23px; }.run-overview { margin-bottom: 15px; }.panel-head { display: flex; align-items: center; justify-content: space-between; gap: 15px; margin-bottom: 22px; }.panel-head h2, .empty-state h2 { margin: 7px 0 0; font-size: 17px; letter-spacing: -.025em; font-weight: 600; }
+  .action-link { color: #a8ff60; text-decoration: none; font: 11px 'DM Mono', monospace; }.action-link span { margin-left: 5px; }
+  .run-facts { display: grid; grid-template-columns: repeat(6, 1fr); gap: 16px; padding-top: 17px; border-top: 1px solid #252c2f; }.run-facts div { min-width: 0; }.run-facts span { display: block; margin-bottom: 9px; color: #758187; font-size: 9px; }.run-facts strong { display: block; overflow: hidden; color: #dce2e4; text-overflow: ellipsis; white-space: nowrap; font: 12px 'DM Mono', monospace; }
+  .content-grid { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(280px, .8fr); gap: 15px; }.small-note, .history-count { color: #727e83; font: 10px 'DM Mono', monospace; }.history-count { display: grid; place-items: center; width: 24px; height: 24px; border: 1px solid #30383b; color: #a8ff60; }
+  .table-scroll { overflow-x: auto; } table { width: 100%; border-collapse: collapse; text-align: left; } th { padding: 0 9px 12px; color: #68747a; font-size: 9px; font-weight: 400; } td { padding: 13px 9px; border-top: 1px solid #22292c; font-size: 11px; } td:first-child { min-width: 210px; }.app-tag { display: block; margin-bottom: 5px; color: #839096; font: 9px 'DM Mono', monospace; letter-spacing: .07em; }.route-name { color: #dce2e4; font: 11px 'DM Mono', monospace; }.time-cell { color: #a8ff60; font: 11px 'DM Mono', monospace; }.table-empty { padding: 18px 8px; color: #7f8a8f; font-size: 12px; }.history-list { display: flex; flex-direction: column; }.history-item { display: flex; align-items: center; gap: 11px; padding: 13px 0; border-top: 1px solid #22292c; color: inherit; text-decoration: none; }.history-item:hover .history-details strong { color: #a8ff60; }.run-indicator { width: 7px; height: 7px; flex: 0 0 auto; border-radius: 50%; }.run-indicator.load { background: #a8ff60; }.run-indicator.e2e { background: #72c9ff; }.history-details { display: flex; min-width: 0; flex: 1; flex-direction: column; gap: 5px; }.history-details strong { overflow: hidden; font-size: 11px; font-weight: 600; text-overflow: ellipsis; white-space: nowrap; }.history-details small { color: #758187; font: 9px 'DM Mono', monospace; }.history-outcome { color: #89959a; font: 9px 'DM Mono', monospace; white-space: nowrap; }
+  footer { display: flex; justify-content: space-between; gap: 12px; padding: 23px 2px 6px; color: #68747a; font-size: 9px; } footer b { color: #a8ff60; } footer a { color: #8c979c; text-decoration: none; }
+  .empty-state { display: flex; align-items: center; gap: 22px; padding: 30px; }.empty-state h2 { margin-top: 0; }.empty-state p { margin: 9px 0 14px; color: #8e999e; font-size: 13px; }.empty-state code { color: #a8ff60; font: 11px 'DM Mono', monospace; }.empty-glyph { color: #a8ff60; font: 36px 'DM Mono', monospace; }
+  @media (max-width: 850px) { main { padding-top: 42px; }.metrics-grid { grid-template-columns: repeat(2, 1fr); }.run-facts { grid-template-columns: repeat(3, 1fr); }.content-grid { grid-template-columns: 1fr; } }
+  @media (max-width: 560px) { .topbar { height: 64px; padding: 0 18px; }.status { display: none; }main { width: calc(100% - 32px); padding-top: 34px; }.intro { align-items: start; flex-direction: column; }.latest-box { width: 100%; }.metrics-grid { gap: 8px; }.metric-card { min-height: 125px; padding: 15px; }.metric-card strong { font-size: 25px; }.panel { padding: 17px 14px; }.run-facts { grid-template-columns: repeat(2, 1fr); }.panel-head { align-items: start; }.action-link { max-width: 120px; line-height: 1.6; text-align: right; }footer { flex-direction: column; } }
+</style>

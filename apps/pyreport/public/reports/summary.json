@@ -1,0 +1,102 @@
+{
+  "runId": "2026-10-05T07-21-24-959Z-48e38c27",
+  "users": 30,
+  "durationSeconds": 30,
+  "pagesVisited": 165,
+  "successfulSessions": 31,
+  "failedSessions": 0,
+  "errorRate": 0,
+  "navigation": {
+    "p50": 453.20000000018626,
+    "p75": 614.6999999997206,
+    "p95": 1095.1999999997206,
+    "p99": 1338,
+    "max": 1501.7000000001863
+  },
+  "slowRoutes": [
+    {
+      "app": "docs",
+      "path": "/",
+      "p95": 1501.7000000001863
+    },
+    {
+      "app": "portfolio",
+      "path": "/",
+      "p95": 1286.2000000001863
+    },
+    {
+      "app": "blogs",
+      "path": "/",
+      "p95": 1044.1999999997206
+    },
+    {
+      "app": "docs",
+      "path": "/languages/python/",
+      "p95": 907.6000000000931
+    },
+    {
+      "app": "docs",
+      "path": "/languages/rust/ownership/",
+      "p95": 892.5
+    },
+    {
+      "app": "docs",
+      "path": "/reference/toolbox/",
+      "p95": 868.6000000000931
+    },
+    {
+      "app": "docs",
+      "path": "/languages/cpp/",
+      "p95": 812.7000000001863
+    },
+    {
+      "app": "portfolio",
+      "path": "/health/",
+      "p95": 800
+    },
+    {
+      "app": "blogs",
+      "path": "/blog/",
+      "p95": 725.7000000001863
+    },
+    {
+      "app": "docs",
+      "path": "/languages/python/packaging/",
+      "p95": 676.6999999997206
+    }
+  ],
+  "brokenRoutes": [
+    {
+      "url": "https://sakshampy.in/api/openstatus",
+      "status": 502
+    },
+    {
+      "url": "https://sakshampy.in/api/openstatus",
+      "status": 502
+    },
+    {
+      "url": "https://sakshampy.in/api/openstatus",
+      "status": 502
+    },
+    {
+      "url": "https://sakshampy.in/api/openstatus",
+      "status": 502
+    },
+    {
+      "url": "https://sakshampy.in/api/openstatus",
+      "status": 502
+    },
+    {
+      "url": "https://sakshampy.in/api/openstatus",
+      "status": 502
+    },
+    {
+      "url": "https://sakshampy.in/api/openstatus",
+      "status": 502
+    }
+  ],
+  "kind": "load",
+  "timestamp": "2026-10-05T07:21:26.540Z",
+  "target": "production",
+  "archiveId": "2026-10-05T07-21-24-959Z-48e38c27"
+}

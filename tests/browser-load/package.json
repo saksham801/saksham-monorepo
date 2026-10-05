@@ -1,0 +1,18 @@
+{
+  "name": "@saksham/browser-load",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test:e2e": "playwright test --config=playwright.config.ts --grep-invert @load; status=$?; PYREPORT_KIND=e2e bun run src/publish.ts; exit $status",
+    "test:load": "bun run src/load.ts",
+    "test:load:smoke": "LOAD_PROFILE=smoke bun run src/load.ts",
+    "test:load:heavy": "LOAD_PROFILE=heavy bun run src/load.ts",
+    "routes": "bun run src/routes.ts",
+    "install:browsers": "playwright install chromium"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.63.0",
+    "@types/node": "^22.20.3",
+    "typescript": "^6.0.3"
+  }
+}

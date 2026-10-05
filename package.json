@@ -9,7 +9,8 @@
   },
   "workspaces": [
     "apps/*",
-    "packages/*"
+    "packages/*",
+    "tests/*"
   ],
   "scripts": {
     "dev": "turbo run dev",
@@ -17,7 +18,11 @@
     "preview": "turbo run preview",
     "lint": "turbo run lint",
     "typecheck": "turbo run typecheck",
-    "check": "turbo run check"
+    "check": "turbo run check",
+    "test:e2e": "bun --filter @saksham/browser-load test:e2e",
+    "test:load": "bun --filter @saksham/browser-load test:load",
+    "test:load:smoke": "bun --filter @saksham/browser-load test:load:smoke",
+    "test:load:heavy": "bun --filter @saksham/browser-load test:load:heavy"
   },
   "devDependencies": {
     "eslint": "^9.39.5",
