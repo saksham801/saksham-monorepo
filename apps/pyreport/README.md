@@ -4,7 +4,7 @@ Pyreport is the monorepo dashboard for Playwright Test and browser-load artifact
 
 ## Data flow
 
-Running `bun run test:e2e`, `bun run test:load`, `bun run test:load:smoke`, or `bun run test:load:heavy` publishes the result into `public/reports/`. The publisher archives each execution under `public/reports/runs/<runId>/`, keeps `latest.json`, `summary.json`, and `runs.json` for the dashboard, and archives the Playwright HTML report for E2E runs. Load runs also publish raw `metrics.json` and `routes.json`. The dashboard reads these static JSON files at runtime and links to archived HTML reports.
+Running `bun run test:e2e`, `bun run test:load`, `bun run test:load:smoke`, or `bun run test:load:heavy` publishes the result into `public/reports/`. The publisher archives each execution under `public/reports/runs/<runId>/`, keeps `data/latest.json`, `summary.json`, and `runs.json`; `/reports/latest.json` is a human-readable report detail page and `/reports/data/latest.json` is the raw latest JSON. Each run’s data is archived under `runs/<runId>/`, Playwright HTML is available at `/reports/playwright/` and in the per-run archive, and load runs publish raw `metrics.json` and `routes.json`. The dashboard reads these static report files at runtime.
 
 These files are local build inputs: run tests before building/deploying pyreport to include newly generated test results in the deployment. The public reports contain URLs, timing/network metrics, browser console output, and failure details; do not publish them if those details are sensitive.
 

@@ -1,0 +1,117 @@
+---
+const title = 'Latest browser report — Pyreport';
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#090b0d" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="Back to Pyreport dashboard"><span class="brand-mark">P<span>.</span></span><span>PYREPORT <small>TEST INTELLIGENCE</small></span></a>
+      <div class="top-actions"><span class="status"><i></i> LATEST EXECUTION</span><a class="back-link" href="/">← Dashboard</a></div>
+    </header>
+    <main>
+      <section class="intro"><div><div class="eyebrow">REPORT DETAIL / BROWSER METRICS</div><h1>Run <em>results.</em></h1><p id="subtitle">Loading report data…</p></div><div class="intro-actions"><a id="raw-link" href="/reports/data/latest.json" target="_blank" rel="noreferrer">Raw JSON ↗</a><a id="playwright-link" href="/playwright" hidden>Full Playwright report ↗</a></div></section>
+      <div id="error" class="empty" hidden>Report data is not available yet. Run Playwright tests or a load profile, then refresh this page.</div>
+      <section id="report" hidden>
+        <div class="kpis">
+          <article class="card"><span id="kpi-one-label">PAGES VISITED</span><strong id="kpi-one">—</strong><small id="kpi-one-note">Observed browser pages</small></article>
+          <article class="card"><span id="kpi-two-label">SUCCESS RATE</span><strong id="kpi-two">—</strong><small id="kpi-two-note">Sessions completed</small></article>
+          <article class="card"><span id="kpi-three-label">NAVIGATION P95</span><strong id="kpi-three">—</strong><small id="kpi-three-note">Milliseconds</small></article>
+          <article class="card"><span id="kpi-four-label">FAILED ROUTES</span><strong id="kpi-four">—</strong><small id="kpi-four-note">HTTP / browser failures</small></article>
+        </div>
+        <section class="panel metadata"><div class="section-title"><div><span class="eyebrow">EXECUTION</span><h2>Run details</h2></div><span id="run-type" class="run-type">—</span></div><div class="facts">
+          <div><span>RUN ID</span><strong id="run-id">—</strong></div><div><span>ENVIRONMENT</span><strong id="environment">—</strong></div><div><span>TARGET</span><strong id="target">—</strong></div><div><span>BROWSER</span><strong id="browser">—</strong></div><div><span>USERS</span><strong id="users">—</strong></div><div><span>DURATION</span><strong id="duration">—</strong></div><div><span>SEED</span><strong id="seed">—</strong></div><div><span>GENERATED</span><strong id="timestamp">—</strong></div>
+        </div></section>
+        <div class="detail-grid">
+          <section class="panel route-panel"><div class="section-title"><div><span class="eyebrow">BY APPLICATION / ROUTE</span><h2>Route performance</h2></div><span class="hint">P95 · ms</span></div><div class="table-wrap"><table><thead><tr><th>APP / PATH</th><th>VISITS</th><th>P50</th><th>P95</th><th>P99</th><th>ERRORS</th></tr></thead><tbody id="route-rows"></tbody></table></div><div id="no-routes" class="empty-inline" hidden>No route-level navigation samples are available for this run.</div></section>
+          <section class="panel failure-panel"><div class="section-title"><div><span class="eyebrow">ISSUES / OBSERVATIONS</span><h2>Failures &amp; errors</h2></div><span id="issue-count" class="count">0</span></div><div id="issues" class="issues"></div></section>
+        </div>
+        <section class="panel network-panel"><div class="section-title"><div><span class="eyebrow">REQUEST HEALTH</span><h2>Response status distribution</h2></div><span id="request-count" class="hint">— requests</span></div><div id="statuses" class="status-list"></div></section>
+        <footer><span>PYREPORT <b>·</b> ACTUAL COLLECTED PLAYWRIGHT DATA</span><a href="/reports/data/latest.json" target="_blank" rel="noreferrer">Download machine-readable JSON ↗</a></footer>
+      </section>
+    </main>
+    <script>
+      type RouteStats = { requests?: number; p50?: number | null; p75?: number | null; p95?: number | null; p99?: number | null; max?: number | null; errors?: number };
+      type Report = { runId?: string; kind?: string; timestamp?: string; target?: string; environment?: string; browser?: string; users?: number; durationSeconds?: number; seed?: number; pagesVisited?: number; successfulSessions?: number; failedSessions?: number; errorRate?: number; requests?: number; passed?: number; failed?: number; skipped?: number; flaky?: number; navigation?: { p50?: number | null; p75?: number | null; p95?: number | null; p99?: number | null }; brokenRoutes?: Array<{ url?: string; status?: number }>; failedSessionDetails?: Array<{ userId?: number; error?: string; pages?: string[] }>; browserErrors?: Array<{ severity?: string; message?: string }>; routeGroups?: Record<string, Record<string, RouteStats>>; network?: { statusDistribution?: Record<string, number>; failedRequests?: Array<{ url?: string; failed?: string }> } };
+      const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
+      const set = (id: string, value: unknown) => { $(id).textContent = value === undefined || value === null || value === '' ? '—' : String(value); };
+      const count = (value: number | null | undefined) => value == null ? '—' : new Intl.NumberFormat().format(value);
+      const duration = (value: number | null | undefined) => value == null ? '—' : `${count(Math.round(value))} ms`;
+      const safe = (value: string) => value.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#39;');
+      const displayDate = (value?: string) => value ? new Date(value).toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'medium' }) : '—';
+      const queryRun = new URLSearchParams(location.search).get('run');
+      const safeRun = queryRun && /^[a-zA-Z0-9_-]+$/.test(queryRun) ? queryRun : undefined;
+      const jsonPath = safeRun ? `/reports/runs/${encodeURIComponent(safeRun)}/latest.json` : '/reports/data/latest.json';
+      $('raw-link').setAttribute('href', jsonPath);
+      document.querySelectorAll<HTMLAnchorElement>('[href="/reports/data/latest.json"]').forEach((link) => link.href = jsonPath);
+      async function render() {
+        try {
+          const response = await fetch(jsonPath, { cache: 'no-store' });
+          if (!response.ok) throw new Error(`Report unavailable (${response.status})`);
+          const report = await response.json() as Report;
+          $('report').hidden = false; $('error').hidden = true;
+          const isLoad = report.kind === 'load' || typeof report.users === 'number';
+          set('subtitle', `${isLoad ? 'Virtual user performance run' : 'Playwright end-to-end run'} · ${displayDate(report.timestamp)}`);
+          set('run-id', report.runId); set('environment', report.environment ?? '—'); set('target', report.target ?? 'Configured application URLs');
+          set('browser', report.browser ?? 'Chromium'); set('users', isLoad ? count(report.users) : 'Not applicable');
+          set('duration', isLoad ? `${count(report.durationSeconds)} sec` : 'Playwright suite'); set('seed', report.seed ?? '—'); set('timestamp', displayDate(report.timestamp));
+          set('run-type', isLoad ? 'LOAD PROFILE' : 'E2E TEST');
+          const failedRoutes = report.brokenRoutes?.length ?? 0;
+          if (isLoad) {
+            set('kpi-one-label', 'PAGES VISITED'); set('kpi-one', count(report.pagesVisited)); set('kpi-one-note', `${count(report.requests)} total network requests`);
+            set('kpi-two-label', 'SESSION SUCCESS'); set('kpi-two', `${((1 - (report.errorRate ?? 0)) * 100).toFixed(1)}%`); set('kpi-two-note', `${count(report.successfulSessions)} passed · ${count(report.failedSessions)} failed`);
+            set('kpi-three-label', 'NAVIGATION P95'); set('kpi-three', duration(report.navigation?.p95)); set('kpi-three-note', `p50 ${duration(report.navigation?.p50)} · p99 ${duration(report.navigation?.p99)}`);
+            set('kpi-four-label', 'BROKEN ROUTES'); set('kpi-four', count(failedRoutes)); set('kpi-four-note', 'HTTP 404 / 410 / 5xx responses');
+          } else {
+            set('kpi-one-label', 'PASSED TESTS'); set('kpi-one', count(report.passed)); set('kpi-one-note', `${count(report.skipped)} skipped · ${count(report.flaky)} flaky`);
+            set('kpi-two-label', 'FAILED TESTS'); set('kpi-two', count(report.failed)); set('kpi-two-note', 'See the full report for steps and traces');
+            set('kpi-three-label', 'RUN TYPE'); set('kpi-three', 'Chromium'); set('kpi-three-note', 'Playwright browser suite');
+            set('kpi-four-label', 'ISSUES'); set('kpi-four', count(report.failed)); set('kpi-four-note', 'Failed Playwright tests');
+            $('playwright-link').hidden = false;
+          }
+          const routes = Object.entries(report.routeGroups ?? {}).flatMap(([app, pages]) => Object.entries(pages).map(([path, stats]) => ({ app, path, ...stats }))).filter((route) => route.p95 != null).sort((a, b) => (b.p95 ?? 0) - (a.p95 ?? 0)).slice(0, 30);
+          $('route-rows').innerHTML = routes.map((route) => `<tr><td><span class="app-tag">${safe(route.app.toUpperCase())}</span><span class="path">${safe(route.path)}</span></td><td>${count(route.requests)}</td><td>${duration(route.p50)}</td><td class="p95">${duration(route.p95)}</td><td>${duration(route.p99)}</td><td>${count(route.errors)}</td></tr>`).join('');
+          $('no-routes').hidden = routes.length > 0;
+          const problems = [
+            ...(report.brokenRoutes ?? []).map((item) => ({ label: `HTTP ${item.status ?? 'error'}`, detail: item.url ?? 'Unknown URL', severity: 'critical' })),
+            ...(report.failedSessionDetails ?? []).map((item) => ({ label: `Virtual user ${item.userId ?? ''}`, detail: item.error ?? 'Session failed', severity: 'critical' })),
+            ...(report.browserErrors ?? []).map((item) => ({ label: item.severity ?? 'browser', detail: item.message ?? 'Browser error', severity: item.severity === 'critical' ? 'critical' : 'warning' })),
+            ...(report.network?.failedRequests ?? []).map((item) => ({ label: 'Request failed', detail: `${item.url ?? 'Unknown URL'} ${item.failed ?? ''}`, severity: 'warning' })),
+          ].slice(0, 60);
+          set('issue-count', problems.length);
+          $('issues').innerHTML = problems.length ? problems.map((issue) => `<article class="issue"><span class="severity ${issue.severity}">${safe(issue.label)}</span><span class="issue-detail">${safe(issue.detail)}</span></article>`).join('') : '<div class="no-issues"><i>✓</i><span>No browser or route failures were recorded.</span></div>';
+          const statuses = report.network?.statusDistribution ?? {};
+          const statusEntries = Object.entries(statuses).sort(([a], [b]) => Number(a) - Number(b));
+          $('statuses').innerHTML = statusEntries.map(([status, total]) => `<div class="status-item"><span class="status-code ${Number(status) >= 400 ? 'bad' : 'good'}">${safe(status || 'network error')}</span><span class="status-bar"><i style="width:${Math.max(2, (total / Math.max(1, report.requests ?? total)) * 100)}%"></i></span><strong>${count(total)}</strong></div>`).join('') || '<span class="muted">No network response status data for this run.</span>';
+          set('request-count', `${count(report.requests)} requests`);
+        } catch (error) { $('error').hidden = false; $('error').textContent = error instanceof Error ? error.message : 'Could not load this report.'; }
+      }
+      void render();
+    </script>
+  </body>
+</html>
+<style>
+  :global(*) { box-sizing: border-box; }
+  :global(html) { min-width: 360px; min-height: 100%; background: #090b0d; color: #e8edf0; font-family: 'Manrope', sans-serif; }
+  :global(body) { margin: 0; min-height: 100vh; background: radial-gradient(ellipse at 80% -10%, rgba(168,255,96,.075), transparent 32%), #090b0d; }
+  .topbar { height: 68px; padding: 0 clamp(18px, 5vw, 76px); display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #202629; background: rgba(9,11,13,.92); }
+  .brand { display: flex; align-items: center; gap: 11px; color: #e8edf0; text-decoration: none; font-size: 11px; font-weight: 800; letter-spacing: .13em; }.brand small { display: block; margin-top: 3px; color: #778187; font: 9px 'DM Mono', monospace; letter-spacing: .12em; }.brand-mark { display: grid; place-items: center; width: 32px; height: 32px; border: 1px solid #a8ff60; color: #a8ff60; font: 700 17px 'DM Mono', monospace; }.brand-mark span { color: white; }
+  .top-actions, .intro-actions { display: flex; align-items: center; gap: 20px; }.status, .eyebrow, .card>span, .facts div>span, th, footer { color: #839096; font: 9px 'DM Mono', monospace; letter-spacing: .1em; }.status i { display: inline-block; width: 6px; height: 6px; margin-right: 7px; border-radius: 50%; background: #a8ff60; }.back-link, .intro-actions a, footer a { color: #a8ff60; text-decoration: none; font: 10px 'DM Mono', monospace; }
+  main { width: min(1320px, calc(100% - 44px)); margin: auto; padding: 42px 0 24px; }.intro { display: flex; align-items: end; justify-content: space-between; gap: 20px; margin-bottom: 22px; }.eyebrow { color: #a8ff60; }h1 { margin: 8px 0 5px; font-size: clamp(30px, 4vw, 46px); line-height: 1.1; letter-spacing: -.055em; font-weight: 600; }h1 em { color: #a8ff60; font-style: normal; }p { margin: 0; color: #879298; font-size: 12px; }.intro-actions { flex-wrap: wrap; justify-content: end; }.intro-actions a { padding: 9px 11px; border: 1px solid #293235; }
+  .kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 11px; margin-bottom: 13px; }.card, .panel, .empty { border: 1px solid #232a2d; background: linear-gradient(140deg, rgba(20,25,27,.96), rgba(13,16,18,.96)); }.card { min-height: 126px; padding: 16px 17px; }.card>span { display: block; }.card strong { display: block; margin: 16px 0 4px; font: 500 clamp(20px, 2.5vw, 29px) 'DM Mono', monospace; letter-spacing: -.055em; }.card small { color: #7e898f; font-size: 10px; }
+  .panel { padding: 20px 21px; margin-bottom: 13px; }.section-title { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 17px; }.section-title h2 { margin: 6px 0 0; font-size: 16px; font-weight: 600; letter-spacing: -.025em; }.run-type, .count { padding: 6px 8px; border: 1px solid #34402f; color: #a8ff60; font: 9px 'DM Mono', monospace; }.count { display: grid; min-width: 25px; place-items: center; }.facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 15px; padding-top: 16px; border-top: 1px solid #252c2f; }.facts div { min-width: 0; }.facts div>span { display: block; margin-bottom: 7px; font-size: 8px; }.facts strong { display: block; overflow: hidden; color: #dce2e4; text-overflow: ellipsis; white-space: nowrap; font: 10px 'DM Mono', monospace; }
+  .detail-grid { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(260px, .8fr); gap: 13px; align-items: start; }.hint, .muted { color: #768288; font: 9px 'DM Mono', monospace; }.table-wrap { overflow-x: auto; }table { width: 100%; border-collapse: collapse; text-align: left; }th { padding: 0 8px 10px; font-size: 8px; font-weight: 400; white-space: nowrap; }td { padding: 11px 8px; border-top: 1px solid #22292c; color: #aab4b8; font: 9px 'DM Mono', monospace; white-space: nowrap; }.app-tag { display: block; margin-bottom: 4px; color: #78868b; font-size: 8px; }.path { color: #dce2e4; }.p95 { color: #a8ff60; }.empty-inline { padding: 16px 7px; color: #839096; font-size: 11px; }
+  .issues { display: grid; max-height: 440px; overflow: auto; }.issue { display: grid; grid-template-columns: 100px minmax(0, 1fr); gap: 9px; padding: 10px 0; border-top: 1px solid #22292c; }.severity { color: #f9a3a3; font: 8px 'DM Mono', monospace; text-transform: uppercase; }.severity.warning { color: #e9c36a; }.issue-detail { overflow-wrap: anywhere; color: #a4afb3; font: 9px/1.5 'DM Mono', monospace; }.no-issues { display: flex; align-items: center; gap: 10px; min-height: 60px; color: #899499; font-size: 11px; }.no-issues i { color: #a8ff60; font-style: normal; font-size: 18px; }
+  .status-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 13px 22px; }.status-item { display: flex; align-items: center; gap: 8px; min-width: 0; }.status-code, .status-item strong { font: 9px 'DM Mono', monospace; }.status-code { min-width: 46px; color: #a8ff60; }.status-code.bad { color: #f28b82; }.status-bar { height: 4px; flex: 1; overflow: hidden; background: #242c2f; }.status-bar i { display: block; height: 100%; background: #a8ff60; }.status-item strong { min-width: 35px; color: #d5dddf; text-align: right; }
+  .empty { padding: 17px; color: #e9c36a; font-size: 12px; }footer { display: flex; justify-content: space-between; gap: 12px; padding: 6px 2px; font-size: 8px; }footer b { color: #a8ff60; }
+  @media(max-width: 900px) { .detail-grid { grid-template-columns: 1fr; }.facts { grid-template-columns: repeat(2, minmax(0,1fr)); }.issues { max-height: 280px; } }
+  @media(max-width: 620px) { main { width: calc(100% - 28px); padding-top: 28px; }.topbar { padding-inline: 14px; }.status { display: none; }.intro { align-items: start; flex-direction: column; }.intro-actions { justify-content: start; }.kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }.card { min-height: 112px; padding: 13px; }.facts { gap: 14px 10px; }.panel { padding: 15px 12px; }.status-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }footer { align-items: start; flex-direction: column; } }
+</style>

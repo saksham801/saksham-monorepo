@@ -1,5 +1,16 @@
 [
   {
+    "runId": "e2e-2026-10-05T07-27-35-725Z-10918fbf",
+    "kind": "e2e",
+    "timestamp": "2026-10-05T07:27:35.726Z",
+    "passed": 3,
+    "failed": 0,
+    "skipped": 0,
+    "flaky": 0,
+    "archiveId": "e2e-2026-10-05T07-27-35-725Z-10918fbf",
+    "reportUrl": "/reports/runs/e2e-2026-10-05T07-27-35-725Z-10918fbf/playwright/index.html"
+  },
+  {
     "runId": "2026-10-05T07-21-24-959Z-48e38c27",
     "users": 30,
     "durationSeconds": 30,
