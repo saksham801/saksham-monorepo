@@ -20,9 +20,9 @@ The checked-in route groups contain 27 human-facing routes. Routes and links wer
 blogs and docs routes are requested from that origin so the test exercises the
 Cloudflare Microfrontend Router. Router configuration is not present in this
 checkout; these route journeys cannot succeed until the router is configured.
-`BLOGS_URL` and `DOCS_URL` are not used because subdomain origins are not
-canonical. Historical result JSON files retain measurements from the former
-`/blog/` deployment and are not current route definitions.
+`BLOGS_URL` and `DOCS_URL` are not used because all apps share the canonical
+origin. Historical result JSON files retain measurements from earlier route
+deployments and are not current route definitions.
 
 ## Prerequisites and commands
 

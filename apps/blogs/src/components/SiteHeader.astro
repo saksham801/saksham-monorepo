@@ -9,7 +9,7 @@ interface Props {
 const { active = "home" } = Astro.props;
 
 const links = [
-	{ href: "/", label: "/ home", key: "home" },
+	{ href: "/", label: "/ portfolio", key: "home" },
 	{ href: "/blogs/", label: "/ articles", key: "blog" },
 	{ href: "/blogs/about/", label: "/ about", key: "about" },
 	{ href: "/docs/", label: "/ docs", key: "docs" },
@@ -28,7 +28,7 @@ const links = [
 <header
 	class="site-header sticky top-0 z-ui-header mx-auto flex max-w-7xl items-center justify-between border-b border-[#202a30] bg-[rgba(9,11,13,0.88)] px-5 py-4 backdrop-blur-[18px] lg:px-10"
 >
-	<Brand subtitle="ENGINEERING BLOG" />
+	<Brand href="/blogs/" subtitle="ENGINEERING BLOG" />
 	<nav class="site-nav flex gap-[29px]" id="site-navigation" aria-label="Primary">
 		{
 			links.map((link) => (

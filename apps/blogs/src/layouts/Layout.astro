@@ -94,7 +94,7 @@ const structuredData = {
 		<link
 			rel="alternate"
 			type="text/markdown"
-			href="/llms.txt"
+			href={`${import.meta.env.BASE_URL}/llms.txt`}
 			title="LLM-friendly blog profile"
 		/>
 		<link
@@ -104,7 +104,7 @@ const structuredData = {
 			href={new URL("/blogs/rss.xml", SITE_URL).href}
 		/>
 		{tags.map((tag) => <meta property="article:tag" content={tag} />)}
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}/favicon.svg`} />
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link
 			rel="preconnect"

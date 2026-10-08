@@ -1,10 +1,9 @@
 ---
 import SiteFooter from "@saksham/ui/components/SiteFooter.astro";
-import SiteHeader from "../../components/SiteHeader.astro";
-import Layout from "../../layouts/Layout.astro";
-import { PORTFOLIO_URL, SITE_AUTHOR, SITE_EMAIL } from "../../consts";
+import SiteHeader from "../components/SiteHeader.astro";
+import Layout from "../layouts/Layout.astro";
+import { PORTFOLIO_URL, SITE_AUTHOR, SITE_EMAIL } from "../consts";
 
-export const prerender = false;
 ---
 
 <Layout
@@ -82,7 +81,7 @@ export const prerender = false;
 		<SiteFooter
 			links={[
 				{ href: "/blogs/terms/", label: "TERMS" },
-				{ href: "/llms.txt", label: "LLMS.TXT" },
+				{ href: "/blogs/llms.txt", label: "LLMS.TXT" },
 				{ href: PORTFOLIO_URL, label: "PORTFOLIO ↗", external: true },
 			]}
 		/>

@@ -8,7 +8,8 @@ import tailwindcss from '@tailwindcss/vite';
 // https://astro.build/config
 export default defineConfig({
 	site: 'https://sakshampy.in',
-	output: 'server',
+	base: '/blogs',
+	output: 'static',
 	integrations: [mdx()],
 	adapter: cloudflare({ inspectorPort: 9230 }),
 	vite: {

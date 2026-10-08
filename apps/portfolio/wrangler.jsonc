@@ -8,6 +8,8 @@
 		"directory": "./dist",
 		"binding": "ASSETS"
 	},
+	"workers_dev": false,
+	"preview_urls": false,
 	"vars": {},
 	"cache": {
 		"enabled": true

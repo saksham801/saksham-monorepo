@@ -6,6 +6,7 @@ import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
 export default defineConfig({
+  base: '/docs',
   compressHTML: true,
   build: {
     inlineStylesheets: 'auto',
@@ -93,7 +94,7 @@ export default defineConfig({
           attrs: {
             rel: 'alternate',
             type: 'text/plain',
-            href: '/llms.txt',
+            href: '/docs/llms.txt',
             title: 'LLM-friendly documentation index',
           },
         },

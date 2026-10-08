@@ -4,7 +4,7 @@ This is the day-to-day guide for running, coding, checking, and safely preparing
 the Astro applications. The complete application code is in this repository:
 
 ```text
-/home/saksham/blogs.sakshampy.in/monorepo/
+/home/saksham/sakshampy.in/monorepo/
 ├── apps/
 │   ├── portfolio/   # https://sakshampy.in (current main Worker)
 │   ├── docs/        # Docs Worker; intended public mount: /docs/
@@ -32,7 +32,7 @@ that is genuinely shared belongs in `packages/ui`.
 In a terminal:
 
 ```bash
-cd /home/saksham/blogs.sakshampy.in/monorepo
+cd /home/saksham/sakshampy.in/monorepo
 bun --version
 node --version
 bun install
@@ -52,17 +52,17 @@ Start only the site you are working on. Each Astro app's default local port is
 `4321`, so starting more than one may make Astro choose a fallback port.
 
 ```bash
-cd /home/saksham/blogs.sakshampy.in/monorepo/apps/portfolio
+cd /home/saksham/sakshampy.in/monorepo/apps/portfolio
 bun run dev
 ```
 
 ```bash
-cd /home/saksham/blogs.sakshampy.in/monorepo/apps/docs
+cd /home/saksham/sakshampy.in/monorepo/apps/docs
 bun run dev
 ```
 
 ```bash
-cd /home/saksham/blogs.sakshampy.in/monorepo/apps/blogs
+cd /home/saksham/sakshampy.in/monorepo/apps/blogs
 bun run dev
 ```
 
@@ -72,7 +72,7 @@ the foreground server with `Ctrl+C`.
 You can also start one application from the repository root using Turbo:
 
 ```bash
-cd /home/saksham/blogs.sakshampy.in/monorepo
+cd /home/saksham/sakshampy.in/monorepo
 bunx turbo dev --filter=portfolio
 # or: bunx turbo dev --filter=docs
 # or: bunx turbo dev --filter=blogs
@@ -113,8 +113,8 @@ Starlight, and its navigation and page layout are intentionally Docs-specific.
 ### Blogs
 
 - Home page: `apps/blogs/src/pages/index.astro`
-- Blog listing: `apps/blogs/src/pages/blogs/index.astro`
-- Individual blog route: `apps/blogs/src/pages/blogs/[...slug].astro`
+- Blog listing: `apps/blogs/src/pages/index.astro` (mounted at `/blogs/`)
+- Individual blog route: `apps/blogs/src/pages/[...slug].astro` (mounted below `/blogs/`)
 - Blog articles: `apps/blogs/src/content/blog/`
 - Content schema: `apps/blogs/src/content.config.ts`
 - Header, footer, and date formatting: `apps/blogs/src/components/`
@@ -130,8 +130,7 @@ frontmatter/schema used by the existing articles.
 
 Create `apps/blogs/src/content/blog/<kebab-case-slug>.md` (or `.mdx` when JSX is
 needed). The slug determines the public URL
-`https://sakshampy.in/blogs/<slug>/`; never write `/blog/` links or use the
-`blogs.sakshampy.in` host in content. The content schema requires a title,
+`https://sakshampy.in/blogs/<slug>/`. The content schema requires a title,
 description, and publication date; tags default to an empty list and topic
 defaults to `general`.
 
@@ -173,30 +172,23 @@ or structured-data claims.
 
 #### Public routing and canonical URLs
 
-The intended URL architecture is `/` (Portfolio), `/blogs/` and `/blogs/*`
-(Blogs), and `/docs/` and `/docs/*` (Docs), all on `https://sakshampy.in`.
-The Portfolio middleware permanently redirects `/blog`, `/blog/`, and
-`/blog/<suffix>` to the corresponding `/blogs/` URL, retaining query strings.
-The Portfolio Workers static-assets `_redirects` file permanently maps those
-legacy paths before static asset fallback. The Blogs Worker permanently redirects its configured
-`blogs.sakshampy.in` host to the same main-host `/blogs/` path, retaining suffix
-and query. Blog HTML routes are server-rendered so the compatibility hostname
-cannot serve duplicate pages; static assets remain served by the Workers asset
-binding.
+The only public URL architecture is `/` (Portfolio), `/blogs` and `/blogs/*`
+(Blogs), and `/docs` and `/docs/*` (Docs), all on `https://sakshampy.in`.
+Blogs and Docs Astro builds use their matching mount paths, and generated
+assets, internal links, feeds, canonicals, and structured data stay under
+those paths. No app Worker configures a public content subdomain or legacy
+blog route.
 
-Important: this checkout does not contain a Cloudflare Microfrontend Router
-Worker, service bindings, or route configuration. The individual app Workers
-are separate; `apps/blogs/wrangler.jsonc` currently attaches the Blogs Worker
-to `blogs.sakshampy.in`, and Docs has no main-host path binding. Therefore the
-main-host `/blogs/*` and `/docs/*` mounts are not proven/configured by this
-repository. Do not claim the public route matrix works until Cloudflare is
-configured to dispatch those prefixes to the existing Workers, including
-correct asset, redirect, and cookie path behavior. Do not add a second router
-or merge app Workers. Recommended Cloudflare configuration: keep
-`sakshampy.in` as the sole canonical host, dispatch `/` to Portfolio,
-`/blogs` and `/blogs/*` to Blogs, `/docs` and `/docs/*` to Docs; configure
-`blogs.sakshampy.in` only as a permanent redirect to the matching main-host
-`/blogs/` URL (not as an independently served canonical website).
+This checkout does not contain the Cloudflare Microfrontend Router Worker,
+service bindings, or its route configuration. The independent app Workers
+must be attached to the existing router in Cloudflare so it dispatches `/` to
+Portfolio, `/blogs` and `/blogs/*` to Blogs, and `/docs` and `/docs/*` to Docs.
+Do not add a second router or merge app Workers. Router-side prefix handling,
+asset rewriting, redirects, and cookie paths cannot be validated from this
+repository; app builds are configured for the `/blogs` and `/docs` mount paths,
+and local Worker checks cover the router-stripped route paths. `workers_dev`
+and preview URLs are disabled for Portfolio, Blogs, and Docs so the app Workers
+do not expose parallel public origins.
 
 ### Report
 
@@ -229,7 +221,7 @@ and tracks it as an app dependency.
 Add a dependency to the app or package that actually uses it. For example:
 
 ```bash
-cd /home/saksham/blogs.sakshampy.in/monorepo/apps/docs
+cd /home/saksham/sakshampy.in/monorepo/apps/docs
 bun add some-package
 ```
 
@@ -244,7 +236,7 @@ available to all apps.
 Run all workspace checks from the monorepo root:
 
 ```bash
-cd /home/saksham/blogs.sakshampy.in/monorepo
+cd /home/saksham/sakshampy.in/monorepo
 bunx turbo lint
 bunx turbo typecheck
 bunx turbo build
@@ -332,7 +324,7 @@ are stored in this repository.
    Vercel team:
 
    ```bash
-   cd /home/saksham/blogs.sakshampy.in/monorepo
+   cd /home/saksham/sakshampy.in/monorepo
    bunx turbo login
    bunx turbo link --scope=YOUR_VERCEL_TEAM_SLUG
    ```
@@ -400,7 +392,7 @@ Portfolio's OpenStatus integration expects:
 For local development, copy the example file and supply values privately:
 
 ```bash
-cd /home/saksham/blogs.sakshampy.in/monorepo
+cd /home/saksham/sakshampy.in/monorepo
 cp apps/portfolio/.dev.vars.example apps/portfolio/.dev.vars
 ```
 
@@ -429,37 +421,40 @@ package manager and workspace runner.
 
 | App directory | Worker name | Production URL |
 | --- | --- | --- |
-| `apps/portfolio` | `saksham` | <https://sakshampy.in> |
-| `apps/docs` | `docs` | Public canonical path intended: <https://sakshampy.in/docs/> |
-| `apps/blogs` | `blogs` | Public canonical path intended: <https://sakshampy.in/blogs/>; compatibility host <https://blogs.sakshampy.in> redirects to it |
+| `apps/portfolio` | `saksham` | <https://sakshampy.in/> |
+| `apps/docs` | `docs` | <https://sakshampy.in/docs/> |
+| `apps/blogs` | `blogs` | <https://sakshampy.in/blogs/> |
 | `apps/report` | `report` | Not recorded; confirm before deployment |
 
 To validate the current production deployment path without publishing, run
 these commands from only the app being checked:
 
 ```bash
-cd /home/saksham/blogs.sakshampy.in/monorepo/apps/portfolio
+cd /home/saksham/sakshampy.in/monorepo/apps/portfolio
 bun run build
 bunx wrangler deploy --dry-run
 ```
 
 This dry run does not publish. Review output for the expected Worker name,
-bindings, routes, and assets. Repeat for `docs`, `blogs`, or `report` only
-when needed. `bun run cf-typegen` exercises the migrated `cf` configuration
-without deploying.
+bindings, and assets. The Portfolio, Blogs, and Docs Workers have no public
+route or preview URL; the Microfrontend Router is their only public entry
+point. Repeat for `docs`, `blogs`, or `report` only when needed.
+`bun run cf-typegen` exercises the migrated `cf` configuration without
+deploying.
 
 The existing `deploy` script still runs Astro build plus Wrangler deploy. It
 performs a real deployment. Use it for one app at a time and only after the
-existing Cloudflare Worker, target account, domains, bindings, production
+existing Cloudflare Worker, target account, router service bindings, production
 variables/secrets, and current deployment have been verified in Cloudflare.
-Never change DNS, domains, Worker ownership, or secrets as part of local
+Do not add public routes or preview URLs to the Portfolio, Blogs, or Docs
+Workers. Never change DNS, Worker ownership, or secrets as part of local
 migration work. Cloudflare Workers Builds settings live in Cloudflare and are
 not changed by this repository.
 
 ### Safe production cutover checklist
 
 1. Confirm the monorepo CI checks pass on the intended production branch.
-2. In Cloudflare, verify the account, existing Worker name, custom domains,
+2. In Cloudflare, verify the account, existing Worker name, router service
    bindings, production variables/secrets, Git connection, and current
    deployment. For `report`, do not deploy until its production URL and target
    Worker settings are confirmed. Keep the old GitHub repositories and last
@@ -467,9 +462,10 @@ not changed by this repository.
 3. Run `bun run cf-typegen`, `bun run build`, and
    `bunx wrangler deploy --dry-run` from that app's directory. Stop if output
    does not match the verified Worker.
-4. Test a preview/staging version and its important routes/assets. Authenticate
-   with `bunx wrangler login` and verify the account with `bunx wrangler whoami`
-   before a real deployment.
+4. Test the mount paths through an existing authorized router staging setup,
+   if available. Do not enable workers.dev or preview URLs to do so.
+   Authenticate with `bunx wrangler login` and verify the account with
+   `bunx wrangler whoami` before a real deployment.
 5. After explicit production approval, run `bun run deploy` from that one app.
    Smoke-test production and inspect Worker logs/errors. Keep the prior Worker
    and repo available; do not deploy all apps together for the first cutover.
@@ -509,7 +505,6 @@ account and `saksham801/saksham-monorepo`, then set:
 | Production branch | `main` | `main` | `main` | Verify before connecting |
 | Build command | `bun install --frozen-lockfile && bunx turbo build --filter=portfolio` | `bun install --frozen-lockfile && bunx turbo build --filter=docs` | `bun install --frozen-lockfile && bunx turbo build --filter=blogs` | Verify before connecting |
 | Deploy command | `cd apps/portfolio && bunx wrangler deploy` | `cd apps/docs && bunx wrangler deploy` | `cd apps/blogs && bunx wrangler deploy` | Only after target verification |
-| Preview command (if enabled) | `cd apps/portfolio && bunx wrangler preview` | `cd apps/docs && bunx wrangler preview` | `cd apps/blogs && bunx wrangler preview` | Only after target verification |
 
 **Use the repository root.** The apps depend on `@saksham/ui` through Bun
 workspaces and the single root `bun.lock`. Do not set the Cloudflare root
@@ -607,7 +602,7 @@ Official Cloudflare references:
 The monorepo Git repository is at:
 
 ```text
-/home/saksham/blogs.sakshampy.in/monorepo/.git
+/home/saksham/sakshampy.in/monorepo/.git
 ```
 
 The old repositories (`blogs/`, `docs/`, and `saksham/` alongside the monorepo)
@@ -630,7 +625,7 @@ The monorepo is already connected locally to
 `git@github.com:saksham801/saksham-monorepo.git`. Verify it with:
 
 ```bash
-cd /home/saksham/blogs.sakshampy.in/monorepo
+cd /home/saksham/sakshampy.in/monorepo
 git remote -v
 ```
 

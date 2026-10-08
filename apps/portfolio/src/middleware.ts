@@ -20,14 +20,6 @@ export const onRequest = defineMiddleware(async ({ request }, next) => {
       return Response.redirect(url, 301);
     }
 
-    if (hostname === PRIMARY_HOST && (url.pathname === '/blog' || url.pathname.startsWith('/blog/'))) {
-      url.protocol = 'https:';
-      url.pathname = url.pathname === '/blog'
-        ? '/blogs/'
-        : `/blogs${url.pathname.slice('/blog'.length)}`;
-      return Response.redirect(url, 301);
-    }
-
     return await next();
   } catch (error) {
     console.error('Portfolio request failed', error);

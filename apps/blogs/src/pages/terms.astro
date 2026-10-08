@@ -1,11 +1,9 @@
 ---
 import TermsContent from "@saksham/ui/components/TermsContent.astro";
 import SiteFooter from "@saksham/ui/components/SiteFooter.astro";
-import SiteHeader from "../../components/SiteHeader.astro";
-import Layout from "../../layouts/Layout.astro";
-import { SITE_AUTHOR, SITE_EMAIL, SITE_URL } from "../../consts";
-
-export const prerender = false;
+import SiteHeader from "../components/SiteHeader.astro";
+import Layout from "../layouts/Layout.astro";
+import { SITE_AUTHOR, SITE_EMAIL, SITE_URL } from "../consts";
 
 const updated = "September 19, 2026";
 ---
@@ -48,7 +46,7 @@ const updated = "September 19, 2026";
 		<SiteFooter
 			links={[
 				{ href: "/blogs/terms/", label: "TERMS" },
-				{ href: "/llms.txt", label: "LLMS.TXT" },
+				{ href: "/blogs/llms.txt", label: "LLMS.TXT" },
 				{ href: "https://sakshampy.in", label: "PORTFOLIO ↗", external: true },
 			]}
 		/>

@@ -13,6 +13,8 @@ export default defineConfig({
 			"global_fetch_strictly_public",
 		],
 		entrypoint: "@astrojs/cloudflare/entrypoints/server",
+		workersDev: false,
+		previewUrls: false,
 		cache: {
 			enabled: true,
 		},

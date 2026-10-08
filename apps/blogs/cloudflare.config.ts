@@ -16,10 +16,6 @@ export default defineConfig({
 				enabled: true,
 			},
 		},
-		domains: [
-			"demo2.sakshampy.in",
-			"blogs.sakshampy.in",
-		],
 		env: {
 			TURBO_TEAM: bindings.text("saksham-dubeys-projects"),
 			TURBO_TEAMID: bindings.text("team_xf3FXzFrtsA27OX9SDyzR5AC"),

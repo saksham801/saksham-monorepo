@@ -4,18 +4,18 @@ import LastUpdated from '@astrojs/starlight/components/LastUpdated.astro';
 import SiteFooter from '@saksham/ui/components/SiteFooter.astro';
 
 const pages = [
-	{ href: '/guides/about/', label: 'About these notes' },
-	{ href: '/reference/toolbox/', label: 'Engineering toolbox' },
-	{ href: '/languages/rust/', label: 'Rust' },
-	{ href: '/languages/rust/ownership/', label: 'Rust ownership' },
-	{ href: '/languages/rust/tooling/', label: 'Rust tooling' },
-	{ href: '/languages/cpp/', label: 'C++' },
-	{ href: '/languages/cpp/memory/', label: 'C++ memory' },
-	{ href: '/languages/cpp/tooling/', label: 'C++ tooling' },
-	{ href: '/languages/python/', label: 'Python' },
-	{ href: '/languages/python/packaging/', label: 'Python packaging' },
-	{ href: '/languages/python/tooling/', label: 'Python tooling' },
-	{ href: '/terms/', label: 'Terms and Conditions' },
+	{ href: '/docs/guides/about/', label: 'About these notes' },
+	{ href: '/docs/reference/toolbox/', label: 'Engineering toolbox' },
+	{ href: '/docs/languages/rust/', label: 'Rust' },
+	{ href: '/docs/languages/rust/ownership/', label: 'Rust ownership' },
+	{ href: '/docs/languages/rust/tooling/', label: 'Rust tooling' },
+	{ href: '/docs/languages/cpp/', label: 'C++' },
+	{ href: '/docs/languages/cpp/memory/', label: 'C++ memory' },
+	{ href: '/docs/languages/cpp/tooling/', label: 'C++ tooling' },
+	{ href: '/docs/languages/python/', label: 'Python' },
+	{ href: '/docs/languages/python/packaging/', label: 'Python packaging' },
+	{ href: '/docs/languages/python/tooling/', label: 'Python tooling' },
+	{ href: '/docs/terms/', label: 'Terms and Conditions' },
 ];
 
 const currentPath = Astro.url.pathname;
@@ -39,7 +39,7 @@ const nextPage = currentIndex >= 0 ? pages[currentIndex + 1] : undefined;
 		element="div"
 		links={[
 			{ href: 'https://sakshampy.in/', label: 'PORTFOLIO', external: true },
-			{ href: '/terms/', label: 'TERMS' },
+			{ href: '/docs/terms/', label: 'TERMS' },
 			{ href: 'mailto:hello@sakshampy.in', label: 'CONTACT' },
 		]}
 	/>

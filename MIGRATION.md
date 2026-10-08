@@ -7,11 +7,15 @@ commits. GitHub's current `docs/main` had advanced beyond the local clone, so
 the candidate imports that verified remote tip while retaining the local
 branches as history references.
 
-| App | Source repository | Local pre-migration commit | Imported source commit | Branches/tags | Production URL |
+| App | Source repository | Local pre-migration commit | Imported source commit | Branches/tags | Current canonical URL |
 | --- | --- | --- | --- | --- | --- |
-| Blogs | `git@github.com:saksham801/blogs.git` | `e11327de2fac2b9e505c5e06f00dda015fe4c41d` | `e11327de2fac2b9e505c5e06f00dda015fe4c41d` | `main`; no tags | <https://blogs.sakshampy.in> |
-| Docs | `https://github.com/saksham801/docs.git` | `a7456d1fe553e45f04226005ee14e078e0188830` | `c4d91b8e19276646fc33d27b8869f6333376e218` | `main`; local `backup/main-before-9ee1bc56`; no tags | <https://docs.sakshampy.in> |
-| Portfolio (`saksham`) | `git@github.com:saksham801/portfolio.git` | `cb033c634e1b5b6a772c4f902d7caae396cba1a4` | `cb033c634e1b5b6a772c4f902d7caae396cba1a4` | `main`; no tags | <https://sakshampy.in> |
+| Blogs | `git@github.com:saksham801/blogs.git` | `e11327de2fac2b9e505c5e06f00dda015fe4c41d` | `e11327de2fac2b9e505c5e06f00dda015fe4c41d` | `main`; no tags | <https://sakshampy.in/blogs/> |
+| Docs | `https://github.com/saksham801/docs.git` | `a7456d1fe553e45f04226005ee14e078e0188830` | `c4d91b8e19276646fc33d27b8869f6333376e218` | `main`; local `backup/main-before-9ee1bc56`; no tags | <https://sakshampy.in/docs/> |
+| Portfolio (`saksham`) | `git@github.com:saksham801/portfolio.git` | `cb033c634e1b5b6a772c4f902d7caae396cba1a4` | `cb033c634e1b5b6a772c4f902d7caae396cba1a4` | `main`; no tags | <https://sakshampy.in/> |
+
+The original apps were imported from standalone deployments. This monorepo
+uses only the canonical path mounts shown above; the historical standalone
+URLs are not part of the current routing architecture.
 
 The latest Docs remote commit descends from the local `main` commit. Its local
 backup branch diverges at `9ee1bc5` and is retained under an archival branch in
@@ -59,10 +63,9 @@ over one of the existing production repositories.
   `wrangler.config.ts` provides build settings to `cf`'s Wrangler bundler.
   `cf` is beta; no production deployment, DNS change, secret change, or
   Cloudflare dashboard edit was made as part of this config migration.
-- The Blogs custom domains declared in Wrangler map to `worker.domains`;
-  `previewUrls: false` preserves the disabled preview setting. This mapping
-  is local configuration only and must still be confirmed against the live
-  Worker before deployment.
+- Public custom-domain routes have been removed from the Blogs Worker config.
+  Cloudflare dashboard-level routing remains unverified; the intended public
+  entry point is the main-host `/blogs/*` Microfrontend mount.
 - Validation confirmed `cf workers types` works for all four app configs.
   Portfolio's `cf build` runs the Astro build but then fails because the
   adapter does not emit the Build Output required by `cf deploy`. Keep the
@@ -119,9 +122,9 @@ Rollback readiness: PASS
 | Production deploy automation | NEEDS DASHBOARD VERIFICATION | The owner reports Cloudflare Workers Builds is active for all three Workers. The connected repository and per-Worker build/watch settings were not accessible to verify; no account settings were changed. |
 | Rollback readiness | PASS | Original clean clones and verified local/remote Git mirrors remain available. |
 
-Read-only HTTP HEAD checks on 2026-09-26 returned `200` for each production
-homepage and one representative route (`/health/`, `/guides/about/`, and
-`/blog/`). No candidate code was deployed.
+Read-only HTTP HEAD checks on 2026-09-26 returned `200` for the imported
+standalone homepages and representative pages. Those historical checks predate
+the current canonical mount paths. No candidate code was deployed.
 
 The local Bun installation was 1.4.2. It generated the final lockfile with
 current compatible dependency versions; the package ranges retain each app's
