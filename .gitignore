@@ -19,3 +19,5 @@ apps/blogs/## User.md
 
 # Cloudflare CLI build output
 **/.cloudflare/
+
+.env.example
