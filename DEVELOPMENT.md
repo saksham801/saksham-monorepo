@@ -174,10 +174,20 @@ or structured-data claims.
 
 The only public URL architecture is `/` (Portfolio), `/blogs` and `/blogs/*`
 (Blogs), and `/docs` and `/docs/*` (Docs), all on `https://sakshampy.in`.
-Blogs and Docs Astro builds use their matching mount paths, and generated
-assets, internal links, feeds, canonicals, and structured data stay under
-those paths. No app Worker configures a public content subdomain or legacy
-blog route.
+All Astro apps use static output so page content is rendered at build time and
+served from Cloudflare Static Assets. Portfolio's OpenStatus API is explicitly
+on-demand; it remains a Worker endpoint and is not prerendered. HTML uses
+`s-maxage=3600` with stale-while-revalidate, while fingerprinted `/_astro/*`
+assets use a one-year immutable cache. Blogs and Docs also cache their public
+metadata/search assets through their `_headers` files.
+
+Generated assets, internal links, feeds, canonicals, and structured data stay
+under the matching mount paths. No app Worker configures a public content
+subdomain or legacy blog route. Requests to the former unprefixed Docs
+namespaces (`/languages/*`, `/guides/*`, and `/reference/*`) receive a
+permanent `308` redirect to the matching `/docs/*` path through Portfolio's
+static-assets `_redirects` rules. Portfolio's `/terms/` remains its own page;
+the Docs terms page is available at `/docs/terms/`.
 
 This checkout does not contain the Cloudflare Microfrontend Router Worker,
 service bindings, or its route configuration. The independent app Workers

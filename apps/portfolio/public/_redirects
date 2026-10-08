@@ -1,0 +1,6 @@
+/languages /docs/languages 308
+/guides /docs/guides 308
+/reference /docs/reference 308
+/languages/* /docs/languages/:splat 308
+/guides/* /docs/guides/:splat 308
+/reference/* /docs/reference/:splat 308

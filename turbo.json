@@ -2,7 +2,8 @@
   "$schema": "https://turbo.build/schema.json",
   "globalDependencies": [
     "bun.lock",
-    "tsconfig.json"
+    "tsconfig.json",
+    "scripts/copy-mounted-headers.mjs"
   ],
   "cacheDir": ".turbo/cache",
   "cacheMaxAge": "30d",
