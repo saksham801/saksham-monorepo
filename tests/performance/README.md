@@ -7,16 +7,22 @@ Two intentionally separate modes are provided: **HTTP mode** for controlled, hig
 | App | Framework / rendering | Public routes exercised | APIs / behavior |
 |---|---|---|---|
 | `apps/portfolio` (`sakshampy.in`) | Astro; prerendered homepage and terms, health page; Cloudflare adapter | `/`, `/health`, `/terms` | `GET /api/openstatus` proxies OpenStatus with a configured secret and is opt-in (`TEST_API=true`); returns 503 if not configured. |
-| `apps/blogs` (`blogs.sakshampy.in`) | Astro + MDX; server output, prerendered content collection | `/`, `/blog/`, `/about`, `/terms`, and `/blog/{cloudflare-workers-production-architecture,cpp-coroutines-executors,cpp-raii-smart-pointers,python-asyncio-structured-concurrency,python-packaging-reproducible-services,rust-error-handling-production,rust-ownership-borrowing}/` | No app API routes discovered; `/rss.xml` is a feed, excluded from human journeys. |
-| `apps/docs` (`docs.sakshampy.in`) | Astro Starlight; content-generated documentation pages | `/`, `/guides/about/`, `/reference/toolbox/`, `/languages/{rust,cpp,python}/`, `/languages/rust/{ownership,tooling}/`, `/languages/cpp/{memory,tooling}/`, `/languages/python/{packaging,tooling}/`, `/terms/` | Static/content pages; Starlight search and Pagefind are client-side. |
+| `apps/blogs` (`sakshampy.in`) | Astro + MDX; server output, prerendered content collection | `/blogs/`, `/blogs/about/`, `/blogs/terms/`, and `/blogs/{cloudflare-workers-production-architecture,cpp-coroutines-executors,cpp-raii-smart-pointers,python-asyncio-structured-concurrency,python-packaging-reproducible-services,rust-error-handling-production,rust-ownership-borrowing}/` | No app API routes discovered; `/blogs/rss.xml` is a feed, excluded from human journeys. |
+| `apps/docs` (`sakshampy.in`) | Astro Starlight; content-generated documentation pages | `/docs/`, `/docs/guides/about/`, `/docs/reference/toolbox/`, `/docs/languages/{rust,cpp,python}/`, `/docs/languages/rust/{ownership,tooling}/`, `/docs/languages/cpp/{memory,tooling}/`, `/docs/languages/python/{packaging,tooling}/`, `/docs/terms/` | Static/content pages; Starlight search and Pagefind are client-side. |
 | `apps/report` | Astro report app | `/` | No API routes discovered; not treated as a visitor-facing site since it is a report artifact app. |
 | `apps/pyreport` | Build/runtime artifacts only; no tracked app source or manifest found | None discovered | Excluded. |
 
 The checked-in route groups contain 27 human-facing routes. Routes and links were checked against page files, content collections, Starlight's sidebar/navigation, Astro configuration and the existing `tests/browser-load/reports/routes.json`. There is no Next.js app, backend service, auth-protected route, project detail route, or destructive endpoint in the inspected application sources. The portfolio's displayed project cards are sections on its homepage, not distinct routes. This inventory is maintained explicitly in `config/routes.js`; update it when pages/content are added. Search, RSS, sitemap, `llms.txt`, static assets, and health endpoints are not normal reading journeys (health is included as a safe page check).
 
-### Origins
+### Origin
 
-`BASE_URL` is required and explicitly selects the portfolio / primary target. Since the apps deploy independently, configure `BLOGS_URL` and `DOCS_URL` to include those origins when testing them. Without these, all apps intentionally resolve against `BASE_URL`, useful for a local single-origin deployment. `REPORT_URL` isn't tested because no public visitor routes were identified. Never point a multi-origin test at production without setting and confirming every origin.
+`BASE_URL` is required and explicitly selects the primary host. All portfolio,
+blogs and docs routes are requested from that origin so the test exercises the
+Cloudflare Microfrontend Router. Router configuration is not present in this
+checkout; these route journeys cannot succeed until the router is configured.
+`BLOGS_URL` and `DOCS_URL` are not used because subdomain origins are not
+canonical. Historical result JSON files retain measurements from the former
+`/blog/` deployment and are not current route definitions.
 
 ## Prerequisites and commands
 
@@ -31,10 +37,12 @@ bun run test:smoke
 bun run test:stress
 ```
 
-Bun loads the root `.env` for these commands. `.env` is ignored by git; do not commit credentials or private environment values. For separate deployments, set `BASE_URL` to the portfolio origin and set `BLOGS_URL` and `DOCS_URL` to their respective origins. The sample uses localhost placeholders only; start the matching local apps first. You can still override any value inline:
+Bun loads the root `.env` for these commands. `.env` is ignored by git; do not commit credentials or private environment values. For tests, set `BASE_URL` to a local or authorized staging origin where the
+Microfrontend Router is configured. The sample uses localhost placeholders
+only; start the matching router first. You can still override the value inline:
 
 ```sh
-BASE_URL=https://authorized-staging.example BLOGS_URL=https://blogs-staging.example DOCS_URL=https://docs-staging.example bun run test:load
+BASE_URL=https://authorized-staging.example bun run test:load
 bun run test:spike
 bun run test:soak
 bun run test:browser

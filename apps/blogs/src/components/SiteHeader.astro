@@ -10,9 +10,9 @@ const { active = "home" } = Astro.props;
 
 const links = [
 	{ href: "/", label: "/ home", key: "home" },
-	{ href: "/blog/", label: "/ articles", key: "blog" },
-	{ href: "/about/", label: "/ about", key: "about" },
-	{ href: "https://docs.sakshampy.in/", label: "/ docs", key: "docs", external: true },
+	{ href: "/blogs/", label: "/ articles", key: "blog" },
+	{ href: "/blogs/about/", label: "/ about", key: "about" },
+	{ href: "/docs/", label: "/ docs", key: "docs" },
 ] as const;
 ---
 
@@ -47,7 +47,7 @@ const links = [
 			<summary>/ more <span aria-hidden="true">⌄</span></summary>
 			<div class="site-menu-panel">
 				<strong>EXPLORE</strong>
-				<a href="/terms/" aria-current={active === "terms" ? "page" : undefined}>Terms and conditions</a>
+				<a href="/blogs/terms/" aria-current={active === "terms" ? "page" : undefined}>Terms and conditions</a>
 				<a href={PORTFOLIO_URL} target="_blank" rel="noopener noreferrer">Portfolio <span>↗</span></a>
 				<a href={`mailto:${SITE_EMAIL}`}>Get in touch <span>↗</span></a>
 			</div>

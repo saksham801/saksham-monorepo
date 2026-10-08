@@ -1,88 +1,97 @@
 ---
 import "../styles/global.css";
+import SeoHead from "@saksham/ui/components/SeoHead.astro";
+import { canonicalUrl } from "@saksham/ui/seo";
+
+interface Props {
+	title?: string;
+	description?: string;
+	canonicalPath?: string;
+	robots?: string;
+	jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+}
 
 const {
-    title = "Saksham Dubey — Full Stack Engineer",
-    description = "Saksham Dubey is a Full Stack Engineer in New Delhi building scalable web applications with React, Angular, Next.js, Node.js and NestJS.",
-    canonicalPath = Astro.url.pathname,
+	title = "Saksham Dubey — Full Stack Engineer",
+	description = "Saksham Dubey is a Full Stack Engineer in New Delhi building scalable web applications with React, Angular, Next.js, Node.js and NestJS.",
+	canonicalPath = Astro.url.pathname,
+	robots = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+	jsonLd,
 } = Astro.props;
 const siteUrl = "https://sakshampy.in";
-const canonical = new URL(canonicalPath, siteUrl).href;
+const canonical = canonicalUrl(canonicalPath);
 const person = {
-    "@type": "Person",
-    name: "Saksham Dubey",
-    url: siteUrl,
-    email: "mailto:hello@sakshampy.in",
-    jobTitle: "Full Stack Engineer",
-    description,
-    address: {
-        "@type": "PostalAddress",
-        addressLocality: "Mumbai",
-        addressCountry: "IN",
-    },
-    knowsAbout: ["React.js", "Angular", "Next.js", "TypeScript", "Node.js", "NestJS", "Python", "PostgreSQL", "MongoDB", "Microservices"],
-    sameAs: ["https://github.com/saksham-dubey"],
+	"@type": "Person",
+	"@id": `${siteUrl}/#person`,
+	name: "Saksham Dubey",
+	url: siteUrl,
+	email: "mailto:hello@sakshampy.in",
+	jobTitle: "Full Stack Engineer",
+	description: "Full stack engineer in New Delhi building scalable web applications and reliable software.",
+	address: {
+		"@type": "PostalAddress",
+		addressLocality: "New Delhi",
+		addressCountry: "IN",
+	},
+	knowsAbout: ["React.js", "Angular", "Next.js", "TypeScript", "Node.js", "NestJS", "Python", "PostgreSQL", "MongoDB", "Microservices"],
+	sameAs: ["https://github.com/saksham-dubey"],
 };
-const structuredData = canonicalPath === "/"
-    ? { "@context": "https://schema.org", ...person }
-    : {
-        "@context": "https://schema.org",
-        "@type": "WebPage",
-        name: title,
-        url: canonical,
-        description,
-        isPartOf: { "@type": "WebSite", name: "Saksham Dubey", url: siteUrl },
-        about: person,
-    };
+const structuredData = jsonLd ?? {
+	"@context": "https://schema.org",
+	"@graph": [
+		person,
+		{
+			"@type": "WebSite",
+			"@id": `${siteUrl}/#website`,
+			name: "Saksham Dubey",
+			url: `${siteUrl}/`,
+			inLanguage: "en-IN",
+			publisher: { "@id": `${siteUrl}/#person` },
+		},
+		{
+			"@type": "WebPage",
+			"@id": `${canonical}#webpage`,
+			name: title,
+			url: canonical,
+			description,
+			isPartOf: { "@id": `${siteUrl}/#website` },
+			about: { "@id": `${siteUrl}/#person` },
+			inLanguage: "en-IN",
+		},
+	],
+};
 ---
 
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width" />
-        <meta name="theme-color" content="#090b0d" />
-        <meta name="description" content={description} />
-        <meta name="author" content="Saksham Dubey" />
-        <meta
-            name="robots"
-            content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
-        />
-        <link rel="canonical" href={canonical} />
-        <link
-            rel="alternate"
-            type="text/markdown"
-            href="/llms.txt"
-            title="LLM-friendly profile"
-        />
-        <meta property="og:type" content="website" />
-        <meta property="og:site_name" content="Saksham Dubey" />
-        <meta property="og:title" content={title} />
-        <meta property="og:description" content={description} />
-        <meta property="og:url" content={canonical} />
-        <meta property="og:locale" content="en_IN" />
-        <meta name="twitter:card" content="summary" />
-        <meta name="twitter:title" content={title} />
-        <meta name="twitter:description" content={description} />
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-            rel="preconnect"
-            href="https://fonts.gstatic.com"
-            crossorigin="anonymous"
-        />
-        <link
-            href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap"
-            rel="stylesheet"
-        />
-
-        <title>{title}</title>
-        <script
-            type="application/ld+json"
-            set:html={JSON.stringify(structuredData)}
-        ></script>
-    </head>
-    <body class="bg-[#090b0d] text-[#e8edf0] antialiased selection:bg-[#a8ff60] selection:text-[#090b0d]">
-        <slot />
-    </body>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="theme-color" content="#090b0d" />
+		<SeoHead
+			title={title}
+			description={description}
+			canonicalPath={robots.includes("noindex") ? undefined : canonicalPath}
+			siteName="Saksham Dubey"
+			robots={robots}
+			jsonLd={robots.includes("noindex") ? undefined : structuredData}
+		/>
+		<link
+			rel="alternate"
+			type="text/markdown"
+			href="/llms.txt"
+			title="LLM-friendly profile"
+		/>
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+		<link
+			href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap"
+			rel="stylesheet"
+		/>
+		<title>{title}</title>
+	</head>
+	<body class="bg-[#090b0d] text-[#e8edf0] antialiased selection:bg-[#a8ff60] selection:text-[#090b0d]">
+		<slot />
+	</body>
 </html>

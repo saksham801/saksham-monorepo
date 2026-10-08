@@ -6,7 +6,6 @@ import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://docs.sakshampy.in',
   compressHTML: true,
   build: {
     inlineStylesheets: 'auto',
@@ -40,6 +39,7 @@ export default defineConfig({
         alt: 'SD — Saksham’s Docs',
       },
       components: {
+        Head: './src/components/Head.astro',
         Header: './src/components/Header.astro',
         Footer: './src/components/Footer.astro',
         PageTitle: './src/components/PageTitle.astro',
@@ -76,66 +76,9 @@ export default defineConfig({
         {
           tag: 'meta',
           attrs: {
-            name: 'author',
-            content: 'Saksham Dubey',
-          },
-        },
-        {
-          tag: 'meta',
-          attrs: {
-            name: 'robots',
-            content: 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1',
-          },
-        },
-        {
-          tag: 'meta',
-          attrs: {
             name: 'keywords',
             content:
               'Saksham Dubey, engineering docs, software guides, Rust, C++, Python, full stack, New Delhi',
-          },
-        },
-        {
-          tag: 'meta',
-          attrs: {
-            property: 'og:type',
-            content: 'website',
-          },
-        },
-        {
-          tag: 'meta',
-          attrs: {
-            property: 'og:site_name',
-            content: 'Saksham’s Docs',
-          },
-        },
-        {
-          tag: 'meta',
-          attrs: {
-            property: 'og:locale',
-            content: 'en_IN',
-          },
-        },
-        {
-          tag: 'meta',
-          attrs: {
-            name: 'twitter:card',
-            content: 'summary',
-          },
-        },
-        {
-          tag: 'meta',
-          attrs: {
-            name: 'twitter:title',
-            content: 'Saksham’s Docs',
-          },
-        },
-        {
-          tag: 'meta',
-          attrs: {
-            name: 'twitter:description',
-            content:
-              'Working notes, engineering guides, and practical references by Saksham Dubey.',
           },
         },
         {
@@ -153,44 +96,6 @@ export default defineConfig({
             href: '/llms.txt',
             title: 'LLM-friendly documentation index',
           },
-        },
-        {
-          tag: 'script',
-          attrs: {
-            type: 'application/ld+json',
-          },
-          content: JSON.stringify({
-            '@context': 'https://schema.org',
-            '@graph': [
-              {
-                '@type': 'WebSite',
-                name: 'Saksham’s Docs',
-                url: 'https://docs.sakshampy.in/',
-                description:
-                  'Working notes, engineering guides, and practical references by Saksham Dubey.',
-                inLanguage: 'en-IN',
-                publisher: {
-                  '@type': 'Person',
-                  name: 'Saksham Dubey',
-                  url: 'https://sakshampy.in/',
-                  email: 'mailto:hello@sakshampy.in',
-                },
-              },
-              {
-                '@type': 'TechArticle',
-                headline: 'Saksham’s Docs',
-                description:
-                  'Working notes, engineering guides, and practical references by Saksham Dubey.',
-                url: 'https://docs.sakshampy.in/',
-                author: {
-                  '@type': 'Person',
-                  name: 'Saksham Dubey',
-                  url: 'https://sakshampy.in/',
-                },
-                inLanguage: 'en-IN',
-              },
-            ],
-          }),
         },
       ],
       social: [

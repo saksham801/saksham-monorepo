@@ -1,4 +1,6 @@
 ---
+import SystemStatus from "./SystemStatus.astro";
+
 interface Link {
 	href: string;
 	label: string;
@@ -39,6 +41,7 @@ const Tag = element;
 	<span>© {year} {copyright}</span>
 	{note && <span class="text-ui-dim">{note}</span>}
 	<slot />
+	<SystemStatus />
 	{links.length > 0 && (
 		<nav class="flex flex-wrap items-center gap-x-3 gap-y-2" aria-label="Footer">
 			{links.map(({ href, label, external }, index) => (

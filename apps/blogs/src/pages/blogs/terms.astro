@@ -1,11 +1,11 @@
 ---
 import TermsContent from "@saksham/ui/components/TermsContent.astro";
 import SiteFooter from "@saksham/ui/components/SiteFooter.astro";
-import SiteHeader from "../components/SiteHeader.astro";
-import Layout from "../layouts/Layout.astro";
-import { SITE_AUTHOR, SITE_EMAIL, SITE_URL } from "../consts";
+import SiteHeader from "../../components/SiteHeader.astro";
+import Layout from "../../layouts/Layout.astro";
+import { SITE_AUTHOR, SITE_EMAIL, SITE_URL } from "../../consts";
 
-export const prerender = true;
+export const prerender = false;
 
 const updated = "September 19, 2026";
 ---
@@ -13,12 +13,12 @@ const updated = "September 19, 2026";
 <Layout
 	title="Terms and Conditions"
 	description="Terms and conditions for the Saksham portfolio, engineering blog, and documentation sites."
-	canonicalPath="/terms/"
+	canonicalPath="/blogs/terms/"
 	jsonLd={{
 		"@context": "https://schema.org",
 		"@type": "WebPage",
 		name: "Terms and Conditions",
-		url: `${SITE_URL}/terms/`,
+		url: `${SITE_URL}/blogs/terms/`,
 		dateModified: "2026-09-19",
 		isPartOf: { "@type": "WebSite", url: SITE_URL },
 	}}
@@ -47,7 +47,7 @@ const updated = "September 19, 2026";
 		</main>
 		<SiteFooter
 			links={[
-				{ href: "/terms", label: "TERMS" },
+				{ href: "/blogs/terms/", label: "TERMS" },
 				{ href: "/llms.txt", label: "LLMS.TXT" },
 				{ href: "https://sakshampy.in", label: "PORTFOLIO ↗", external: true },
 			]}

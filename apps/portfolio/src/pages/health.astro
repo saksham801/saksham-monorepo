@@ -17,21 +17,21 @@ const services = [
         name: "Portfolio website",
         key: "website",
         detail: "sakshampy.in",
-        latency: "17ms",
+        latency: "Not measured",
     },
     {
         name: "Static delivery",
         key: "cdn",
         detail: "Cloudflare edge network",
-        latency: "18ms",
+        latency: "Not measured",
     },
     {
         name: "Contact channel",
         key: "email",
         detail: "hello@sakshampy.in",
-        latency: "—",
+        latency: "Not measured",
     },
-    { name: "LLM profile", key: "llms", detail: "/llms.txt", latency: "12ms" },
+    { name: "LLM profile", key: "llms", detail: "/llms.txt", latency: "Not measured" },
 ];
 ---
 
@@ -72,9 +72,9 @@ const services = [
                         <span class="prompt">&gt;_</span> MONITOR / HEALTH
                     </p>
                     <h1>
-                        Everything is
+                        System
                         <br />
-                        <em>operational.</em>
+                        <em>status.</em>
                     </h1>
                     <p class="intro">
                         A transparent look at the systems powering Saksham's
@@ -82,13 +82,13 @@ const services = [
                     </p>
                 </div>
                 <div class="overall-status">
-                    <span class="status-orb"></span>
+                    <span class="status-orb status-warning"></span>
                     <div>
                         <strong id="live-status">
-                            ALL SYSTEMS OPERATIONAL
+                            CHECKING LIVE STATUS
                         </strong>
                         <small>
-                            Last checked <span id="last-checked">just now</span>
+                            Last checked <span id="last-checked">waiting for OpenStatus</span>
                         </small>
                     </div>
                 </div>
@@ -199,14 +199,14 @@ const services = [
                     {services.map((service) => (
                         <div class="service-row" data-service={service.name}>
                             <div class="service-name">
-                                <span class="check">✓</span>
+                                <span class="check" aria-hidden="true">↗</span>
                                 <div>
                                     <strong>{service.name}</strong>
                                     <small>{service.detail}</small>
                                 </div>
                             </div>
                             <span class="latency">{service.latency}</span>
-                            <span class="operational">OPERATIONAL</span>
+                            <a class="operational" href="https://saksham.openstatus.dev/" target="_blank" rel="noopener noreferrer">VIEW LIVE STATUS ↗</a>
                         </div>
                     ))}
                 </div>
@@ -265,8 +265,8 @@ const services = [
                             <b>HTTPS / TLS</b>
                         </div>
                         <div>
-                            <span>LAST INCIDENT</span>
-                            <b>NONE REPORTED</b>
+                            <span>INCIDENT HISTORY</span>
+                            <b>See OpenStatus</b>
                         </div>
                     </div>
                 </div>
@@ -275,14 +275,13 @@ const services = [
             <section class="incident-section">
                 <div class="incident-icon">✓</div>
                 <div>
-                    <strong>No incidents reported</strong>
+                    <strong>Incident history</strong>
                     <p>
-                        All systems have been running normally. This page
-                        updates whenever a new deployment or service event
-                        occurs.
+                        View the linked OpenStatus page for current availability
+                        and incident details.
                     </p>
                 </div>
-                <span class="incident-date">SINCE 2020</span>
+                <a href="https://saksham.openstatus.dev/" target="_blank" rel="noopener noreferrer">OPEN STATUS ↗</a>
             </section>
 
             <section class="contact-strip">
@@ -327,8 +326,6 @@ const services = [
         };
         const liveStatus = document.querySelector("#live-status");
         const statusOrb = document.querySelector(".status-orb");
-        const serviceRows = document.querySelectorAll("[data-service]");
-
         const updateOpenStatus = async () => {
             try {
                 const response = await fetch(openStatusApi, {
@@ -356,18 +353,10 @@ const services = [
                         overall !== "OVERALL_STATUS_OPERATIONAL",
                     );
 
-                serviceRows.forEach((row) => {
-                    const state = row.querySelector(".operational");
-                    if (state)
-                        state.textContent =
-                            overall === "OVERALL_STATUS_OPERATIONAL"
-                                ? "OPERATIONAL"
-                                : "CHECK STATUS";
-                    row.setAttribute("data-live-status", overall);
-                });
                 const checked = document.querySelector("#last-checked");
                 if (checked) checked.textContent = "just now · OpenStatus";
-            } catch {
+            } catch (error) {
+                console.error("Unable to retrieve live OpenStatus data", error);
                 if (liveStatus)
                     liveStatus.textContent = "OPENSTATUS DATA UNAVAILABLE";
                 if (statusOrb) statusOrb.classList.add("status-warning");

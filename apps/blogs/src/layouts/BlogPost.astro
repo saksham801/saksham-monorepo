@@ -36,7 +36,12 @@ const jsonLd = {
 	},
 	mainEntityOfPage: {
 		"@type": "WebPage",
-		"@id": `${SITE_URL}/blog/${slug}/`,
+		"@id": `${SITE_URL}/blogs/${slug}/`,
+	},
+	isPartOf: {
+		"@type": "Blog",
+		name: "Saksham Dubey — Engineering Blog",
+		url: `${SITE_URL}/blogs/`,
 	},
 	articleSection: topicLabel[topic] ?? topic,
 	keywords: tags.join(", "),
@@ -47,7 +52,7 @@ const jsonLd = {
 <Layout
 	title={title}
 	description={description}
-	canonicalPath={`/blog/${slug}/`}
+	canonicalPath={`/blogs/${slug}/`}
 	ogType="article"
 	publishedTime={pubDate}
 	modifiedTime={updatedDate ?? pubDate}
@@ -96,7 +101,7 @@ const jsonLd = {
 		</main>
 		<SiteFooter
 			links={[
-				{ href: "/terms", label: "TERMS" },
+				{ href: "/blogs/terms/", label: "TERMS" },
 				{ href: "/llms.txt", label: "LLMS.TXT" },
 				{ href: "https://sakshampy.in", label: "PORTFOLIO ↗", external: true },
 			]}

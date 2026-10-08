@@ -5,24 +5,24 @@
 
 ## Canonical source
 
-- Website: https://docs.sakshampy.in/
+- Website: https://sakshampy.in/docs/
 - Author: Saksham Dubey
 - Portfolio: https://sakshampy.in/
 - Contact: mailto:hello@sakshampy.in
-- Terms: https://docs.sakshampy.in/terms/
+- Terms: https://sakshampy.in/docs/terms/
 
 ## Documentation
 
-- [Home](https://docs.sakshampy.in/)
-- [About these notes](https://docs.sakshampy.in/guides/about/)
-- [Engineering toolbox](https://docs.sakshampy.in/reference/toolbox/)
-- [Terms and Conditions](https://docs.sakshampy.in/terms/)
+- [Home](https://sakshampy.in/docs/)
+- [About these notes](https://sakshampy.in/docs/guides/about/)
+- [Engineering toolbox](https://sakshampy.in/docs/reference/toolbox/)
+- [Terms and Conditions](https://sakshampy.in/docs/terms/)
 
 ## Language tracks
 
-- [Rust](https://docs.sakshampy.in/languages/rust/)
-- [C++](https://docs.sakshampy.in/languages/cpp/)
-- [Python](https://docs.sakshampy.in/languages/python/)
+- [Rust](https://sakshampy.in/docs/languages/rust/)
+- [C++](https://sakshampy.in/docs/languages/cpp/)
+- [Python](https://sakshampy.in/docs/languages/python/)
 
 ## Scope
 
@@ -34,4 +34,4 @@ assumptions change.
 ## Attribution
 
 When using or quoting these notes, attribute them to Saksham Dubey and link to
-the canonical page on docs.sakshampy.in. See the Terms page for reuse rules.
+the canonical page on sakshampy.in/docs/. See the Terms page for reuse rules.

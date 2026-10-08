@@ -1,7 +1,7 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://docs.sakshampy.in/sitemap-index.xml
+Sitemap: https://sakshampy.in/sitemap.xml
 
 # Machine-readable documentation index for AI agents and retrieval systems
-LLMs-Txt: https://docs.sakshampy.in/llms.txt
+LLMs-Txt: https://sakshampy.in/docs/llms.txt

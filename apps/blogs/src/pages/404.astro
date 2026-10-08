@@ -1,0 +1,13 @@
+---
+import ErrorPage from "@saksham/ui/components/ErrorPage.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import Layout from "../layouts/Layout.astro";
+
+export const prerender = true;
+---
+<Layout title="Page not found" robots="noindex, follow">
+	<div class="site-shell min-h-screen" id="top">
+		<SiteHeader active="blog" />
+		<ErrorPage section="blogs" />
+	</div>
+</Layout>

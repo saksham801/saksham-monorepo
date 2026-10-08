@@ -6,7 +6,7 @@ import SiteHeader from "../../components/SiteHeader.astro";
 import Layout from "../../layouts/Layout.astro";
 import { SITE_DESCRIPTION, SITE_TITLE, SITE_URL } from "../../consts";
 
-export const prerender = true;
+export const prerender = false;
 
 const posts = (await getCollection("blog")).sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
@@ -34,17 +34,17 @@ const accentFor: Record<string, string> = {
 <Layout
 	title="Blog"
 	description={`All posts from ${SITE_TITLE}. ${SITE_DESCRIPTION}`}
-	canonicalPath="/blog/"
+	canonicalPath="/blogs/"
 	jsonLd={{
 		"@context": "https://schema.org",
 		"@type": "CollectionPage",
 		name: "Blog",
-		url: `${SITE_URL}/blog/`,
+		url: `${SITE_URL}/blogs/`,
 		description: SITE_DESCRIPTION,
 		hasPart: posts.map((post) => ({
 			"@type": "BlogPosting",
 			headline: post.data.title,
-			url: `${SITE_URL}/blog/${post.id}/`,
+			url: `${SITE_URL}/blogs/${post.id}/`,
 			datePublished: post.data.pubDate.toISOString(),
 		})),
 	}}
@@ -85,7 +85,7 @@ const accentFor: Record<string, string> = {
 				{
 					posts.map((post, index) => (
 						<a
-							href={`/blog/${post.id}/`}
+							href={`/blogs/${post.id}/`}
 							class={`ui-card card project-${accentFor[post.data.topic] ?? "lime"} ${index === 0 ? "featured" : ""}`}
 							data-topic={post.data.topic}
 							data-search={[post.data.title, post.data.description, post.data.topic, ...post.data.tags].join(" ").toLowerCase()}
@@ -124,7 +124,7 @@ const accentFor: Record<string, string> = {
 		</main>
 		<SiteFooter
 			links={[
-				{ href: "/terms", label: "TERMS" },
+				{ href: "/blogs/terms/", label: "TERMS" },
 				{ href: "/llms.txt", label: "LLMS.TXT" },
 				{ href: "https://sakshampy.in", label: "PORTFOLIO ↗", external: true },
 			]}

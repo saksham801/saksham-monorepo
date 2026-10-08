@@ -8,10 +8,16 @@ environment, and deployment ownership.
 
 | Workspace | Previous repository | Cloudflare Worker | Production URL |
 | --- | --- | --- | --- |
-| `apps/portfolio` | `saksham801/portfolio` | `saksham` | <https://sakshampy.in> |
-| `apps/docs` | `saksham801/docs` | `docs` | <https://docs.sakshampy.in> |
-| `apps/blogs` | `saksham801/blogs` | `blogs` | <https://blogs.sakshampy.in> |
+| `apps/portfolio` | `saksham801/portfolio` | `saksham` | <https://sakshampy.in/> |
+| `apps/docs` | `saksham801/docs` | `docs` | <https://sakshampy.in/docs/> |
+| `apps/blogs` | `saksham801/blogs` | `blogs` | <https://sakshampy.in/blogs/> |
 | `apps/report` | — | `report` | Not recorded |
+
+The canonical public host is `https://sakshampy.in`. The Blogs Worker custom
+domain is a permanent-redirect compatibility host; `/blogs/*` and `/docs/*`
+must be dispatched by the existing Cloudflare Microfrontend Router. This
+repository currently contains no Router Worker or service bindings, so those
+production routes still require Cloudflare configuration.
 
 Each app has a typed `cloudflare.config.ts` for Cloudflare CLI commands and
 keeps its Wrangler config for the active Astro build/deployment path. The

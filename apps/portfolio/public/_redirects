@@ -1,0 +1,3 @@
+/blog https://sakshampy.in/blogs/ 301
+/blog/ https://sakshampy.in/blogs/ 301
+/blog/* https://sakshampy.in/blogs/:splat 301

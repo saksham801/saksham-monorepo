@@ -89,18 +89,18 @@ export default function journey() {
 
   if (persona === 'casual') {
     readAndScroll(route('portfolio', '/terms'), persona, device);
-    readAndScroll(route('blogs', '/about'), persona, device);
+    readAndScroll(route('blogs', '/blogs/about/'), persona, device);
   } else if (persona === 'blog') {
-    readAndScroll(route('blogs', '/blog/'), persona, device);
+    readAndScroll(route('blogs', '/blogs/'), persona, device);
     readAndScroll(choose(blogs.filter((item) => item.type === 'blog')), persona, device);
     if (Math.random() < 0.7) readAndScroll(choose(blogs.filter((item) => item.type === 'blog')), persona, device);
   } else if (persona === 'docs') {
-    readAndScroll(route('docs', '/'), persona, device);
-    readAndScroll(choose(docs.filter((item) => item.type === 'docs' && item.path !== '/terms/')), persona, device);
-    readAndScroll(choose(docs.filter((item) => item.type === 'docs' && item.path !== '/terms/')), persona, device);
+    readAndScroll(route('docs', '/docs/'), persona, device);
+    readAndScroll(choose(docs.filter((item) => item.type === 'docs' && item.path !== '/docs/terms/')), persona, device);
+    readAndScroll(choose(docs.filter((item) => item.type === 'docs' && item.path !== '/docs/terms/')), persona, device);
   } else if (persona === 'developer') {
     readAndScroll(route('portfolio', '/health'), persona, device);
-    readAndScroll(route('blogs', '/about'), persona, device);
+    readAndScroll(route('blogs', '/blogs/about/'), persona, device);
   } else {
     const app = choose(['portfolio', 'blogs', 'docs']);
     readAndScroll(randomPage(appRoutes[app]), persona, device);

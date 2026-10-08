@@ -1,0 +1,85 @@
+---
+import SeoHead from "@saksham/ui/components/SeoHead.astro";
+
+const { entry, lang } = Astro.locals.starlightRoute;
+const { title } = entry.data;
+const description =
+	entry.data.description ??
+	"Engineering guides and practical software references by Saksham Dubey.";
+const notFound = entry.id === "404" || entry.id.endsWith("/404");
+const entryPath = entry.id.replace(/\/$/, "");
+const isIndex = entryPath === "index" || !entryPath;
+const canonicalPath = isIndex ? "/docs/" : `/docs/${entryPath}/`;
+const siteUrl = "https://sakshampy.in";
+const personId = `${siteUrl}/#person`;
+const structuredData = notFound
+	? undefined
+	: {
+			"@context": "https://schema.org",
+			"@graph": [
+				{
+					"@type": "Person",
+					"@id": personId,
+					name: "Saksham Dubey",
+					url: `${siteUrl}/`,
+				},
+				{
+					"@type": "WebSite",
+					"@id": `${siteUrl}/docs/#website`,
+					name: "Saksham’s Docs",
+					url: `${siteUrl}/docs/`,
+					description:
+						"Working notes, engineering guides, and practical references by Saksham Dubey.",
+					inLanguage: lang,
+					publisher: { "@id": personId },
+				},
+				{
+					"@type": "WebPage",
+					"@id": `${siteUrl}${canonicalPath}#webpage`,
+					name: title,
+					url: `${siteUrl}${canonicalPath}`,
+					description,
+					isPartOf: { "@id": `${siteUrl}/docs/#website` },
+					inLanguage: lang,
+				},
+				...(isIndex || entry.id.endsWith("terms")
+					? []
+					: [
+							{
+								"@type": "TechArticle",
+								"@id": `${siteUrl}${canonicalPath}#article`,
+								headline: title,
+								description,
+								url: `${siteUrl}${canonicalPath}`,
+								author: { "@id": personId },
+								mainEntityOfPage: { "@id": `${siteUrl}${canonicalPath}#webpage` },
+								inLanguage: lang,
+							},
+						]),
+			],
+		};
+
+const excludedHeadTag = ({ tag, attrs }: (typeof Astro.locals.starlightRoute.head)[number]) => {
+	if (tag === "link" && attrs?.rel === "canonical") return true;
+	if (tag === "link" && attrs?.rel === "sitemap") return true;
+	if (tag === "script" && attrs?.type === "application/ld+json") return true;
+	if (tag !== "meta") return false;
+	return (
+		["description", "author", "robots"].includes(String(attrs?.name ?? "")) ||
+		String(attrs?.name ?? "").startsWith("twitter:") ||
+		String(attrs?.property ?? "").startsWith("og:") ||
+		String(attrs?.property ?? "").startsWith("article:")
+	);
+};
+const preservedHead = Astro.locals.starlightRoute.head.filter((tag) => !excludedHeadTag(tag));
+---
+<SeoHead
+	title={title}
+	description={description}
+	canonicalPath={notFound ? undefined : canonicalPath}
+	siteName="Saksham’s Docs"
+	contentType={isIndex ? "website" : "article"}
+	robots={notFound ? "noindex, follow" : undefined}
+	jsonLd={structuredData}
+/>
+{preservedHead.map(({ tag: Tag, attrs, content }) => <Tag {...attrs} set:html={content} />)}

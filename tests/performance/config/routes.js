@@ -7,10 +7,10 @@ const blogSlugs = [
   'rust-ownership-borrowing',
 ];
 const docsPaths = [
-  '/', '/guides/about/', '/reference/toolbox/', '/languages/rust/',
-  '/languages/rust/ownership/', '/languages/rust/tooling/', '/languages/cpp/',
-  '/languages/cpp/memory/', '/languages/cpp/tooling/', '/languages/python/',
-  '/languages/python/packaging/', '/languages/python/tooling/', '/terms/',
+  '/docs/', '/docs/guides/about/', '/docs/reference/toolbox/', '/docs/languages/rust/',
+  '/docs/languages/rust/ownership/', '/docs/languages/rust/tooling/', '/docs/languages/cpp/',
+  '/docs/languages/cpp/memory/', '/docs/languages/cpp/tooling/', '/docs/languages/python/',
+  '/docs/languages/python/packaging/', '/docs/languages/python/tooling/', '/docs/terms/',
 ];
 
 export const routeGroups = {
@@ -19,19 +19,16 @@ export const routeGroups = {
     { path: '/terms', type: 'static' },
   ],
   blogs: [
-    { path: '/', type: 'homepage' }, { path: '/blog/', type: 'listing' },
-    { path: '/about', type: 'static' }, { path: '/terms', type: 'static' },
-    ...blogSlugs.map((slug) => ({ path: `/blog/${slug}/`, type: 'blog' })),
+    { path: '/blogs/', type: 'listing' },
+    { path: '/blogs/about/', type: 'static' }, { path: '/blogs/terms/', type: 'static' },
+    ...blogSlugs.map((slug) => ({ path: `/blogs/${slug}/`, type: 'blog' })),
   ],
-  docs: docsPaths.map((path) => ({ path, type: path === '/' ? 'homepage' : 'docs' })),
+  docs: docsPaths.map((path) => ({ path, type: path === '/docs/' ? 'homepage' : 'docs' })),
 };
 
 export const apiRoutes = [{ app: 'portfolio', path: '/api/openstatus', method: 'GET', type: 'api' }];
 
-export function originFor(app) {
-  const configured = __ENV[`${app.toUpperCase()}_URL`];
-  if (configured) return configured.replace(/\/$/, '');
-  if (app === 'portfolio') return __ENV.BASE_URL.replace(/\/$/, '');
+export function originFor() {
   return __ENV.BASE_URL.replace(/\/$/, '');
 }
 

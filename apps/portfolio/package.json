@@ -7,14 +7,14 @@
 	},
 	"scripts": {
 		"dev": "astro dev",
-		"build": "astro build",
-		"preview": "astro build && astro preview",
+		"build": "bun run scripts/generate-sitemap.ts && astro build",
+		"preview": "bun run build && astro preview",
 		"lint": "eslint .",
 		"typecheck": "astro check",
 		"check": "astro check",
 		"astro": "astro",
 		"generate-types": "cf workers types",
-		"deploy": "astro build && wrangler deploy",
+		"deploy": "bun run build && wrangler deploy",
 		"cf-typegen": "cf workers types"
 	},
 	"dependencies": {

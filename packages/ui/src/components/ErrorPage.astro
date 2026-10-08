@@ -1,0 +1,40 @@
+---
+interface Props {
+  section?: "portfolio" | "blogs" | "docs";
+  element?: "main" | "section";
+}
+
+const { section, element = "main" } = Astro.props;
+const sectionLabel = section === "blogs" ? "Blogs" : section === "docs" ? "Docs" : "Home";
+const sectionHref = section === "blogs" ? "/blogs/" : section === "docs" ? "/docs/" : "/";
+const searchHref = section === "blogs" ? "/blogs/#article-search" : undefined;
+const Tag = element;
+---
+<Tag id="main-content" class="mx-auto grid min-h-[65vh] w-full max-w-container-ui content-center gap-6 px-5 py-16 lg:px-10">
+  <p class="m-0 text-ui-sm tracking-[0.13em] text-ui-muted"><span class="text-ui-accent">&gt;_</span> 404</p>
+  <h1 class="m-0 font-ui-sans text-[clamp(3rem,8vw,6rem)] leading-[0.95] font-extrabold tracking-[-0.08em]">Page not found.</h1>
+  <p class="m-0 max-w-[38rem] text-ui-base leading-relaxed text-ui-muted">
+    The page you're looking for doesn't exist or may have moved.
+  </p>
+  <nav aria-label="404 navigation" class="flex flex-wrap gap-4 text-ui-sm">
+    <a class="text-ui-accent underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ui-accent" href={sectionHref}>
+      {section ? `Back to ${sectionLabel}` : "Go Home"}
+    </a>
+    {section !== "blogs" && <a class="text-ui-accent underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ui-accent" href="/blogs/">Browse Blogs</a>}
+    {section !== "docs" && <a class="text-ui-accent underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ui-accent" href="/docs/">Open Docs</a>}
+    {searchHref && <a class="text-ui-accent underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ui-accent" href={searchHref}>Search Blogs</a>}
+    {section === "docs" && <button class="cursor-pointer border-0 bg-transparent p-0 text-ui-accent underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ui-accent" type="button" data-open-docs-search>Search Docs</button>}
+  </nav>
+</Tag>
+
+{section === "docs" && (
+  <script>
+    const openSearch = document.querySelector<HTMLButtonElement>("[data-open-docs-search]");
+    if (openSearch) {
+      openSearch.addEventListener("click", () => {
+        const searchButton = document.querySelector<HTMLButtonElement>("site-search button[data-open-modal]");
+        if (searchButton) searchButton.click();
+      });
+    }
+  </script>
+)}

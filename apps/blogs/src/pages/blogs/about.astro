@@ -1,21 +1,21 @@
 ---
 import SiteFooter from "@saksham/ui/components/SiteFooter.astro";
-import SiteHeader from "../components/SiteHeader.astro";
-import Layout from "../layouts/Layout.astro";
-import { PORTFOLIO_URL, SITE_AUTHOR, SITE_EMAIL } from "../consts";
+import SiteHeader from "../../components/SiteHeader.astro";
+import Layout from "../../layouts/Layout.astro";
+import { PORTFOLIO_URL, SITE_AUTHOR, SITE_EMAIL } from "../../consts";
 
-export const prerender = true;
+export const prerender = false;
 ---
 
 <Layout
 	title="About"
 	description="About Saksham Dubey and this engineering blog covering C++, Rust, and Python."
-	canonicalPath="/about/"
+	canonicalPath="/blogs/about/"
 	jsonLd={{
 		"@context": "https://schema.org",
 		"@type": "AboutPage",
 		name: "About",
-		url: "https://blogs.sakshampy.in/about/",
+		url: "https://sakshampy.in/blogs/about/",
 		mainEntity: {
 			"@type": "Person",
 			name: SITE_AUTHOR,
@@ -81,7 +81,7 @@ export const prerender = true;
 		</main>
 		<SiteFooter
 			links={[
-				{ href: "/terms", label: "TERMS" },
+				{ href: "/blogs/terms/", label: "TERMS" },
 				{ href: "/llms.txt", label: "LLMS.TXT" },
 				{ href: PORTFOLIO_URL, label: "PORTFOLIO ↗", external: true },
 			]}

@@ -7,7 +7,7 @@ import { join, resolve } from 'node:path';
 const server = createServer((request, response) => {
   const status = request.url === '/' ? 500 : 200;
   response.writeHead(status, { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'public, max-age=60' });
-  response.end(`<main><h1>Test route</h1><a href="/blog/">Articles</a><p>${request.url}</p></main>`);
+  response.end(`<main><h1>Test route</h1><a href="/blogs/">Articles</a><p>${request.url}</p></main>`);
 });
 await new Promise((resolveListen) => server.listen(0, '127.0.0.1', resolveListen));
 const address = server.address();

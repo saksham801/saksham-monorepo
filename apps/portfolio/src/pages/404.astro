@@ -1,0 +1,13 @@
+---
+import ErrorPage from "@saksham/ui/components/ErrorPage.astro";
+import PortfolioHeader from "../components/PortfolioHeader.astro";
+import Layout from "../layouts/Layout.astro";
+
+export const prerender = true;
+---
+<Layout title="Page not found — Saksham Dubey" robots="noindex, follow">
+  <div class="ui-grid-background min-h-screen bg-ui-bg" id="top">
+    <PortfolioHeader />
+    <ErrorPage section="portfolio" />
+  </div>
+</Layout>

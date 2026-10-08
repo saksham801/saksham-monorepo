@@ -1,0 +1,55 @@
+---
+import StructuredData from "./StructuredData.astro";
+import { canonicalUrl } from "../seo";
+
+interface Props {
+  title: string;
+  description: string;
+  canonicalPath?: string;
+  siteName: string;
+  author?: string;
+  contentType?: "website" | "article";
+  image?: string;
+  locale?: string;
+  publishedTime?: Date;
+  modifiedTime?: Date;
+  robots?: string;
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+}
+
+const {
+  title,
+  description,
+  canonicalPath,
+  siteName,
+  author = "Saksham Dubey",
+  contentType = "website",
+  image,
+  locale = "en_IN",
+  publishedTime,
+  modifiedTime,
+  robots = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+  jsonLd,
+} = Astro.props;
+const canonical = canonicalPath ? canonicalUrl(canonicalPath) : undefined;
+const imageUrl = image ? new URL(image, "https://sakshampy.in").href : undefined;
+---
+<meta name="description" content={description} />
+<meta name="author" content={author} />
+<meta name="robots" content={robots} />
+{canonical && <link rel="canonical" href={canonical} />}
+<link rel="sitemap" type="application/xml" href="https://sakshampy.in/sitemap.xml" />
+<meta property="og:type" content={contentType} />
+<meta property="og:site_name" content={siteName} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+{canonical && <meta property="og:url" content={canonical} />}
+<meta property="og:locale" content={locale} />
+{imageUrl && <meta property="og:image" content={imageUrl} />}
+{publishedTime && <meta property="article:published_time" content={publishedTime.toISOString()} />}
+{modifiedTime && <meta property="article:modified_time" content={modifiedTime.toISOString()} />}
+<meta name="twitter:card" content={imageUrl ? "summary_large_image" : "summary"} />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+{imageUrl && <meta name="twitter:image" content={imageUrl} />}
+{jsonLd && <StructuredData data={jsonLd} />}

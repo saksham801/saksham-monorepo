@@ -6,9 +6,9 @@ the Astro applications. The complete application code is in this repository:
 ```text
 /home/saksham/blogs.sakshampy.in/monorepo/
 ├── apps/
-│   ├── portfolio/   # https://sakshampy.in
-│   ├── docs/        # https://docs.sakshampy.in
-│   ├── blogs/       # https://blogs.sakshampy.in
+│   ├── portfolio/   # https://sakshampy.in (current main Worker)
+│   ├── docs/        # Docs Worker; intended public mount: /docs/
+│   ├── blogs/       # Blogs Worker; intended public mount: /blogs/
 │   └── report/      # Worker URL not recorded
 ├── packages/
 │   └── ui/          # shared design tokens and Astro primitives
@@ -113,8 +113,8 @@ Starlight, and its navigation and page layout are intentionally Docs-specific.
 ### Blogs
 
 - Home page: `apps/blogs/src/pages/index.astro`
-- Blog listing: `apps/blogs/src/pages/blog/index.astro`
-- Individual blog route: `apps/blogs/src/pages/blog/[...slug].astro`
+- Blog listing: `apps/blogs/src/pages/blogs/index.astro`
+- Individual blog route: `apps/blogs/src/pages/blogs/[...slug].astro`
 - Blog articles: `apps/blogs/src/content/blog/`
 - Content schema: `apps/blogs/src/content.config.ts`
 - Header, footer, and date formatting: `apps/blogs/src/components/`
@@ -125,6 +125,78 @@ Starlight, and its navigation and page layout are intentionally Docs-specific.
 
 Add an article as a Markdown/MDX file in `src/content/blog/` and follow the
 frontmatter/schema used by the existing articles.
+
+#### Writing a blog post
+
+Create `apps/blogs/src/content/blog/<kebab-case-slug>.md` (or `.mdx` when JSX is
+needed). The slug determines the public URL
+`https://sakshampy.in/blogs/<slug>/`; never write `/blog/` links or use the
+`blogs.sakshampy.in` host in content. The content schema requires a title,
+description, and publication date; tags default to an empty list and topic
+defaults to `general`.
+
+```md
+---
+title: "A specific, useful title"
+description: "A concise, accurate summary of what readers will learn."
+pubDate: "2026-10-09"
+# updatedDate: "2026-10-10" # only when materially updated
+topic: rust
+tags: [rust, ownership]
+# heroImage: ../../assets/example.webp # optional; use a real, optimized image
+---
+
+Introduce the problem and the intended reader. Use descriptive `##` sections,
+working examples, and explain important tradeoffs. Link to other public pages
+using `/blogs/<slug>/`, `/docs/<path>/`, and `/` canonical paths. Do not invent
+a publication/update date, author credential, image, review, or other claim.
+```
+
+The Blogs layouts render per-post title, description, canonical, OpenGraph,
+Twitter, date and BlogPosting data from frontmatter. Keep summaries distinct
+and useful; verify generated HTML and RSS after edits. Use the existing dark,
+terminal-inspired typography and code formatting rather than adding a competing
+theme.
+
+#### Writing a Docs page
+
+Create a `.md`/`.mdx` file under `apps/docs/src/content/docs/`. The file path
+becomes its Starlight route under the public `/docs/` mount (for example,
+`languages/rust/ownership.md` maps to `/docs/languages/rust/ownership/`). Use
+Starlight frontmatter such as `title`, `description`, and optional
+`lastUpdated`; add the page to the Docs sidebar in `apps/docs/astro.config.mjs`
+when it belongs in navigation. Use heading levels in order, descriptive links,
+fenced code blocks with language identifiers, and valid accessible Markdown.
+Follow the existing docs theme/components and add no page-specific arbitrary
+visual system unless there is a clear content need. Do not add fabricated dates
+or structured-data claims.
+
+#### Public routing and canonical URLs
+
+The intended URL architecture is `/` (Portfolio), `/blogs/` and `/blogs/*`
+(Blogs), and `/docs/` and `/docs/*` (Docs), all on `https://sakshampy.in`.
+The Portfolio middleware permanently redirects `/blog`, `/blog/`, and
+`/blog/<suffix>` to the corresponding `/blogs/` URL, retaining query strings.
+The Portfolio Workers static-assets `_redirects` file permanently maps those
+legacy paths before static asset fallback. The Blogs Worker permanently redirects its configured
+`blogs.sakshampy.in` host to the same main-host `/blogs/` path, retaining suffix
+and query. Blog HTML routes are server-rendered so the compatibility hostname
+cannot serve duplicate pages; static assets remain served by the Workers asset
+binding.
+
+Important: this checkout does not contain a Cloudflare Microfrontend Router
+Worker, service bindings, or route configuration. The individual app Workers
+are separate; `apps/blogs/wrangler.jsonc` currently attaches the Blogs Worker
+to `blogs.sakshampy.in`, and Docs has no main-host path binding. Therefore the
+main-host `/blogs/*` and `/docs/*` mounts are not proven/configured by this
+repository. Do not claim the public route matrix works until Cloudflare is
+configured to dispatch those prefixes to the existing Workers, including
+correct asset, redirect, and cookie path behavior. Do not add a second router
+or merge app Workers. Recommended Cloudflare configuration: keep
+`sakshampy.in` as the sole canonical host, dispatch `/` to Portfolio,
+`/blogs` and `/blogs/*` to Blogs, `/docs` and `/docs/*` to Docs; configure
+`blogs.sakshampy.in` only as a permanent redirect to the matching main-host
+`/blogs/` URL (not as an independently served canonical website).
 
 ### Report
 
@@ -358,8 +430,8 @@ package manager and workspace runner.
 | App directory | Worker name | Production URL |
 | --- | --- | --- |
 | `apps/portfolio` | `saksham` | <https://sakshampy.in> |
-| `apps/docs` | `docs` | <https://docs.sakshampy.in> |
-| `apps/blogs` | `blogs` | <https://blogs.sakshampy.in> |
+| `apps/docs` | `docs` | Public canonical path intended: <https://sakshampy.in/docs/> |
+| `apps/blogs` | `blogs` | Public canonical path intended: <https://sakshampy.in/blogs/>; compatibility host <https://blogs.sakshampy.in> redirects to it |
 | `apps/report` | `report` | Not recorded; confirm before deployment |
 
 To validate the current production deployment path without publishing, run

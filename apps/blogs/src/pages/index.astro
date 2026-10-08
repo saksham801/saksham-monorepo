@@ -14,7 +14,7 @@ import {
 	SITE_URL,
 } from "../consts";
 
-export const prerender = true;
+export const prerender = false;
 
 const posts = (await getCollection("blog")).sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
@@ -49,7 +49,7 @@ const jsonLd = [
 		blogPost: posts.slice(0, 10).map((post) => ({
 			"@type": "BlogPosting",
 			headline: post.data.title,
-			url: `${SITE_URL}/blog/${post.id}/`,
+			url: `${SITE_URL}/blogs/${post.id}/`,
 			datePublished: post.data.pubDate.toISOString(),
 			description: post.data.description,
 		})),
@@ -64,9 +64,14 @@ const topicLabel: Record<string, string> = {
 };
 ---
 
-<Layout jsonLd={jsonLd}>
+<Layout
+	title={SITE_TITLE}
+	description={SITE_DESCRIPTION}
+	canonicalPath="/blogs/"
+	jsonLd={jsonLd}
+>
 	<div class="site-shell min-h-screen" id="top">
-		<SiteHeader active="home" />
+		<SiteHeader active="blog" />
 		<main id="main-content" class="mx-auto max-w-7xl px-5 lg:px-10">
 			<section class="hero reveal">
 				<div class="hero-copy reveal">
@@ -85,7 +90,7 @@ const topicLabel: Record<string, string> = {
 						care about correctness, performance, and readable systems.
 					</p>
 					<div class="hero-actions">
-						<Button href="/blog">
+						<Button href="/blogs/">
 							READ THE BLOG <span>↓</span>
 						</Button>
 						<a href={PORTFOLIO_URL} class="text-link" target="_blank" rel="noreferrer">
@@ -176,13 +181,13 @@ const topicLabel: Record<string, string> = {
 							<br />
 							<strong>the workshop.</strong>
 						</p>
-						<a href="/blog" class="text-link">VIEW ALL ↗</a>
+						<a href="/blogs/" class="text-link">VIEW ALL ↗</a>
 					</div>
 					<div class="post-list">
 						{
 							posts.map((post, index) => (
 								<a
-									href={`/blog/${post.id}/`}
+									href={`/blogs/${post.id}/`}
 									class={`post-row reveal ${index === 0 ? "featured" : ""}`}
 								>
 									<span class="post-index">
@@ -207,7 +212,7 @@ const topicLabel: Record<string, string> = {
 		</main>
 		<SiteFooter
 			links={[
-				{ href: "/terms", label: "TERMS" },
+				{ href: "/blogs/terms/", label: "TERMS" },
 				{ href: "/llms.txt", label: "LLMS.TXT" },
 				{ href: PORTFOLIO_URL, label: "PORTFOLIO ↗", external: true },
 			]}
