@@ -17,7 +17,14 @@
     "preview": "turbo run preview",
     "lint": "turbo run lint",
     "typecheck": "turbo run typecheck",
-    "check": "turbo run check"
+    "check": "turbo run check",
+    "test:smoke": "bun run tests/performance/run.js smoke",
+    "test:load": "bun run tests/performance/run.js load",
+    "test:stress": "bun run tests/performance/run.js stress",
+    "test:spike": "bun run tests/performance/run.js spike",
+    "test:soak": "bun run tests/performance/run.js soak",
+    "test:browser": "bun run tests/performance/run.js browser",
+    "test:compare": "bun run tests/performance/compare.js"
   },
   "devDependencies": {
     "eslint": "^9.39.5",

@@ -1,7 +1,7 @@
 ---
 import Button from "@saksham/ui/components/Button.astro";
-import Brand from "@saksham/ui/components/Brand.astro";
 import SiteFooter from "@saksham/ui/components/SiteFooter.astro";
+import PortfolioHeader from "../components/PortfolioHeader.astro";
 import Layout from "../layouts/Layout.astro";
 
 export const prerender = true;
@@ -85,47 +85,11 @@ const experience = [
 ---
 
 <Layout>
-    <div class="site-shell min-h-screen">
+    <div class="site-shell min-h-screen" id="top">
         <div class="pointer-glow" aria-hidden="true"></div>
-        <div class="topline">
-            <span>SAKSHAM.DUBey // PORTFOLIO_V2.0</span>
-            <span class="topline-right">
-                <i></i> SYSTEMS ONLINE <b>14:32:08 IST</b>
-            </span>
-        </div>
-        <header class="header mx-auto max-w-7xl px-5 py-5 lg:px-10">
-            <Brand href="#top" subtitle="FULL STACK ENGINEER" />
-            <nav class="nav">
-                <a href="#about">/ about</a>
-                <a href="#work">/ work</a>
-                <a href="#experience">/ experience</a>
-                <a href="https://docs.sakshampy.in">/ docs</a>
-                <a href="/health">/ health</a>
-                <a href="#contact">/ contact</a>
-            </nav>
-            <a href="mailto:hello@sakshampy.in" class="hire-button">
-                HIRE ME <span>↗</span>
-            </a>
-            <button
-                id="menu-button"
-                class="menu-button"
-                type="button"
-                aria-controls="mobile-menu"
-                aria-expanded="false"
-            >
-                [ MENU ]
-            </button>
-        </header>
-        <div id="mobile-menu" class="mobile-menu hidden">
-            <a href="#about">/ about</a>
-            <a href="#work">/ work</a>
-            <a href="#experience">/ experience</a>
-            <a href="https://docs.sakshampy.in">/ docs</a>
-            <a href="/health">/ health</a>
-            <a href="#contact">/ contact</a>
-        </div>
+        <PortfolioHeader />
 
-        <main id="top" class="mx-auto max-w-7xl px-5 lg:px-10">
+        <main id="main-content" tabindex="-1" class="mx-auto max-w-7xl px-5 lg:px-10">
             <section class="hero reveal">
                 <div class="hero-copy reveal">
                     <p class="kicker">
@@ -180,7 +144,7 @@ const experience = [
                         </p>
                         <p class="indent">
                             <span class="blue">location:</span>{" "}
-                            <span class="yellow">"New Delhi, IN"</span>,
+                            <span class="yellow">"Mumbai, IN"</span>,
                         </p>
                         <p class="indent">
                             <span class="blue">focus:</span> [
@@ -374,18 +338,14 @@ const experience = [
                         </a>
                         <div class="socials">
                             <a
-                                href="https://github.com"
+                                href="https://github.com/saksham-dubey"
                                 target="_blank"
-                                rel="noreferrer"
+                                rel="noopener noreferrer"
                             >
                                 GITHUB ↗
                             </a>
-                            <a
-                                href="https://www.linkedin.com"
-                                target="_blank"
-                                rel="noreferrer"
-                            >
-                                LINKEDIN ↗
+                            <a href="mailto:hello@sakshampy.in">
+                                EMAIL ↗
                             </a>
                         </div>
                     </div>
@@ -402,41 +362,19 @@ const experience = [
         />
     </div>
     <script>
-        const button = document.querySelector("#menu-button");
-        const menu = document.querySelector("#mobile-menu");
-        button?.addEventListener("click", () => {
-            menu?.classList.toggle("hidden");
-            button.setAttribute(
-                "aria-expanded",
-                menu?.classList.contains("hidden") ? "false" : "true",
-            );
-        });
-        menu?.querySelectorAll("a").forEach((link) =>
-            link.addEventListener("click", () => {
-                menu.classList.add("hidden");
-                button?.setAttribute("aria-expanded", "false");
-            }),
-        );
-        document.addEventListener("keydown", (event) => {
-            if (
-                event.key === "Escape" &&
-                menu &&
-                !menu.classList.contains("hidden")
-            ) {
-                menu.classList.add("hidden");
-                button?.setAttribute("aria-expanded", "false");
-                if (button instanceof HTMLButtonElement) button.focus();
-            }
-        });
-
         const glow = document.querySelector(".pointer-glow");
         window.addEventListener("pointermove", (event) => {
-            if (glow instanceof HTMLElement && window.matchMedia("(pointer: fine)").matches) {
+            if (
+                glow instanceof HTMLElement &&
+                window.matchMedia("(pointer: fine)").matches &&
+                !window.matchMedia("(prefers-reduced-motion: reduce)").matches
+            ) {
                 glow.style.setProperty("--pointer-x", `${event.clientX}px`);
                 glow.style.setProperty("--pointer-y", `${event.clientY}px`);
             }
         });
 
+        document.documentElement.classList.add("has-reveal");
         const revealItems = document.querySelectorAll(".reveal");
         if ("IntersectionObserver" in window) {
             const observer = new IntersectionObserver(
@@ -454,24 +392,6 @@ const experience = [
             revealItems.forEach((item) => item.classList.add("is-visible"));
         }
 
-        const sections = document.querySelectorAll("main section[id]");
-        const navLinks = document.querySelectorAll(".nav a");
-        const navObserver = new IntersectionObserver(
-            (entries) =>
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        navLinks.forEach((link) =>
-                            link.classList.toggle(
-                                "current",
-                                link.getAttribute("href") ===
-                                    `#${entry.target.id}`,
-                            ),
-                        );
-                    }
-                }),
-            { rootMargin: "-35% 0px -55%" },
-        );
-        sections.forEach((section) => navObserver.observe(section));
     </script>
 </Layout>
 
@@ -481,6 +401,7 @@ const experience = [
     }
     :global(html) {
         scroll-behavior: smooth;
+        scroll-padding-top: 6rem;
     }
     :global(body) {
         margin: 0;
@@ -522,13 +443,15 @@ const experience = [
         z-index: 1;
     }
     .reveal {
-        opacity: 0;
-        transform: translateY(22px);
         transition:
             opacity 0.75s ease,
             transform 0.75s cubic-bezier(0.2, 0.7, 0.2, 1);
     }
-    .reveal.is-visible {
+    :global(html.has-reveal) .reveal {
+        opacity: 0;
+        transform: translateY(22px);
+    }
+    :global(html.has-reveal) .reveal.is-visible {
         opacity: 1;
         transform: translateY(0);
     }
@@ -641,6 +564,7 @@ const experience = [
         background: transparent;
         display: none;
     }
+    main section[id] { scroll-margin-top: 6rem; }
     .hero {
         display: grid;
         grid-template-columns: minmax(0, 1.1fr) minmax(340px, 0.9fr);
@@ -1251,6 +1175,7 @@ const experience = [
         }
     }
     @media (prefers-reduced-motion: reduce) {
+        :global(html) { scroll-behavior: auto; }
         .reveal {
             opacity: 1;
             transform: none;

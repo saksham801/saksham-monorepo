@@ -1,0 +1,481 @@
+{
+  "test_type": "load",
+  "base_url": "https://blogs.sakshampy.in",
+  "started_at": "2026-10-08T05:06:48.591Z",
+  "ended_at": "2026-10-08T05:15:48.592Z",
+  "seed": 12345,
+  "target_vus": 25,
+  "peak_vus": 25,
+  "total_requests": 0,
+  "request_rate_per_second": 0,
+  "requests_per_minute": 0,
+  "status_2xx": 0,
+  "status_3xx": 0,
+  "status_4xx": 0,
+  "status_5xx": 0,
+  "timeouts": 0,
+  "bytes_received": 0,
+  "average_latency_ms": 0,
+  "p50_ms": 0,
+  "p90_ms": 0,
+  "p95_ms": 0,
+  "p99_ms": 0,
+  "max_latency_ms": 0,
+  "error_rate": 0,
+  "checks_passed": 0,
+  "checks_failed": 0,
+  "routes_discovered": 27,
+  "routes_tested": 0,
+  "routes_not_tested": 27,
+  "route_coverage_percent": 0,
+  "routes": [
+    {
+      "app": "portfolio",
+      "route": "/",
+      "type": "homepage",
+      "visits": 0,
+      "errors": 0,
+      "p95_ms": null,
+      "tested": false
+    },
+    {
+      "app": "portfolio",
+      "route": "/health",
+      "type": "health",
+      "visits": 0,
+      "errors": 0,
+      "p95_ms": null,
+      "tested": false
+    },
+    {
+      "app": "portfolio",
+      "route": "/terms",
+      "type": "static",
+      "visits": 0,
+      "errors": 0,
+      "p95_ms": null,
+      "tested": false
+    },
+    {
+      "app": "blogs",
+      "route": "/",
+      "type": "homepage",
+      "visits": 0,
+      "errors": 0,
+      "p95_ms": null,
+      "tested": false
+    },
+    {
+      "app": "blogs",
+      "route": "/blog/",
+      "type": "listing",
+      "visits": 0,
+      "errors": 0,
+      "p95_ms": null,
+      "tested": false
+    },
+    {
+      "app": "blogs",
+      "route": "/about",
+      "type": "static",
+      "visits": 0,
+      "errors": 0,
+      "p95_ms": null,
+      "tested": false
+    },
+    {
+      "app": "blogs",
+      "route": "/terms",
+      "type": "static",
+      "visits": 0,
+      "errors": 0,
+      "p95_ms": null,
+      "tested": false
+    },
+    {
+      "app": "blogs",
+      "route": "/blog/cloudflare-workers-production-architecture/",
+      "type": "blog",
+      "visits": 0,
+      "errors": 0,
+      "p95_ms": null,
+      "tested": false
+    },
+    {
+      "app": "blogs",
+      "route": "/blog/cpp-coroutines-executors/",
+      "type": "blog",
+      "visits": 0,
+      "errors": 0,
+      "p95_ms": null,
+      "tested": false
+    },
+    {
+      "app": "blogs",
+      "route": "/blog/cpp-raii-smart-pointers/",
+      "type": "blog",
+      "visits": 0,
+      "errors": 0,
+      "p95_ms": null,
+      "tested": false
+    },
+    {
+      "app": "blogs",
+      "route": "/blog/python-asyncio-structured-concurrency/",
+      "type": "blog",
+      "visits": 0,
+      "errors": 0,
+      "p95_ms": null,
+      "tested": false
+    },
+    {
+      "app": "blogs",
+      "route": "/blog/python-packaging-reproducible-services/",
+      "type": "blog",
+      "visits": 0,
+      "errors": 0,
+      "p95_ms": null,
+      "tested": false
+    },
+    {
+      "app": "blogs",
+      "route": "/blog/rust-error-handling-production/",
+      "type": "blog",
+      "visits": 0,
+      "errors": 0,
+      "p95_ms": null,
+      "tested": false
+    },
+    {
+      "app": "blogs",
+      "route": "/blog/rust-ownership-borrowing/",
+      "type": "blog",
+      "visits": 0,
+      "errors": 0,
+      "p95_ms": null,
+      "tested": false
+    },
+    {
+      "app": "docs",
+      "route": "/",
+      "type": "homepage",
+      "visits": 0,
+      "errors": 0,
+      "p95_ms": null,
+      "tested": false
+    },
+    {
+      "app": "docs",
+      "route": "/guides/about/",
+      "type": "docs",
+      "visits": 0,
+      "errors": 0,
+      "p95_ms": null,
+      "tested": false
+    },
+    {
+      "app": "docs",
+      "route": "/reference/toolbox/",
+      "type": "docs",
+      "visits": 0,
+      "errors": 0,
+      "p95_ms": null,
+      "tested": false
+    },
+    {
+      "app": "docs",
+      "route": "/languages/rust/",
+      "type": "docs",
+      "visits": 0,
+      "errors": 0,
+      "p95_ms": null,
+      "tested": false
+    },
+    {
+      "app": "docs",
+      "route": "/languages/rust/ownership/",
+      "type": "docs",
+      "visits": 0,
+      "errors": 0,
+      "p95_ms": null,
+      "tested": false
+    },
+    {
+      "app": "docs",
+      "route": "/languages/rust/tooling/",
+      "type": "docs",
+      "visits": 0,
+      "errors": 0,
+      "p95_ms": null,
+      "tested": false
+    },
+    {
+      "app": "docs",
+      "route": "/languages/cpp/",
+      "type": "docs",
+      "visits": 0,
+      "errors": 0,
+      "p95_ms": null,
+      "tested": false
+    },
+    {
+      "app": "docs",
+      "route": "/languages/cpp/memory/",
+      "type": "docs",
+      "visits": 0,
+      "errors": 0,
+      "p95_ms": null,
+      "tested": false
+    },
+    {
+      "app": "docs",
+      "route": "/languages/cpp/tooling/",
+      "type": "docs",
+      "visits": 0,
+      "errors": 0,
+      "p95_ms": null,
+      "tested": false
+    },
+    {
+      "app": "docs",
+      "route": "/languages/python/",
+      "type": "docs",
+      "visits": 0,
+      "errors": 0,
+      "p95_ms": null,
+      "tested": false
+    },
+    {
+      "app": "docs",
+      "route": "/languages/python/packaging/",
+      "type": "docs",
+      "visits": 0,
+      "errors": 0,
+      "p95_ms": null,
+      "tested": false
+    },
+    {
+      "app": "docs",
+      "route": "/languages/python/tooling/",
+      "type": "docs",
+      "visits": 0,
+      "errors": 0,
+      "p95_ms": null,
+      "tested": false
+    },
+    {
+      "app": "docs",
+      "route": "/terms/",
+      "type": "docs",
+      "visits": 0,
+      "errors": 0,
+      "p95_ms": null,
+      "tested": false
+    }
+  ],
+  "slowest_routes": [],
+  "most_requested_routes": [
+      {
+        "app": "portfolio",
+        "route": "/",
+        "type": "homepage",
+        "visits": 0,
+        "errors": 0,
+        "p95_ms": null,
+        "tested": false
+      },
+      {
+        "app": "portfolio",
+        "route": "/health",
+        "type": "health",
+        "visits": 0,
+        "errors": 0,
+        "p95_ms": null,
+        "tested": false
+      },
+      {
+        "app": "portfolio",
+        "route": "/terms",
+        "type": "static",
+        "visits": 0,
+        "errors": 0,
+        "p95_ms": null,
+        "tested": false
+      },
+      {
+        "app": "blogs",
+        "route": "/",
+        "type": "homepage",
+        "visits": 0,
+        "errors": 0,
+        "p95_ms": null,
+        "tested": false
+      },
+      {
+        "app": "blogs",
+        "route": "/blog/",
+        "type": "listing",
+        "visits": 0,
+        "errors": 0,
+        "p95_ms": null,
+        "tested": false
+      },
+      {
+        "app": "blogs",
+        "route": "/about",
+        "type": "static",
+        "visits": 0,
+        "errors": 0,
+        "p95_ms": null,
+        "tested": false
+      },
+      {
+        "app": "blogs",
+        "route": "/terms",
+        "type": "static",
+        "visits": 0,
+        "errors": 0,
+        "p95_ms": null,
+        "tested": false
+      },
+      {
+        "app": "blogs",
+        "route": "/blog/cloudflare-workers-production-architecture/",
+        "type": "blog",
+        "visits": 0,
+        "errors": 0,
+        "p95_ms": null,
+        "tested": false
+      },
+      {
+        "app": "blogs",
+        "route": "/blog/cpp-coroutines-executors/",
+        "type": "blog",
+        "visits": 0,
+        "errors": 0,
+        "p95_ms": null,
+        "tested": false
+      },
+      {
+        "app": "blogs",
+        "route": "/blog/cpp-raii-smart-pointers/",
+        "type": "blog",
+        "visits": 0,
+        "errors": 0,
+        "p95_ms": null,
+        "tested": false
+      }
+    ],
+  "highest_error_routes": [],
+  "git_commit": "4a06581d9334f68d23201be0c65b8ee618f32c88",
+  "k6_version": "k6 v2.3.0 (commit/e088784614, go1.26.8, linux/amd64)",
+  "configuration": {
+        "target_vus": 25,
+        "test_duration": "5m",
+        "max_vus": null,
+        "ramp_duration": null,
+        "p95_threshold_ms": 1500,
+        "p99_threshold_ms": 3000,
+        "error_rate_threshold": 0.01,
+        "cache_mode": "warm"
+      },
+  "assessment": "WARNING",
+  "raw_metrics": {
+        "iteration_duration": {
+          "type": "trend",
+          "contains": "time",
+          "values": {
+            "p(99)": 0.020886,
+            "p(99.9)": 0.2987873760000169,
+            "med": 0.005371,
+            "max": 27.378304,
+            "p(75)": 0.006351,
+            "avg": 0.006958323181487415,
+            "min": 0.002491,
+            "p(50)": 0.005371,
+            "p(90)": 0.008146,
+            "p(95)": 0.010657
+          }
+        },
+        "iterations": {
+          "type": "counter",
+          "contains": "default",
+          "values": {
+            "rate": 36726.76005523774,
+            "count": 19832454
+          }
+        },
+        "http_req_duration": {
+          "type": "trend",
+          "contains": "time",
+          "values": {
+            "med": 0,
+            "p(75)": 0,
+            "p(95)": 0,
+            "p(99)": 0,
+            "avg": 0,
+            "min": 0,
+            "max": 0,
+            "p(50)": 0,
+            "p(90)": 0,
+            "p(99.9)": 0
+          },
+          "thresholds": {
+            "p(95)<1500": {
+              "ok": true
+            },
+            "p(99)<3000": {
+              "ok": true
+            }
+          }
+        },
+        "http_req_failed": {
+          "thresholds": {
+            "rate<0.01": {
+              "ok": true
+            }
+          },
+          "type": "rate",
+          "contains": "default",
+          "values": {
+            "rate": 0,
+            "passes": 0,
+            "fails": 0
+          }
+        },
+        "vus": {
+          "type": "gauge",
+          "contains": "default",
+          "values": {
+            "value": 1,
+            "min": 0,
+            "max": 25
+          }
+        },
+        "vus_max": {
+          "type": "gauge",
+          "contains": "default",
+          "values": {
+            "value": 25,
+            "min": 25,
+            "max": 25
+          }
+        },
+        "data_sent": {
+          "type": "counter",
+          "contains": "data",
+          "values": {
+            "count": 0,
+            "rate": 0
+          }
+        },
+        "data_received": {
+          "type": "counter",
+          "contains": "data",
+          "values": {
+            "count": 0,
+            "rate": 0
+          }
+        }
+      }
+}

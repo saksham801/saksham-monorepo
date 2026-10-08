@@ -67,7 +67,7 @@ const topicLabel: Record<string, string> = {
 <Layout jsonLd={jsonLd}>
 	<div class="site-shell min-h-screen" id="top">
 		<SiteHeader active="home" />
-		<main class="mx-auto max-w-7xl px-5 lg:px-10">
+		<main id="main-content" class="mx-auto max-w-7xl px-5 lg:px-10">
 			<section class="hero reveal">
 				<div class="hero-copy reveal">
 					<p class="kicker">
@@ -214,6 +214,7 @@ const topicLabel: Record<string, string> = {
 		/>
 	</div>
 	<script>
+		document.documentElement.classList.add("has-reveal");
 		const revealItems = document.querySelectorAll(".reveal");
 		if ("IntersectionObserver" in window) {
 			const observer = new IntersectionObserver(
@@ -248,13 +249,15 @@ const topicLabel: Record<string, string> = {
 		z-index: 1;
 	}
 	.reveal {
-		opacity: 0;
-		transform: translateY(22px);
 		transition:
 			opacity 0.75s ease,
 			transform 0.75s cubic-bezier(0.2, 0.7, 0.2, 1);
 	}
-	.reveal.is-visible {
+	:global(html.has-reveal) .reveal {
+		opacity: 0;
+		transform: translateY(22px);
+	}
+	:global(html.has-reveal) .reveal.is-visible {
 		opacity: 1;
 		transform: translateY(0);
 	}

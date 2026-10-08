@@ -10,33 +10,26 @@ const { active = "home" } = Astro.props;
 
 const links = [
 	{ href: "/", label: "/ home", key: "home" },
-	{ href: "/blog", label: "/ blog", key: "blog" },
-	{ href: "/about", label: "/ about", key: "about" },
-	{ href: "/terms", label: "/ terms", key: "terms" },
-	{ href: PORTFOLIO_URL, label: "/ portfolio", key: "portfolio", external: true },
+	{ href: "/blog/", label: "/ articles", key: "blog" },
+	{ href: "/about/", label: "/ about", key: "about" },
+	{ href: "https://docs.sakshampy.in/", label: "/ docs", key: "docs", external: true },
 ] as const;
 ---
 
-<div
-	class="pointer-events-none fixed top-[calc(var(--pointer-y,40vh)-230px)] left-[calc(var(--pointer-x,50vw)-230px)] z-0 size-[460px] bg-[radial-gradient(circle,rgba(168,255,96,0.12)_0,rgba(101,201,255,0.04)_22%,transparent_60%)]"
-	aria-hidden="true"
-></div>
+<a class="skip-link" href="#main-content">Skip to main content</a>
 <div
 	class="relative z-ui-content flex justify-between border-b border-[#202a30] px-[5vw] py-[9px] font-ui-mono text-[9px] tracking-[0.1em] text-[#617078]"
 >
 	<span>SAKSHAM.DUBEY // BLOG_V1.0</span>
 	<span class="flex items-center gap-3 max-[50rem]:[&>b]:hidden">
-		<i class="inline-block size-1.5 rounded-full bg-ui-accent"></i> SYSTEMS ONLINE <b
-			id="site-clock"
-			class="font-normal text-[#8a989e] max-[50rem]:hidden">--:--:-- IST</b
-		>
+		<i class="inline-block size-1.5 rounded-full bg-ui-accent"></i> C++, RUST &amp; PYTHON NOTES
 	</span>
 </div>
 <header
-	class="sticky top-0 z-ui-header mx-auto flex max-w-7xl items-center justify-between border-b border-[#202a30] bg-[rgba(9,11,13,0.78)] px-5 py-5 backdrop-blur-[16px] lg:px-10"
+	class="site-header sticky top-0 z-ui-header mx-auto flex max-w-7xl items-center justify-between border-b border-[#202a30] bg-[rgba(9,11,13,0.88)] px-5 py-4 backdrop-blur-[18px] lg:px-10"
 >
 	<Brand subtitle="ENGINEERING BLOG" />
-	<nav class="flex gap-[29px] max-[50rem]:hidden" aria-label="Primary">
+	<nav class="site-nav flex gap-[29px]" id="site-navigation" aria-label="Primary">
 		{
 			links.map((link) => (
 				<a
@@ -44,12 +37,21 @@ const links = [
 					class="font-ui-mono text-ui-sm tracking-[0.1em] text-[#89989f] uppercase no-underline transition-colors hover:text-ui-accent focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ui-accent aria-[current=page]:text-ui-accent"
 					aria-current={active === link.key ? "page" : undefined}
 					target={"external" in link && link.external ? "_blank" : undefined}
-					rel={"external" in link && link.external ? "noreferrer" : undefined}
+					rel={"external" in link && link.external ? "noopener noreferrer" : undefined}
 				>
 					{link.label}
 				</a>
 			))
 		}
+		<details class="site-menu">
+			<summary>/ more <span aria-hidden="true">⌄</span></summary>
+			<div class="site-menu-panel">
+				<strong>EXPLORE</strong>
+				<a href="/terms/" aria-current={active === "terms" ? "page" : undefined}>Terms and conditions</a>
+				<a href={PORTFOLIO_URL} target="_blank" rel="noopener noreferrer">Portfolio <span>↗</span></a>
+				<a href={`mailto:${SITE_EMAIL}`}>Get in touch <span>↗</span></a>
+			</div>
+		</details>
 	</nav>
 	<a
 		href={`mailto:${SITE_EMAIL}`}
@@ -57,78 +59,160 @@ const links = [
 	>
 		WRITE ME <span>↗</span>
 	</a>
-	<button
-		id="menu-button"
-		class="hidden cursor-pointer border-0 bg-transparent font-ui-mono text-ui-sm tracking-[0.1em] text-[#89989f] uppercase hover:text-ui-accent focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ui-accent max-[50rem]:block"
-		type="button"
-		aria-controls="mobile-menu"
-		aria-expanded="false"
-	>
-		<span id="menu-label">[ MENU ]</span>
+	<button class="site-menu-toggle" type="button" aria-controls="site-navigation" aria-expanded="false">
+		<span class="site-menu-label">[ MENU ]</span>
 	</button>
 </header>
-<nav
-	id="mobile-menu"
-	class="relative z-ui-content hidden flex-col gap-5 border-b border-[#33464f] bg-ui-raised p-5"
-	aria-label="Mobile primary"
->
-	{
-		links.map((link) => (
-			<a
-				href={link.href}
-				class="font-ui-mono text-ui-sm text-ui-accent no-underline hover:text-ui-fg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ui-accent"
-				target={"external" in link && link.external ? "_blank" : undefined}
-				rel={"external" in link && link.external ? "noreferrer" : undefined}
-			>
-				{link.label}
-			</a>
-		))
-	}
-</nav>
 
 <script>
-	const button = document.querySelector("#menu-button");
-	const menu = document.querySelector("#mobile-menu");
-	const label = document.querySelector("#menu-label");
+	const header = document.querySelector<HTMLElement>(".site-header");
+	const button = header?.querySelector<HTMLButtonElement>(".site-menu-toggle");
+	const menu = header?.querySelector<HTMLElement>("#site-navigation");
+	const label = button?.querySelector<HTMLElement>(".site-menu-label");
+	header?.classList.add("has-js");
 	const setMenuOpen = (isOpen: boolean) => {
-		menu?.classList.toggle("hidden", !isOpen);
-		menu?.classList.toggle("flex", isOpen);
+		menu?.classList.toggle("is-open", isOpen);
 		button?.setAttribute("aria-expanded", String(isOpen));
 		if (label) label.textContent = isOpen ? "[ CLOSE ]" : "[ MENU ]";
 	};
-	button?.addEventListener("click", () => {
-		setMenuOpen(menu?.classList.contains("hidden") ?? false);
-	});
-	menu?.querySelectorAll("a").forEach((link) =>
-		link.addEventListener("click", () => setMenuOpen(false)),
-	);
+	button?.addEventListener("click", () => setMenuOpen(button.getAttribute("aria-expanded") !== "true"));
+	menu?.querySelectorAll("a").forEach((link) => link.addEventListener("click", () => setMenuOpen(false)));
 	document.addEventListener("keydown", (event) => {
-		if (event.key === "Escape" && menu && !menu.classList.contains("hidden")) {
+		if (event.key === "Escape" && button?.getAttribute("aria-expanded") === "true") {
 			setMenuOpen(false);
-			if (button instanceof HTMLButtonElement) button.focus();
+			button.focus();
 		}
 	});
-
-	const glow = document.querySelector(".pointer-glow");
-	window.addEventListener("pointermove", (event) => {
-		if (
-			glow instanceof HTMLElement &&
-			window.matchMedia("(pointer: fine)").matches &&
-			!window.matchMedia("(prefers-reduced-motion: reduce)").matches
-		) {
-			glow.style.setProperty("--pointer-x", `${event.clientX}px`);
-			glow.style.setProperty("--pointer-y", `${event.clientY}px`);
-		}
+	document.addEventListener("click", (event) => {
+		if (event.target instanceof Node && !header?.contains(event.target)) setMenuOpen(false);
 	});
+	window.matchMedia("(min-width: 801px)").addEventListener("change", () => setMenuOpen(false));
 
-	const clock = document.querySelector("#site-clock");
-	const tick = () => {
-		if (!clock) return;
-		clock.textContent = new Date().toLocaleTimeString("en-IN", {
-			hour12: false,
-			timeZone: "Asia/Kolkata",
-		}) + " IST";
-	};
-	tick();
-	setInterval(tick, 1000);
 </script>
+
+<style>
+	.skip-link {
+		background: #a8ff60;
+		color: #090b0d;
+		font: 600 0.7rem "DM Mono", monospace;
+		left: 1rem;
+		padding: 0.75rem 1rem;
+		position: fixed;
+		top: 0.75rem;
+		transform: translateY(-160%);
+		transition: transform 160ms ease;
+		z-index: 100;
+	}
+	.skip-link:focus { transform: translateY(0); }
+	.site-header { min-height: 4.75rem; position: relative; }
+	.site-nav { align-items: center; gap: clamp(0.85rem, 1.7vw, 1.6rem); justify-content: flex-end; }
+	.site-menu-toggle { display: none; }
+	.site-nav a {
+		position: relative;
+		padding-block: 0.45rem;
+	}
+
+	.site-nav > a::after,
+	.site-menu summary::after {
+		position: absolute;
+		inset-inline: 0;
+		bottom: 0;
+		height: 1px;
+		background: currentColor;
+		content: "";
+		transform: scaleX(0);
+		transform-origin: left;
+		transition: transform 180ms ease;
+	}
+
+	.site-nav > a:hover::after,
+	.site-nav > a:focus-visible::after,
+	.site-nav > a[aria-current="page"]::after,
+	.site-menu summary:hover::after,
+	.site-menu[open] summary::after {
+		transform: scaleX(1);
+	}
+
+	.site-nav a[aria-current="page"]::before {
+		color: var(--color-ui-accent, #a8ff60);
+		content: "• ";
+	}
+	.site-menu { position: relative; }
+	.site-menu summary {
+		color: #89989f;
+		cursor: pointer;
+		font: 0.625rem "DM Mono", monospace;
+		letter-spacing: 0.1em;
+		list-style: none;
+		padding-block: 0.45rem;
+		position: relative;
+		text-transform: uppercase;
+		white-space: nowrap;
+	}
+	.site-menu summary::-webkit-details-marker { display: none; }
+	.site-menu summary:hover, .site-menu[open] summary { color: #a8ff60; }
+	.site-menu-panel {
+		background: #101a20;
+		border: 1px solid #33464f;
+		box-shadow: 0 1rem 2.5rem rgb(0 0 0 / 0.35);
+		display: grid;
+		gap: 0.25rem;
+		min-width: 13rem;
+		padding: 0.8rem;
+		position: absolute;
+		right: 0;
+		top: calc(100% + 0.35rem);
+		z-index: 3;
+	}
+	.site-menu-panel strong { color: #63757d; font: 0.5rem "DM Mono", monospace; letter-spacing: 0.12em; padding: 0.35rem 0.5rem; }
+	.site-menu-panel a { color: #b6c3c8; font-size: 0.65rem; padding: 0.55rem; text-decoration: none; }
+	.site-menu-panel a:hover { background: #142127; color: #a8ff60; }
+	.site-menu-panel a span { color: #a8ff60; }
+	@media (max-width: 950px) and (min-width: 801px) {
+		.site-header { gap: 1rem; }
+		.site-nav { gap: 0.8rem; }
+		.site-nav > a, .site-menu summary { font-size: 0.55rem; }
+	}
+	@media (max-width: 800px) {
+		.site-header.has-js .site-menu-toggle {
+			align-items: center;
+			background: transparent;
+			border: 1px solid #33464f;
+			color: #a8ff60;
+			cursor: pointer;
+			display: inline-flex;
+			font: 0.6rem "DM Mono", monospace;
+			justify-content: center;
+			letter-spacing: 0.08em;
+			line-height: 1;
+			min-height: 1.9rem;
+			min-width: 4.8rem;
+			padding: 0 0.55rem;
+		}
+		.site-menu-toggle:hover, .site-menu-toggle[aria-expanded="true"] { border-color: #a8ff60; color: #e8edf0; }
+		.site-nav,
+		.site-nav.is-open {
+			align-items: stretch;
+			background: #090b0d;
+			border: 1px solid #33464f;
+			box-shadow: 0 1rem 2rem rgb(0 0 0 / 0.35);
+			flex-direction: column;
+			gap: 0;
+			left: 1.25rem;
+			padding: 0.5rem;
+			position: absolute;
+			right: 1.25rem;
+			top: calc(100% + 0.25rem);
+			z-index: 5;
+		}
+		.site-header.has-js .site-nav { display: none; }
+		.site-header.has-js .site-nav.is-open { display: flex; }
+		.site-nav > a, .site-menu summary { display: block; padding: 0.75rem; }
+		.site-nav > a { border-bottom: 1px solid #202a30; }
+		.site-menu { padding: 0.2rem 0; }
+		.site-menu-panel { border: 0; border-top: 1px solid #26343b; box-shadow: none; min-width: 0; position: static; }
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.skip-link, .site-nav a::after, .site-menu summary::after { transition: none; }
+	}
+</style>

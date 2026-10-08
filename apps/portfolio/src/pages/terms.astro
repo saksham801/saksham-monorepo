@@ -1,6 +1,6 @@
 ---
-import Brand from "@saksham/ui/components/Brand.astro";
 import SiteFooter from "@saksham/ui/components/SiteFooter.astro";
+import PortfolioHeader from "../components/PortfolioHeader.astro";
 import TermsContent from "@saksham/ui/components/TermsContent.astro";
 import Layout from "../layouts/Layout.astro";
 
@@ -15,22 +15,7 @@ const updated = "September 19, 2026";
 	canonicalPath="/terms/"
 >
 	<div class="ui-grid-background min-h-screen bg-ui-bg pt-px" id="top">
-		<header
-			class="sticky top-0 z-ui-header flex items-center justify-between border-b border-ui-line bg-ui-bg/80 px-5 py-4 backdrop-blur-[16px] sm:px-[5vw]"
-		>
-			<Brand subtitle="FULL STACK ENGINEER" />
-			<nav class="flex gap-6 max-[50rem]:hidden" aria-label="Primary">
-				<a class="font-ui-mono text-ui-sm tracking-[0.1em] text-ui-muted no-underline hover:text-ui-accent" href="/">/ home</a>
-				<a class="font-ui-mono text-ui-sm tracking-[0.1em] text-ui-muted no-underline hover:text-ui-accent" href="https://blogs.sakshampy.in/">/ blog</a>
-				<a class="font-ui-mono text-ui-sm tracking-[0.1em] text-ui-muted no-underline hover:text-ui-accent" href="https://docs.sakshampy.in/">/ docs</a>
-			</nav>
-			<a
-				class="border border-ui-line-strong px-3.5 py-2.5 font-ui-mono text-ui-sm tracking-[0.1em] text-ui-fg no-underline transition-colors hover:border-ui-accent hover:text-ui-accent max-[50rem]:hidden"
-				href="mailto:hello@sakshampy.in"
-			>
-				CONTACT ↗
-			</a>
-		</header>
+		<PortfolioHeader active="terms" />
 		<a
 			class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:bg-ui-accent focus:px-4 focus:py-3 focus:font-ui-mono focus:text-ui-sm focus:text-ui-accent-ink"
 			href="#main-content"

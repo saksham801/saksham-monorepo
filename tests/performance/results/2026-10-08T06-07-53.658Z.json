@@ -1,0 +1,1675 @@
+{
+  "test_type": "stress",
+  "base_url": "https://sakshampy.in",
+  "started_at": "2026-10-08T05:55:32.599Z",
+  "ended_at": "2026-10-08T06:07:53.006Z",
+  "seed": 12345,
+  "target_vus": 50,
+  "peak_vus": 50,
+  "total_requests": 1742,
+  "request_rate_per_second": 2.3527615345772714,
+  "journeys_started": 413,
+  "journeys_completed": 407,
+  "journeys_failed": 0,
+  "requests_per_minute": 141.1656920746363,
+  "status_2xx": 1362,
+  "status_3xx": 0,
+  "status_4xx": 0,
+  "status_5xx": 0,
+  "timeouts": 1,
+  "bytes_received": 42223314,
+  "average_latency_ms": 434.5674780287024,
+  "p50_ms": 318.59073,
+  "p90_ms": 737.0078679000001,
+  "p95_ms": 1002.8247819999997,
+  "p99_ms": 2503.789608679993,
+  "max_latency_ms": 6133.689994,
+  "error_rate": 0.000574052812858783,
+  "checks_passed": 1362,
+  "checks_failed": 1,
+  "routes_discovered": 27,
+  "routes_tested": 27,
+  "routes_not_tested": 0,
+  "route_coverage_percent": 100,
+  "routes": [
+    {
+      "app": "portfolio",
+      "route": "/",
+      "type": "homepage",
+      "visits": 442,
+      "errors": 1,
+      "p95_ms": 1788,
+      "tested": true
+    },
+    {
+      "app": "portfolio",
+      "route": "/health",
+      "type": "health",
+      "visits": 92,
+      "errors": 0,
+      "p95_ms": 1425.2500000000002,
+      "tested": true
+    },
+    {
+      "app": "portfolio",
+      "route": "/terms",
+      "type": "static",
+      "visits": 108,
+      "errors": 0,
+      "p95_ms": 1714.549999999999,
+      "tested": true
+    },
+    {
+      "app": "blogs",
+      "route": "/",
+      "type": "homepage",
+      "visits": 4,
+      "errors": 0,
+      "p95_ms": 933.3999999999999,
+      "tested": true
+    },
+    {
+      "app": "blogs",
+      "route": "/blog/",
+      "type": "listing",
+      "visits": 86,
+      "errors": 0,
+      "p95_ms": 1588.5,
+      "tested": true
+    },
+    {
+      "app": "blogs",
+      "route": "/about",
+      "type": "static",
+      "visits": 170,
+      "errors": 0,
+      "p95_ms": 1756.1,
+      "tested": true
+    },
+    {
+      "app": "blogs",
+      "route": "/terms",
+      "type": "static",
+      "visits": 9,
+      "errors": 0,
+      "p95_ms": 1771.4,
+      "tested": true
+    },
+    {
+      "app": "blogs",
+      "route": "/blog/cloudflare-workers-production-architecture/",
+      "type": "blog",
+      "visits": 23,
+      "errors": 0,
+      "p95_ms": 1372.6999999999991,
+      "tested": true
+    },
+    {
+      "app": "blogs",
+      "route": "/blog/cpp-coroutines-executors/",
+      "type": "blog",
+      "visits": 25,
+      "errors": 0,
+      "p95_ms": 663.9999999999998,
+      "tested": true
+    },
+    {
+      "app": "blogs",
+      "route": "/blog/cpp-raii-smart-pointers/",
+      "type": "blog",
+      "visits": 25,
+      "errors": 0,
+      "p95_ms": 1183.199999999999,
+      "tested": true
+    },
+    {
+      "app": "blogs",
+      "route": "/blog/python-asyncio-structured-concurrency/",
+      "type": "blog",
+      "visits": 29,
+      "errors": 0,
+      "p95_ms": 1054.9999999999998,
+      "tested": true
+    },
+    {
+      "app": "blogs",
+      "route": "/blog/python-packaging-reproducible-services/",
+      "type": "blog",
+      "visits": 18,
+      "errors": 0,
+      "p95_ms": 898.3499999999999,
+      "tested": true
+    },
+    {
+      "app": "blogs",
+      "route": "/blog/rust-error-handling-production/",
+      "type": "blog",
+      "visits": 31,
+      "errors": 0,
+      "p95_ms": 2431.5,
+      "tested": true
+    },
+    {
+      "app": "blogs",
+      "route": "/blog/rust-ownership-borrowing/",
+      "type": "blog",
+      "visits": 29,
+      "errors": 0,
+      "p95_ms": 913.1999999999995,
+      "tested": true
+    },
+    {
+      "app": "docs",
+      "route": "/",
+      "type": "homepage",
+      "visits": 72,
+      "errors": 0,
+      "p95_ms": 2353.5000000000005,
+      "tested": true
+    },
+    {
+      "app": "docs",
+      "route": "/guides/about/",
+      "type": "docs",
+      "visits": 16,
+      "errors": 0,
+      "p95_ms": 780.75,
+      "tested": true
+    },
+    {
+      "app": "docs",
+      "route": "/reference/toolbox/",
+      "type": "docs",
+      "visits": 21,
+      "errors": 0,
+      "p95_ms": 1637,
+      "tested": true
+    },
+    {
+      "app": "docs",
+      "route": "/languages/rust/",
+      "type": "docs",
+      "visits": 17,
+      "errors": 0,
+      "p95_ms": 712.3999999999996,
+      "tested": true
+    },
+    {
+      "app": "docs",
+      "route": "/languages/rust/ownership/",
+      "type": "docs",
+      "visits": 14,
+      "errors": 0,
+      "p95_ms": 2423.1499999999996,
+      "tested": true
+    },
+    {
+      "app": "docs",
+      "route": "/languages/rust/tooling/",
+      "type": "docs",
+      "visits": 17,
+      "errors": 0,
+      "p95_ms": 1829.3999999999999,
+      "tested": true
+    },
+    {
+      "app": "docs",
+      "route": "/languages/cpp/",
+      "type": "docs",
+      "visits": 21,
+      "errors": 0,
+      "p95_ms": 939,
+      "tested": true
+    },
+    {
+      "app": "docs",
+      "route": "/languages/cpp/memory/",
+      "type": "docs",
+      "visits": 12,
+      "errors": 0,
+      "p95_ms": 1431.6,
+      "tested": true
+    },
+    {
+      "app": "docs",
+      "route": "/languages/cpp/tooling/",
+      "type": "docs",
+      "visits": 18,
+      "errors": 0,
+      "p95_ms": 811.699999999999,
+      "tested": true
+    },
+    {
+      "app": "docs",
+      "route": "/languages/python/",
+      "type": "docs",
+      "visits": 21,
+      "errors": 0,
+      "p95_ms": 1140,
+      "tested": true
+    },
+    {
+      "app": "docs",
+      "route": "/languages/python/packaging/",
+      "type": "docs",
+      "visits": 24,
+      "errors": 0,
+      "p95_ms": 1911.8499999999988,
+      "tested": true
+    },
+    {
+      "app": "docs",
+      "route": "/languages/python/tooling/",
+      "type": "docs",
+      "visits": 13,
+      "errors": 0,
+      "p95_ms": 1015.399999999999,
+      "tested": true
+    },
+    {
+      "app": "docs",
+      "route": "/terms/",
+      "type": "docs",
+      "visits": 6,
+      "errors": 0,
+      "p95_ms": 1047.75,
+      "tested": true
+    }
+  ],
+  "slowest_routes": [
+    {
+      "app": "blogs",
+      "route": "/blog/rust-error-handling-production/",
+      "type": "blog",
+      "visits": 31,
+      "errors": 0,
+      "p95_ms": 2431.5,
+      "tested": true
+    },
+    {
+      "app": "docs",
+      "route": "/languages/rust/ownership/",
+      "type": "docs",
+      "visits": 14,
+      "errors": 0,
+      "p95_ms": 2423.1499999999996,
+      "tested": true
+    },
+    {
+      "app": "docs",
+      "route": "/",
+      "type": "homepage",
+      "visits": 72,
+      "errors": 0,
+      "p95_ms": 2353.5000000000005,
+      "tested": true
+    },
+    {
+      "app": "docs",
+      "route": "/languages/python/packaging/",
+      "type": "docs",
+      "visits": 24,
+      "errors": 0,
+      "p95_ms": 1911.8499999999988,
+      "tested": true
+    },
+    {
+      "app": "docs",
+      "route": "/languages/rust/tooling/",
+      "type": "docs",
+      "visits": 17,
+      "errors": 0,
+      "p95_ms": 1829.3999999999999,
+      "tested": true
+    },
+    {
+      "app": "portfolio",
+      "route": "/",
+      "type": "homepage",
+      "visits": 442,
+      "errors": 1,
+      "p95_ms": 1788,
+      "tested": true
+    },
+    {
+      "app": "blogs",
+      "route": "/terms",
+      "type": "static",
+      "visits": 9,
+      "errors": 0,
+      "p95_ms": 1771.4,
+      "tested": true
+    },
+    {
+      "app": "blogs",
+      "route": "/about",
+      "type": "static",
+      "visits": 170,
+      "errors": 0,
+      "p95_ms": 1756.1,
+      "tested": true
+    },
+    {
+      "app": "portfolio",
+      "route": "/terms",
+      "type": "static",
+      "visits": 108,
+      "errors": 0,
+      "p95_ms": 1714.549999999999,
+      "tested": true
+    },
+    {
+      "app": "docs",
+      "route": "/reference/toolbox/",
+      "type": "docs",
+      "visits": 21,
+      "errors": 0,
+      "p95_ms": 1637,
+      "tested": true
+    }
+  ],
+  "most_requested_routes": [
+    {
+      "app": "portfolio",
+      "route": "/",
+      "type": "homepage",
+      "visits": 442,
+      "errors": 1,
+      "p95_ms": 1788,
+      "tested": true
+    },
+    {
+      "app": "blogs",
+      "route": "/about",
+      "type": "static",
+      "visits": 170,
+      "errors": 0,
+      "p95_ms": 1756.1,
+      "tested": true
+    },
+    {
+      "app": "portfolio",
+      "route": "/terms",
+      "type": "static",
+      "visits": 108,
+      "errors": 0,
+      "p95_ms": 1714.549999999999,
+      "tested": true
+    },
+    {
+      "app": "portfolio",
+      "route": "/health",
+      "type": "health",
+      "visits": 92,
+      "errors": 0,
+      "p95_ms": 1425.2500000000002,
+      "tested": true
+    },
+    {
+      "app": "blogs",
+      "route": "/blog/",
+      "type": "listing",
+      "visits": 86,
+      "errors": 0,
+      "p95_ms": 1588.5,
+      "tested": true
+    },
+    {
+      "app": "docs",
+      "route": "/",
+      "type": "homepage",
+      "visits": 72,
+      "errors": 0,
+      "p95_ms": 2353.5000000000005,
+      "tested": true
+    },
+    {
+      "app": "blogs",
+      "route": "/blog/rust-error-handling-production/",
+      "type": "blog",
+      "visits": 31,
+      "errors": 0,
+      "p95_ms": 2431.5,
+      "tested": true
+    },
+    {
+      "app": "blogs",
+      "route": "/blog/python-asyncio-structured-concurrency/",
+      "type": "blog",
+      "visits": 29,
+      "errors": 0,
+      "p95_ms": 1054.9999999999998,
+      "tested": true
+    },
+    {
+      "app": "blogs",
+      "route": "/blog/rust-ownership-borrowing/",
+      "type": "blog",
+      "visits": 29,
+      "errors": 0,
+      "p95_ms": 913.1999999999995,
+      "tested": true
+    },
+    {
+      "app": "blogs",
+      "route": "/blog/cpp-coroutines-executors/",
+      "type": "blog",
+      "visits": 25,
+      "errors": 0,
+      "p95_ms": 663.9999999999998,
+      "tested": true
+    }
+  ],
+  "highest_error_routes": [
+    {
+      "app": "portfolio",
+      "route": "/",
+      "type": "homepage",
+      "visits": 442,
+      "errors": 1,
+      "p95_ms": 1788,
+      "tested": true
+    },
+    {
+      "app": "portfolio",
+      "route": "/health",
+      "type": "health",
+      "visits": 92,
+      "errors": 0,
+      "p95_ms": 1425.2500000000002,
+      "tested": true
+    },
+    {
+      "app": "portfolio",
+      "route": "/terms",
+      "type": "static",
+      "visits": 108,
+      "errors": 0,
+      "p95_ms": 1714.549999999999,
+      "tested": true
+    },
+    {
+      "app": "blogs",
+      "route": "/",
+      "type": "homepage",
+      "visits": 4,
+      "errors": 0,
+      "p95_ms": 933.3999999999999,
+      "tested": true
+    },
+    {
+      "app": "blogs",
+      "route": "/blog/",
+      "type": "listing",
+      "visits": 86,
+      "errors": 0,
+      "p95_ms": 1588.5,
+      "tested": true
+    },
+    {
+      "app": "blogs",
+      "route": "/about",
+      "type": "static",
+      "visits": 170,
+      "errors": 0,
+      "p95_ms": 1756.1,
+      "tested": true
+    },
+    {
+      "app": "blogs",
+      "route": "/terms",
+      "type": "static",
+      "visits": 9,
+      "errors": 0,
+      "p95_ms": 1771.4,
+      "tested": true
+    },
+    {
+      "app": "blogs",
+      "route": "/blog/cloudflare-workers-production-architecture/",
+      "type": "blog",
+      "visits": 23,
+      "errors": 0,
+      "p95_ms": 1372.6999999999991,
+      "tested": true
+    },
+    {
+      "app": "blogs",
+      "route": "/blog/cpp-coroutines-executors/",
+      "type": "blog",
+      "visits": 25,
+      "errors": 0,
+      "p95_ms": 663.9999999999998,
+      "tested": true
+    },
+    {
+      "app": "blogs",
+      "route": "/blog/cpp-raii-smart-pointers/",
+      "type": "blog",
+      "visits": 25,
+      "errors": 0,
+      "p95_ms": 1183.199999999999,
+      "tested": true
+    }
+  ],
+  "git_commit": "4a06581d9334f68d23201be0c65b8ee618f32c88",
+  "k6_version": "k6 v2.3.0 (commit/e088784614, go1.26.8, linux/amd64)",
+  "configuration": {
+    "target_vus": 50,
+    "test_duration": "10m",
+    "max_vus": null,
+    "ramp_duration": "2m",
+    "p95_threshold_ms": 1500,
+    "p99_threshold_ms": 3000,
+    "error_rate_threshold": 0.01,
+    "cache_mode": "warm"
+  },
+  "assessment": "PASS",
+  "raw_metrics": {
+    "route_visits_docs_guides_about": {
+      "values": {
+        "count": 16,
+        "rate": 0.02160975003056047
+      },
+      "type": "counter",
+      "contains": "default"
+    },
+    "iteration_duration": {
+      "values": {
+        "p(90)": 61193.4510796,
+        "p(99.9)": 83452.65789374216,
+        "min": 15515.43291,
+        "p(50)": 36419.737617,
+        "p(95)": 66412.767536,
+        "p(99)": 77172.9369381,
+        "avg": 39693.33773553319,
+        "med": 36419.737617,
+        "max": 84688.799128,
+        "p(75)": 51445.394593499994
+      },
+      "type": "trend",
+      "contains": "time"
+    },
+    "http_req_sending": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "min": 0.008482,
+        "med": 0.0487185,
+        "p(90)": 0.0705177,
+        "p(95)": 0.0861492499999999,
+        "avg": 0.05102271412169923,
+        "max": 1.307337,
+        "p(50)": 0.0487185,
+        "p(75)": 0.05554125,
+        "p(99)": 0.14374638999999995,
+        "p(99.9)": 0.7208297690000319
+      }
+    },
+    "route_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 634.3727072633895,
+        "min": 18,
+        "med": 477,
+        "max": 6996,
+        "p(50)": 477,
+        "p(90)": 1250,
+        "p(75)": 773.5,
+        "p(95)": 1747.6999999999941,
+        "p(99)": 3033.159999999996,
+        "p(99.9)": 3995.5740000000105
+      }
+    },
+    "route_duration_docs_guides_about": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 387.5,
+        "min": 178,
+        "med": 331.5,
+        "max": 810,
+        "p(75)": 509.75,
+        "p(99.9)": 809.4150000000001,
+        "p(50)": 331.5,
+        "p(90)": 769,
+        "p(95)": 780.75,
+        "p(99)": 804.15
+      }
+    },
+    "route_visits_blogs_about": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 170,
+        "rate": 0.22960359407470501
+      }
+    },
+    "route_visits_portfolio_health": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 92,
+        "rate": 0.12425606267572271
+      }
+    },
+    "route_duration_blogs_root": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "max": 970,
+        "p(90)": 896.8000000000001,
+        "p(99)": 962.68,
+        "med": 685,
+        "p(50)": 685,
+        "p(75)": 787,
+        "p(95)": 933.3999999999999,
+        "p(99.9)": 969.268,
+        "avg": 720,
+        "min": 540
+      }
+    },
+    "route_errors_portfolio_root": {
+      "values": {
+        "count": 1,
+        "rate": 0.0013506093769100295
+      },
+      "type": "counter",
+      "contains": "default"
+    },
+    "http_errors": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "rate": 0.0013506093769100295,
+        "count": 1
+      }
+    },
+    "route_duration_docs_languages_rust": {
+      "contains": "time",
+      "values": {
+        "med": 327,
+        "p(50)": 327,
+        "p(75)": 401,
+        "p(90)": 565.4,
+        "p(99.9)": 1121.648000000001,
+        "avg": 382.1764705882353,
+        "max": 1130,
+        "p(95)": 712.3999999999996,
+        "p(99)": 1046.48,
+        "min": 200
+      },
+      "type": "trend"
+    },
+    "route_duration_blogs_blog_rust_error_handling_production": {
+      "values": {
+        "p(99.9)": 3447.1600000000026,
+        "min": 30,
+        "p(90)": 1157,
+        "p(99)": 3169.5999999999995,
+        "avg": 606.5806451612904,
+        "med": 303,
+        "max": 3478,
+        "p(50)": 303,
+        "p(75)": 503.5,
+        "p(95)": 2431.5
+      },
+      "type": "trend",
+      "contains": "time"
+    },
+    "data_sent": {
+      "type": "counter",
+      "contains": "data",
+      "values": {
+        "count": 516927,
+        "rate": 698.1664533779708
+      }
+    },
+    "route_duration_blogs_blog_cpp_coroutines_executors": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "med": 280,
+        "max": 1008,
+        "p(50)": 280,
+        "p(95)": 663.9999999999998,
+        "p(99)": 930.2399999999993,
+        "avg": 370.92,
+        "min": 39,
+        "p(75)": 509,
+        "p(90)": 568.4000000000001,
+        "p(99.9)": 1000.2240000000008
+      }
+    },
+    "http_reqs": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "rate": 2.3527615345772714,
+        "count": 1742
+      }
+    },
+    "route_duration_blogs_blog": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 622.2674418604652,
+        "p(50)": 366,
+        "p(75)": 774,
+        "p(90)": 1366.5,
+        "p(95)": 1588.5,
+        "p(99)": 3272.4000000000046,
+        "p(99.9)": 3881.3400000000047,
+        "min": 18,
+        "med": 366,
+        "max": 3949
+      }
+    },
+    "data_received": {
+      "type": "counter",
+      "contains": "data",
+      "values": {
+        "count": 42223314,
+        "rate": 57027.20381261652
+      }
+    },
+    "journeys_completed": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 407,
+        "rate": 0.549698016402382
+      }
+    },
+    "route_visits_docs_reference_toolbox": {
+      "values": {
+        "count": 21,
+        "rate": 0.02836279691511062
+      },
+      "type": "counter",
+      "contains": "default"
+    },
+    "route_visits_docs_languages_cpp": {
+      "values": {
+        "count": 21,
+        "rate": 0.02836279691511062
+      },
+      "type": "counter",
+      "contains": "default"
+    },
+    "route_duration_blogs_blog_python_packaging_reproducible_services": {
+      "contains": "time",
+      "values": {
+        "p(99.9)": 939.167,
+        "avg": 451.22222222222223,
+        "min": 222,
+        "p(90)": 782.5000000000001,
+        "p(99)": 931.67,
+        "med": 414.5,
+        "max": 940,
+        "p(50)": 414.5,
+        "p(75)": 504,
+        "p(95)": 898.3499999999999
+      },
+      "type": "trend"
+    },
+    "route_duration_blogs_blog_rust_ownership_borrowing": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(99.9)": 2711.8600000000024,
+        "avg": 379.9655172413793,
+        "max": 2761,
+        "p(75)": 397,
+        "p(99)": 2269.599999999998,
+        "min": 35,
+        "med": 255,
+        "p(50)": 255,
+        "p(90)": 600.3999999999999,
+        "p(95)": 913.1999999999995
+      }
+    },
+    "route_duration_blogs_blog_cloudflare_workers_production_architecture": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 463.60869565217394,
+        "med": 318,
+        "max": 1528,
+        "p(50)": 318,
+        "p(75)": 542.5,
+        "p(90)": 834.6,
+        "p(95)": 1372.6999999999991,
+        "min": 25,
+        "p(99)": 1506.66,
+        "p(99.9)": 1525.8660000000002
+      }
+    },
+    "cache_responses": {
+      "values": {
+        "count": 1363,
+        "rate": 1.8408805807283701
+      },
+      "type": "counter",
+      "contains": "default"
+    },
+    "route_duration_docs_languages_cpp_memory": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "med": 597.5,
+        "p(50)": 597.5,
+        "p(75)": 656.25,
+        "p(90)": 1276.2000000000003,
+        "p(95)": 1431.6,
+        "p(99.9)": 1543.7120000000002,
+        "avg": 622.25,
+        "min": 201,
+        "max": 1546,
+        "p(99)": 1523.1200000000001
+      }
+    },
+    "route_visits_blogs_blog_rust_error_handling_production": {
+      "contains": "default",
+      "values": {
+        "count": 31,
+        "rate": 0.041868890684210916
+      },
+      "type": "counter"
+    },
+    "http_req_waiting": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "med": 272.73331399999995,
+        "p(99)": 1198.3977372899958,
+        "max": 2893.387793,
+        "p(50)": 272.73331399999995,
+        "p(75)": 414.8845215,
+        "p(90)": 602.3179162000001,
+        "p(95)": 742.4217877999998,
+        "p(99.9)": 2289.035400676072,
+        "avg": 338.6579363593567,
+        "min": 13.592704
+      }
+    },
+    "http_req_failed": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "rate": 0.000574052812858783,
+        "passes": 1,
+        "fails": 1741
+      },
+      "thresholds": {
+        "rate<0.01": {
+          "ok": true
+        }
+      }
+    },
+    "vus_max": {
+      "type": "gauge",
+      "contains": "default",
+      "values": {
+        "value": 50,
+        "min": 50,
+        "max": 50
+      }
+    },
+    "journeys_started": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 413,
+        "rate": 0.5578016726638422
+      }
+    },
+    "route_visits_docs_languages_python": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 21,
+        "rate": 0.02836279691511062
+      }
+    },
+    "route_visits_blogs_blog_cpp_raii_smart_pointers": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 25,
+        "rate": 0.033765234422750735
+      }
+    },
+    "docs_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 538.73,
+        "min": 178,
+        "med": 373.5,
+        "max": 3349,
+        "p(50)": 373.5,
+        "p(75)": 608,
+        "p(90)": 1039.0999999999995,
+        "p(99.9)": 3279.7480000000055,
+        "p(95)": 1456.6999999999985,
+        "p(99)": 2649.5499999999965
+      }
+    },
+    "successful_pages": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 1362,
+        "rate": 1.8395299713514601
+      }
+    },
+    "route_duration_docs_root": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(90)": 1413.5,
+        "p(95)": 2353.5000000000005,
+        "p(99)": 4688.50000000002,
+        "p(99.9)": 6765.250000000007,
+        "min": 167,
+        "max": 6996,
+        "p(50)": 545,
+        "avg": 835.3472222222222,
+        "med": 545,
+        "p(75)": 1008.75
+      }
+    },
+    "navigation_duration": {
+      "values": {
+        "avg": 12043.413411938098,
+        "min": 2055,
+        "med": 10515,
+        "max": 35794,
+        "p(75)": 15032,
+        "p(90)": 21260.8,
+        "p(99.9)": 34230.90000000017,
+        "p(50)": 10515,
+        "p(95)": 25563.80000000001,
+        "p(99)": 30376.72
+      },
+      "type": "trend",
+      "contains": "time"
+    },
+    "route_visits_blogs_blog_rust_ownership_borrowing": {
+      "values": {
+        "count": 29,
+        "rate": 0.039167671930390856
+      },
+      "type": "counter",
+      "contains": "default"
+    },
+    "route_duration_blogs_blog_python_asyncio_structured_concurrency": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 462.0689655172414,
+        "min": 43,
+        "med": 395,
+        "max": 1218,
+        "p(90)": 880.9999999999999,
+        "p(50)": 395,
+        "p(75)": 581,
+        "p(95)": 1054.9999999999998,
+        "p(99)": 1182.4399999999998,
+        "p(99.9)": 1214.4440000000002
+      }
+    },
+    "route_duration_docs_languages_cpp": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(50)": 302,
+        "p(95)": 939,
+        "p(99)": 1972.6000000000008,
+        "p(99.9)": 2205.1600000000053,
+        "p(75)": 598,
+        "p(90)": 838,
+        "avg": 498.0952380952381,
+        "min": 181,
+        "med": 302,
+        "max": 2231
+      }
+    },
+    "route_duration_blogs_terms": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(99)": 1774.28,
+        "p(99.9)": 1774.928,
+        "avg": 873.6666666666666,
+        "min": 241,
+        "max": 1775,
+        "p(50)": 693,
+        "p(75)": 1074,
+        "p(90)": 1767.8,
+        "med": 693,
+        "p(95)": 1771.4
+      }
+    },
+    "route_duration_docs_languages_rust_tooling": {
+      "values": {
+        "min": 200,
+        "med": 423,
+        "p(50)": 423,
+        "p(90)": 1512.0000000000002,
+        "p(99)": 1865.88,
+        "avg": 642.4705882352941,
+        "max": 1875,
+        "p(75)": 801,
+        "p(95)": 1829.3999999999999,
+        "p(99.9)": 1874.0880000000002
+      },
+      "type": "trend",
+      "contains": "time"
+    },
+    "route_visits_docs_languages_python_packaging": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 24,
+        "rate": 0.03241462504584071
+      }
+    },
+    "successful_docs_reads": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "rate": 0.2701218753820059,
+        "count": 200
+      }
+    },
+    "route_visits_blogs_root": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 4,
+        "rate": 0.005402437507640118
+      }
+    },
+    "route_duration_blogs_about": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "med": 710.5,
+        "p(50)": 710.5,
+        "p(99)": 3034.6400000000003,
+        "p(99.9)": 3123.170000000001,
+        "avg": 847.0529411764705,
+        "min": 48,
+        "max": 3135,
+        "p(75)": 1000,
+        "p(90)": 1406.1999999999998,
+        "p(95)": 1756.1
+      }
+    },
+    "route_duration_docs_terms": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(99.9)": 1183.2350000000006,
+        "med": 320.5,
+        "max": 1186,
+        "p(50)": 320.5,
+        "p(90)": 909.5,
+        "avg": 479.3333333333333,
+        "min": 189,
+        "p(75)": 557.25,
+        "p(95)": 1047.75,
+        "p(99)": 1158.3500000000001
+      }
+    },
+    "checks": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "fails": 1,
+        "rate": 0.9992663242846662,
+        "passes": 1362
+      }
+    },
+    "route_visits_docs_root": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 72,
+        "rate": 0.09724387513752213
+      }
+    },
+    "route_visits_docs_languages_rust_ownership": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 14,
+        "rate": 0.01890853127674041
+      }
+    },
+    "project_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "min": 40,
+        "med": 679,
+        "max": 3887,
+        "p(50)": 679,
+        "p(75)": 914,
+        "p(99)": 3056.439999999997,
+        "avg": 794.665,
+        "p(90)": 1162.1999999999998,
+        "p(95)": 1650.349999999998,
+        "p(99.9)": 3789.490000000008
+      }
+    },
+    "route_duration_docs_languages_rust_ownership": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "med": 385.5,
+        "p(75)": 668.5,
+        "p(90)": 1720.5000000000014,
+        "p(95)": 2423.1499999999996,
+        "p(99.9)": 2989.4430000000016,
+        "avg": 699.7142857142857,
+        "min": 186,
+        "max": 3001,
+        "p(50)": 385.5,
+        "p(99)": 2885.4299999999994
+      }
+    },
+    "response_bytes": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "max": 37874,
+        "p(75)": 32942,
+        "p(99)": 37874,
+        "p(99.9)": 37874,
+        "avg": 29841.861967694567,
+        "min": 22227,
+        "med": 32559,
+        "p(50)": 32559,
+        "p(90)": 33985,
+        "p(95)": 37021
+      }
+    },
+    "route_visits_blogs_blog_python_asyncio_structured_concurrency": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 29,
+        "rate": 0.039167671930390856
+      }
+    },
+    "route_errors": {
+      "values": {
+        "rate": 0.0013506093769100295,
+        "count": 1
+      },
+      "type": "counter",
+      "contains": "default"
+    },
+    "timeout_errors": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 1,
+        "rate": 0.0013506093769100295
+      }
+    },
+    "route_duration_docs_languages_python_packaging": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 721.5,
+        "min": 189,
+        "p(75)": 701.75,
+        "p(95)": 1911.8499999999988,
+        "p(99)": 3037.1199999999994,
+        "p(99.9)": 3317.8120000000054,
+        "med": 479,
+        "max": 3349,
+        "p(50)": 479,
+        "p(90)": 1391.1
+      }
+    },
+    "route_visits_blogs_terms": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 9,
+        "rate": 0.012155484392190266
+      }
+    },
+    "http_2xx": {
+      "contains": "default",
+      "values": {
+        "count": 1362,
+        "rate": 1.8395299713514601
+      },
+      "type": "counter"
+    },
+    "route_duration_docs_reference_toolbox": {
+      "contains": "time",
+      "values": {
+        "min": 226,
+        "max": 2646,
+        "p(75)": 608,
+        "p(90)": 789,
+        "p(95)": 1637,
+        "p(99)": 2444.2000000000007,
+        "p(99.9)": 2625.8200000000043,
+        "avg": 589.2857142857143,
+        "med": 424,
+        "p(50)": 424
+      },
+      "type": "trend"
+    },
+    "route_visits_blogs_blog_cpp_coroutines_executors": {
+      "contains": "default",
+      "values": {
+        "count": 25,
+        "rate": 0.033765234422750735
+      },
+      "type": "counter"
+    },
+    "http_req_receiving": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "max": 5070.105707,
+        "p(75)": 16.28916625,
+        "p(90)": 253.94875050000005,
+        "p(95)": 607.5240633499996,
+        "avg": 95.85851895522407,
+        "med": 3.4485675000000002,
+        "p(50)": 3.4485675000000002,
+        "p(99)": 1619.724991339999,
+        "p(99.9)": 3015.914426007161,
+        "min": 0
+      }
+    },
+    "route_duration_blogs_blog_cpp_raii_smart_pointers": {
+      "values": {
+        "p(99.9)": 1266.592,
+        "max": 1267,
+        "p(90)": 886.0000000000001,
+        "p(95)": 1183.199999999999,
+        "p(99)": 1262.92,
+        "avg": 477,
+        "min": 32,
+        "med": 432,
+        "p(50)": 432,
+        "p(75)": 701
+      },
+      "type": "trend",
+      "contains": "time"
+    },
+    "iterations": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 407,
+        "rate": 0.549698016402382
+      }
+    },
+    "route_visits_blogs_blog_cloudflare_workers_production_architecture": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 23,
+        "rate": 0.03106401566893068
+      }
+    },
+    "route_visits_docs_languages_rust_tooling": {
+      "contains": "default",
+      "values": {
+        "count": 17,
+        "rate": 0.0229603594074705
+      },
+      "type": "counter"
+    },
+    "route_duration_docs_languages_python_tooling": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 473.38461538461536,
+        "min": 216,
+        "med": 368,
+        "max": 1424,
+        "p(50)": 368,
+        "p(75)": 470,
+        "p(95)": 1015.399999999999,
+        "p(99.9)": 1415.8280000000009,
+        "p(90)": 717.0000000000001,
+        "p(99)": 1342.2799999999993
+      }
+    },
+    "route_visits_docs_languages_cpp_memory": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 12,
+        "rate": 0.016207312522920354
+      }
+    },
+    "route_visits_docs_languages_cpp_tooling": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 18,
+        "rate": 0.02431096878438053
+      }
+    },
+    "route_visits_docs_languages_python_tooling": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 13,
+        "rate": 0.01755792189983038
+      }
+    },
+    "http_req_tls_handshaking": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "max": 1759.931646,
+        "p(75)": 0,
+        "p(95)": 232.4585574999999,
+        "p(99)": 617.1163045599999,
+        "med": 0,
+        "p(50)": 0,
+        "p(90)": 0,
+        "p(99.9)": 1005.7618758590014,
+        "avg": 29.37599838633754,
+        "min": 0
+      }
+    },
+    "route_duration_portfolio_terms": {
+      "contains": "time",
+      "values": {
+        "p(50)": 723.5,
+        "p(75)": 945.25,
+        "p(95)": 1714.549999999999,
+        "p(99.9)": 3762.0240000000176,
+        "avg": 819.8703703703703,
+        "med": 723.5,
+        "p(90)": 1114.6,
+        "p(99)": 2691.559999999997,
+        "min": 328,
+        "max": 3887
+      },
+      "type": "trend"
+    },
+    "http_req_blocked": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 61.738111701492564,
+        "p(50)": 0.000222,
+        "p(75)": 0.00042,
+        "p(95)": 513.1509498999984,
+        "p(99)": 1230.0025837599994,
+        "p(99.9)": 1981.335427591005,
+        "min": 0.000147,
+        "med": 0.000222,
+        "max": 2035.202782,
+        "p(90)": 0.0006749000000000001
+      }
+    },
+    "homepage_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "max": 6996,
+        "p(50)": 382,
+        "p(75)": 647,
+        "p(95)": 1879.7499999999977,
+        "p(99)": 2746.139999999999,
+        "avg": 597.2741312741313,
+        "min": 19,
+        "med": 382,
+        "p(90)": 1255.4,
+        "p(99.9)": 5458.442000000181
+      }
+    },
+    "route_visits": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 1363,
+        "rate": 1.8408805807283701
+      }
+    },
+    "route_duration_docs_languages_cpp_tooling": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "max": 1371,
+        "p(75)": 513,
+        "p(99)": 1259.139999999999,
+        "p(99.9)": 1359.8140000000003,
+        "avg": 458.8888888888889,
+        "min": 178,
+        "med": 404.5,
+        "p(50)": 404.5,
+        "p(90)": 679.4000000000001,
+        "p(95)": 811.699999999999
+      }
+    },
+    "route_visits_docs_terms": {
+      "contains": "default",
+      "values": {
+        "rate": 0.008103656261460177,
+        "count": 6
+      },
+      "type": "counter"
+    },
+    "http_req_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(99)": 2503.789608679993,
+        "med": 318.59073,
+        "max": 6133.689994,
+        "p(50)": 318.59073,
+        "p(75)": 494.4088005,
+        "p(95)": 1002.8247819999997,
+        "p(99.9)": 3941.4804388340262,
+        "avg": 434.5674780287024,
+        "min": 15.799703,
+        "p(90)": 737.0078679000001
+      },
+      "thresholds": {
+        "p(95)<1500": {
+          "ok": true
+        },
+        "p(99)<3000": {
+          "ok": true
+        }
+      }
+    },
+    "successful_blog_reads": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 180,
+        "rate": 0.2431096878438053
+      }
+    },
+    "failed_pages": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 1,
+        "rate": 0.0013506093769100295
+      }
+    },
+    "http_req_connecting": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(90)": 0,
+        "p(99)": 739.502206889997,
+        "avg": 30.645450576923068,
+        "med": 0,
+        "max": 1472.440651,
+        "p(75)": 0,
+        "p(95)": 238.79910259999963,
+        "p(99.9)": 1048.5462202680394,
+        "min": 0,
+        "p(50)": 0
+      }
+    },
+    "http_req_duration{expected_response:true}": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(50)": 318.619487,
+        "min": 15.799703,
+        "med": 318.619487,
+        "p(75)": 494.455867,
+        "p(90)": 737.076888,
+        "p(95)": 1002.907029,
+        "p(99)": 2504.6993471999917,
+        "p(99.9)": 3941.589038760024,
+        "avg": 434.6921425272829,
+        "max": 6133.689994
+      }
+    },
+    "reading_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "med": 3000,
+        "max": 9000,
+        "p(50)": 3000,
+        "p(75)": 4000,
+        "p(99)": 9000,
+        "p(99.9)": 9000,
+        "avg": 3463.2824051256775,
+        "min": 1000,
+        "p(90)": 7000,
+        "p(95)": 8000
+      }
+    },
+    "route_visits_blogs_blog_python_packaging_reproducible_services": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 18,
+        "rate": 0.02431096878438053
+      }
+    },
+    "route_visits_portfolio_terms": {
+      "values": {
+        "count": 108,
+        "rate": 0.14586581270628318
+      },
+      "type": "counter",
+      "contains": "default"
+    },
+    "route_duration_portfolio_root": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 557.3823529411765,
+        "p(90)": 1088.7000000000005,
+        "p(95)": 1788,
+        "p(99)": 2624.1999999999953,
+        "min": 19,
+        "med": 375.5,
+        "max": 4022,
+        "p(50)": 375.5,
+        "p(75)": 619,
+        "p(99.9)": 3973.9310000000028
+      }
+    },
+    "route_visits_portfolio_root": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 442,
+        "rate": 0.596969344594233
+      }
+    },
+    "vus": {
+      "type": "gauge",
+      "contains": "default",
+      "values": {
+        "value": 1,
+        "min": 1,
+        "max": 50
+      }
+    },
+    "route_duration_docs_languages_python": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(75)": 484,
+        "p(90)": 767,
+        "p(95)": 1140,
+        "p(99)": 1256.8000000000002,
+        "p(99.9)": 1283.0800000000006,
+        "avg": 448.7142857142857,
+        "min": 197,
+        "p(50)": 361,
+        "med": 361,
+        "max": 1286
+      }
+    },
+    "route_visits_docs_languages_rust": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 17,
+        "rate": 0.0229603594074705
+      }
+    },
+    "route_visits_blogs_blog": {
+      "values": {
+        "count": 86,
+        "rate": 0.11615240641426253
+      },
+      "type": "counter",
+      "contains": "default"
+    },
+    "route_duration_portfolio_health": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 765.0760869565217,
+        "min": 40,
+        "med": 628.5,
+        "max": 3397,
+        "p(50)": 628.5,
+        "p(90)": 1216.2,
+        "p(99)": 3083.960000000001,
+        "p(99.9)": 3365.696000000002,
+        "p(75)": 856,
+        "p(95)": 1425.2500000000002
+      }
+    },
+    "blog_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "min": 25,
+        "p(50)": 318,
+        "p(75)": 537.5,
+        "p(95)": 1160.049999999999,
+        "p(99)": 2515.3100000000027,
+        "p(99.9)": 3349.657000000019,
+        "avg": 462.25555555555553,
+        "med": 318,
+        "max": 3478,
+        "p(90)": 854.9999999999998
+      }
+    }
+  }
+}

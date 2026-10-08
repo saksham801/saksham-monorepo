@@ -8,6 +8,32 @@ const {
 } = Astro.props;
 const siteUrl = "https://sakshampy.in";
 const canonical = new URL(canonicalPath, siteUrl).href;
+const person = {
+    "@type": "Person",
+    name: "Saksham Dubey",
+    url: siteUrl,
+    email: "mailto:hello@sakshampy.in",
+    jobTitle: "Full Stack Engineer",
+    description,
+    address: {
+        "@type": "PostalAddress",
+        addressLocality: "Mumbai",
+        addressCountry: "IN",
+    },
+    knowsAbout: ["React.js", "Angular", "Next.js", "TypeScript", "Node.js", "NestJS", "Python", "PostgreSQL", "MongoDB", "Microservices"],
+    sameAs: ["https://github.com/saksham-dubey"],
+};
+const structuredData = canonicalPath === "/"
+    ? { "@context": "https://schema.org", ...person }
+    : {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        name: title,
+        url: canonical,
+        description,
+        isPartOf: { "@type": "WebSite", name: "Saksham Dubey", url: siteUrl },
+        about: person,
+    };
 ---
 
 <!doctype html>
@@ -53,32 +79,7 @@ const canonical = new URL(canonicalPath, siteUrl).href;
         <title>{title}</title>
         <script
             type="application/ld+json"
-            set:html={JSON.stringify({
-                "@context": "https://schema.org",
-                "@type": "Person",
-                name: "Saksham Dubey",
-                url: canonical,
-                email: "mailto:hello@sakshampy.in",
-                jobTitle: "Full Stack Engineer",
-                description,
-                address: {
-                    "@type": "PostalAddress",
-                    addressLocality: "New Delhi",
-                    addressCountry: "IN",
-                },
-                knowsAbout: [
-                    "React.js",
-                    "Angular",
-                    "Next.js",
-                    "TypeScript",
-                    "Node.js",
-                    "NestJS",
-                    "Python",
-                    "PostgreSQL",
-                    "MongoDB",
-                    "Microservices",
-                ],
-            })}
+            set:html={JSON.stringify(structuredData)}
         ></script>
     </head>
     <body class="bg-[#090b0d] text-[#e8edf0] antialiased selection:bg-[#a8ff60] selection:text-[#090b0d]">

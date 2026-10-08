@@ -20,6 +20,8 @@ const topicLabel: Record<string, string> = {
 	general: "GENERAL",
 };
 
+const filterTopics = [...new Set(posts.map((post) => post.data.topic))].sort();
+
 const accentFor: Record<string, string> = {
 	cpp: "lime",
 	rust: "orange",
@@ -49,7 +51,7 @@ const accentFor: Record<string, string> = {
 >
 	<div class="site-shell min-h-screen" id="top">
 		<SiteHeader active="blog" />
-		<main class="mx-auto max-w-7xl px-5 lg:px-10">
+		<main id="main-content" class="mx-auto max-w-7xl px-5 lg:px-10">
 			<section class="page-hero reveal is-visible">
 				<p class="kicker">
 					<span class="prompt">&gt;_</span> ARCHIVE / ALL POSTS
@@ -64,12 +66,29 @@ const accentFor: Record<string, string> = {
 					humans, crawlers, and LLMs.
 				</p>
 			</section>
-			<section class="grid">
+			<section class="post-tools" aria-label="Find articles">
+				<label class="article-search">
+					<span>SEARCH ARTICLES</span>
+					<input id="article-search" type="search" placeholder="Title, topic, or keyword" autocomplete="off" />
+				</label>
+				<div class="topic-filters" aria-label="Filter articles by topic">
+					<button type="button" data-filter="all" aria-pressed="true">ALL <span>{posts.length}</span></button>
+					{filterTopics.map((topic) => (
+						<button type="button" data-filter={topic} aria-pressed="false">
+							{topicLabel[topic] ?? topic} <span>{posts.filter((post) => post.data.topic === topic).length}</span>
+						</button>
+					))}
+				</div>
+				<p class="filter-count" id="filter-count" role="status" aria-live="polite">{posts.length} articles</p>
+			</section>
+			<section class="grid" aria-label="Engineering articles">
 				{
 					posts.map((post, index) => (
 						<a
 							href={`/blog/${post.id}/`}
 							class={`ui-card card project-${accentFor[post.data.topic] ?? "lime"} ${index === 0 ? "featured" : ""}`}
+							data-topic={post.data.topic}
+							data-search={[post.data.title, post.data.description, post.data.topic, ...post.data.tags].join(" ").toLowerCase()}
 						>
 							<div class="card-top">
 								<span>
@@ -101,6 +120,7 @@ const accentFor: Record<string, string> = {
 					))
 				}
 			</section>
+		<p class="filter-empty" id="filter-empty" hidden>No articles match that search. Try another keyword or topic.</p>
 		</main>
 		<SiteFooter
 			links={[
@@ -111,6 +131,38 @@ const accentFor: Record<string, string> = {
 		/>
 	</div>
 </Layout>
+
+<script>
+	const shell = document.querySelector<HTMLElement>(".site-shell");
+	const search = document.querySelector<HTMLInputElement>("#article-search");
+	const cards = [...document.querySelectorAll<HTMLAnchorElement>(".card[data-topic]")];
+	const filters = [...document.querySelectorAll<HTMLButtonElement>("[data-filter]")];
+	const count = document.querySelector<HTMLElement>("#filter-count");
+	const empty = document.querySelector<HTMLElement>("#filter-empty");
+	let activeTopic = "all";
+
+	function updateArticles() {
+		const query = search?.value.trim().toLocaleLowerCase() ?? "";
+		let visible = 0;
+		for (const card of cards) {
+			const matchesTopic = activeTopic === "all" || card.dataset.topic === activeTopic;
+			const matchesQuery = !query || (card.dataset.search ?? "").includes(query);
+			const show = matchesTopic && matchesQuery;
+			card.hidden = !show;
+			if (show) visible += 1;
+		}
+		if (count) count.textContent = `${visible} ${visible === 1 ? "article" : "articles"}`;
+		if (empty) empty.hidden = visible > 0;
+	}
+
+	shell?.classList.add("has-filter");
+	search?.addEventListener("input", updateArticles);
+	filters.forEach((button) => button.addEventListener("click", () => {
+		activeTopic = button.dataset.filter || "all";
+		filters.forEach((item) => item.setAttribute("aria-pressed", String(item === button)));
+		updateArticles();
+	}));
+</script>
 
 <style>
 	.site-shell {
@@ -155,6 +207,48 @@ const accentFor: Record<string, string> = {
 		margin: 24px 0 0;
 		max-width: 480px;
 	}
+	.post-tools { display: none; }
+	.site-shell.has-filter .post-tools {
+		align-items: end;
+		border-block: 1px solid #26343b;
+		display: grid;
+		gap: 1rem 1.5rem;
+		grid-template-columns: minmax(13rem, 0.8fr) minmax(0, 1.6fr) auto;
+		margin-bottom: 1.25rem;
+		padding-block: 1rem;
+	}
+	.article-search { display: grid; gap: 0.45rem; }
+	.article-search > span { color: #63757d; font-size: 0.52rem; letter-spacing: 0.12em; }
+	.article-search input {
+		background: #0d1519;
+		border: 1px solid #33464f;
+		border-radius: 0;
+		color: #e8edf0;
+		font: 0.68rem "DM Mono", monospace;
+		min-height: 2.6rem;
+		min-width: 0;
+		padding: 0.65rem 0.75rem;
+		width: 100%;
+	}
+	.article-search input::placeholder { color: #63757d; }
+	.article-search input:focus-visible { border-color: #a8ff60; outline: 2px solid #a8ff60; outline-offset: 2px; }
+	.topic-filters { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+	.topic-filters button {
+		background: transparent;
+		border: 1px solid #26343b;
+		color: #91a2aa;
+		cursor: pointer;
+		font: 0.54rem "DM Mono", monospace;
+		letter-spacing: 0.04em;
+		min-height: 2.35rem;
+		padding: 0.45rem 0.6rem;
+		transition: border-color 160ms ease, color 160ms ease, background 160ms ease;
+	}
+	.topic-filters button span { color: #63757d; margin-inline-start: 0.25rem; }
+	.topic-filters button:hover, .topic-filters button[aria-pressed="true"] { background: #101a20; border-color: #a8ff60; color: #a8ff60; }
+	.filter-count { color: #63757d; font-size: 0.58rem; margin: 0; white-space: nowrap; }
+	.filter-empty { border: 1px dashed #33464f; color: #91a2aa; margin: 1rem 0; padding: 1.5rem; }
+	.card[hidden] { display: none; }
 	.grid {
 		display: grid;
 		gap: 12px;
@@ -277,6 +371,10 @@ const accentFor: Record<string, string> = {
 		letter-spacing: 0.06em;
 		margin-top: auto;
 		text-transform: uppercase;
+	}
+	@media (max-width: 900px) {
+		.site-shell.has-filter .post-tools { grid-template-columns: 1fr; }
+		.filter-count { justify-self: end; }
 	}
 	@media (max-width: 800px) {
 		.grid {

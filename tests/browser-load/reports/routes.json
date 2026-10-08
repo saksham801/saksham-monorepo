@@ -1,0 +1,221 @@
+{
+  "generatedAt": "2026-10-05T06:38:49.611Z",
+  "routes": [
+    {
+      "app": "blogs",
+      "url": "https://blogs.sakshampy.in/",
+      "path": "/",
+      "type": "homepage"
+    },
+    {
+      "app": "blogs",
+      "url": "https://blogs.sakshampy.in/about",
+      "path": "/about",
+      "type": "about"
+    },
+    {
+      "app": "blogs",
+      "url": "https://blogs.sakshampy.in/about/",
+      "path": "/about/",
+      "type": "about"
+    },
+    {
+      "app": "blogs",
+      "url": "https://blogs.sakshampy.in/blog",
+      "path": "/blog",
+      "type": "other"
+    },
+    {
+      "app": "blogs",
+      "url": "https://blogs.sakshampy.in/blog/",
+      "path": "/blog/",
+      "type": "listing"
+    },
+    {
+      "app": "blogs",
+      "url": "https://blogs.sakshampy.in/blog/cloudflare-workers-production-architecture/",
+      "path": "/blog/cloudflare-workers-production-architecture/",
+      "type": "article"
+    },
+    {
+      "app": "blogs",
+      "url": "https://blogs.sakshampy.in/blog/cpp-coroutines-executors/",
+      "path": "/blog/cpp-coroutines-executors/",
+      "type": "article"
+    },
+    {
+      "app": "blogs",
+      "url": "https://blogs.sakshampy.in/blog/cpp-raii-smart-pointers/",
+      "path": "/blog/cpp-raii-smart-pointers/",
+      "type": "article"
+    },
+    {
+      "app": "blogs",
+      "url": "https://blogs.sakshampy.in/blog/python-asyncio-structured-concurrency/",
+      "path": "/blog/python-asyncio-structured-concurrency/",
+      "type": "article"
+    },
+    {
+      "app": "blogs",
+      "url": "https://blogs.sakshampy.in/blog/python-packaging-reproducible-services/",
+      "path": "/blog/python-packaging-reproducible-services/",
+      "type": "article"
+    },
+    {
+      "app": "blogs",
+      "url": "https://blogs.sakshampy.in/blog/rust-error-handling-production/",
+      "path": "/blog/rust-error-handling-production/",
+      "type": "article"
+    },
+    {
+      "app": "blogs",
+      "url": "https://blogs.sakshampy.in/blog/rust-ownership-borrowing/",
+      "path": "/blog/rust-ownership-borrowing/",
+      "type": "article"
+    },
+    {
+      "app": "blogs",
+      "url": "https://blogs.sakshampy.in/llms.txt",
+      "path": "/llms.txt",
+      "type": "other"
+    },
+    {
+      "app": "blogs",
+      "url": "https://blogs.sakshampy.in/sitemap-0.xml",
+      "path": "/sitemap-0.xml",
+      "type": "other"
+    },
+    {
+      "app": "blogs",
+      "url": "https://blogs.sakshampy.in/terms",
+      "path": "/terms",
+      "type": "other"
+    },
+    {
+      "app": "blogs",
+      "url": "https://blogs.sakshampy.in/terms/",
+      "path": "/terms/",
+      "type": "other"
+    },
+    {
+      "app": "docs",
+      "url": "https://docs.sakshampy.in/",
+      "path": "/",
+      "type": "homepage"
+    },
+    {
+      "app": "docs",
+      "url": "https://docs.sakshampy.in/guides/about/",
+      "path": "/guides/about/",
+      "type": "documentation"
+    },
+    {
+      "app": "docs",
+      "url": "https://docs.sakshampy.in/languages/cpp/",
+      "path": "/languages/cpp/",
+      "type": "documentation"
+    },
+    {
+      "app": "docs",
+      "url": "https://docs.sakshampy.in/languages/cpp/memory/",
+      "path": "/languages/cpp/memory/",
+      "type": "documentation"
+    },
+    {
+      "app": "docs",
+      "url": "https://docs.sakshampy.in/languages/cpp/tooling/",
+      "path": "/languages/cpp/tooling/",
+      "type": "documentation"
+    },
+    {
+      "app": "docs",
+      "url": "https://docs.sakshampy.in/languages/python/",
+      "path": "/languages/python/",
+      "type": "documentation"
+    },
+    {
+      "app": "docs",
+      "url": "https://docs.sakshampy.in/languages/python/packaging/",
+      "path": "/languages/python/packaging/",
+      "type": "documentation"
+    },
+    {
+      "app": "docs",
+      "url": "https://docs.sakshampy.in/languages/python/tooling/",
+      "path": "/languages/python/tooling/",
+      "type": "documentation"
+    },
+    {
+      "app": "docs",
+      "url": "https://docs.sakshampy.in/languages/rust/",
+      "path": "/languages/rust/",
+      "type": "documentation"
+    },
+    {
+      "app": "docs",
+      "url": "https://docs.sakshampy.in/languages/rust/ownership/",
+      "path": "/languages/rust/ownership/",
+      "type": "documentation"
+    },
+    {
+      "app": "docs",
+      "url": "https://docs.sakshampy.in/languages/rust/tooling/",
+      "path": "/languages/rust/tooling/",
+      "type": "documentation"
+    },
+    {
+      "app": "docs",
+      "url": "https://docs.sakshampy.in/llms.txt",
+      "path": "/llms.txt",
+      "type": "documentation"
+    },
+    {
+      "app": "docs",
+      "url": "https://docs.sakshampy.in/reference/toolbox/",
+      "path": "/reference/toolbox/",
+      "type": "documentation"
+    },
+    {
+      "app": "docs",
+      "url": "https://docs.sakshampy.in/sitemap-0.xml",
+      "path": "/sitemap-0.xml",
+      "type": "documentation"
+    },
+    {
+      "app": "docs",
+      "url": "https://docs.sakshampy.in/terms/",
+      "path": "/terms/",
+      "type": "documentation"
+    },
+    {
+      "app": "portfolio",
+      "url": "https://sakshampy.in/",
+      "path": "/",
+      "type": "homepage"
+    },
+    {
+      "app": "portfolio",
+      "url": "https://sakshampy.in/health",
+      "path": "/health",
+      "type": "other"
+    },
+    {
+      "app": "portfolio",
+      "url": "https://sakshampy.in/health/",
+      "path": "/health/",
+      "type": "other"
+    },
+    {
+      "app": "portfolio",
+      "url": "https://sakshampy.in/llms.txt",
+      "path": "/llms.txt",
+      "type": "other"
+    },
+    {
+      "app": "portfolio",
+      "url": "https://sakshampy.in/terms/",
+      "path": "/terms/",
+      "type": "other"
+    }
+  ]
+}

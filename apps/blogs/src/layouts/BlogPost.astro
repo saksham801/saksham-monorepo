@@ -38,6 +38,7 @@ const jsonLd = {
 		"@type": "WebPage",
 		"@id": `${SITE_URL}/blog/${slug}/`,
 	},
+	articleSection: topicLabel[topic] ?? topic,
 	keywords: tags.join(", "),
 	inLanguage: "en",
 };
@@ -49,12 +50,16 @@ const jsonLd = {
 	canonicalPath={`/blog/${slug}/`}
 	ogType="article"
 	publishedTime={pubDate}
+	modifiedTime={updatedDate ?? pubDate}
 	tags={tags}
 	jsonLd={jsonLd}
 >
 	<div class="site-shell min-h-screen" id="top">
+		<div class="reading-progress" id="blog-reading-progress" role="progressbar" aria-label="Article reading progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-valuetext="0% read" hidden>
+			<span></span>
+		</div>
 		<SiteHeader active="blog" />
-		<main class="mx-auto max-w-7xl px-5 lg:px-10">
+		<main id="main-content" class="mx-auto max-w-7xl px-5 lg:px-10">
 			<article class="post reveal is-visible">
 				<header class="post-header">
 					<div class="post-meta">
@@ -99,7 +104,57 @@ const jsonLd = {
 	</div>
 </Layout>
 
+<script>
+	const progress = document.querySelector<HTMLElement>('#blog-reading-progress');
+	const progressFill = progress?.querySelector<HTMLElement>('span');
+	const article = document.querySelector<HTMLElement>('.prose');
+	let progressFrame = 0;
+
+	function updateReadingProgress() {
+		progressFrame = 0;
+		if (!progress || !progressFill || !article) return;
+		const longArticle = article.scrollHeight > window.innerHeight * 1.5;
+		progress.hidden = !longArticle;
+		if (!longArticle) return;
+		const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+		const percent = scrollable > 0 ? Math.min(100, Math.max(0, Math.round((window.scrollY / scrollable) * 100))) : 0;
+		progressFill.style.transform = `scaleX(${percent / 100})`;
+		progress.setAttribute('aria-valuenow', String(percent));
+		progress.setAttribute('aria-valuetext', `${percent}% read`);
+	}
+
+	function scheduleProgressUpdate() {
+		if (!progressFrame) progressFrame = window.requestAnimationFrame(updateReadingProgress);
+	}
+	window.addEventListener('scroll', scheduleProgressUpdate, { passive: true });
+	window.addEventListener('resize', scheduleProgressUpdate, { passive: true });
+	window.addEventListener('load', scheduleProgressUpdate, { once: true });
+	scheduleProgressUpdate();
+</script>
+
 <style>
+	.reading-progress {
+		background: transparent;
+		inset: 0 0 auto;
+		height: 3px;
+		pointer-events: none;
+		position: fixed;
+		z-index: 100;
+	}
+	.reading-progress[hidden] { display: none; }
+	.reading-progress span {
+		background: #a8ff60;
+		box-shadow: 0 0 10px rgba(168, 255, 96, 0.5);
+		display: block;
+		height: 100%;
+		transform: scaleX(0);
+		transform-origin: left;
+		will-change: transform;
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.reading-progress span { transition: none; }
+	}
+
 	.site-shell {
 		background-color: #090b0d;
 		background-image:
