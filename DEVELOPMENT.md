@@ -526,6 +526,8 @@ account and `saksham801/saksham-monorepo`, then set:
 | Build command | `bun install --frozen-lockfile && bunx turbo build --filter=portfolio` | `bun install --frozen-lockfile && bunx turbo build --filter=docs` | `bun install --frozen-lockfile && bunx turbo build --filter=blogs` | Verify before connecting |
 | Deploy command | `cd apps/portfolio && bunx wrangler deploy --config dist/server/wrangler.json` | `cd apps/docs && bunx wrangler deploy --config dist/client/docs/wrangler.json` | `cd apps/blogs && bunx wrangler deploy --config dist/client/blogs/wrangler.json` | Verify target, then use `cd apps/report && bunx wrangler deploy --config dist/client/wrangler.json` |
 
+**Critical:** All deploy commands **must** include the `--config` flag pointing to the generated Wrangler configuration. Without this flag, Wrangler attempts to use the original `wrangler.jsonc` which references the adapter entry point `@astrojs/cloudflare/entrypoints/server` that does not exist as a file after Turborepo restores cached build outputs. The generated config file is created by Astro's Cloudflare adapter during the build and contains the correct entry point and all bindings.
+
 **Use the repository root.** The apps depend on `@saksham/ui` through Bun
 workspaces and the single root `bun.lock`. Do not set the Cloudflare root
 directory to `apps/<app>`: a root install from inside an app would not have
