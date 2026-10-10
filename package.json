@@ -4,8 +4,7 @@
   "type": "module",
   "packageManager": "bun@1.4.2",
   "engines": {
-    "bun": ">=1.4.0",
-    "node": ">=22.18.0"
+    "bun": ">=1.4.0"
   },
   "workspaces": [
     "apps/*",
@@ -29,8 +28,8 @@
   "devDependencies": {
     "eslint": "^9.39.5",
     "eslint-plugin-astro": "^1.7.0",
-    "turbo": "^2.11.5",
+    "turbo": "^2.11.7",
     "typescript": "^6.0.3",
-    "typescript-eslint": "^8.71.0"
+    "typescript-eslint": "^8.71.1"
   }
 }
