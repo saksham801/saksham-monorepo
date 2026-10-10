@@ -25,7 +25,7 @@ Traditional LLMs generate text token by token. Jev evaluates state and returns s
 Jev returns one of three typed structures:
 
 ### Choice
-Select from up to 255 options with calibrated probabilities.
+Select from up to `255` options with calibrated probabilities.
 
 ```typescript
 const response = await jev.decide({
@@ -43,7 +43,7 @@ const response = await jev.decide({
 ```
 
 ### Score
-Evaluate on a 2-10 scale with expected value and per-level probabilities.
+Evaluate on a `2-10 scale with expected value and per-level probabilities`.
 
 ```typescript
 const response = await jev.decide({
@@ -61,7 +61,7 @@ const response = await jev.decide({
 ```
 
 ### Noul
-Binary yes/no with a single probability.
+Binary `yes/no` with a single probability.
 
 ```typescript
 const response = await jev.decide({
@@ -88,7 +88,7 @@ Jev isn't for content generation. It's for the small, fast decisions that happen
 
 ## The probability advantage
 
-Every Jev response ships with a calibrated probability. High confidence means high accuracy, consistently.
+Every Jev response ships with a calibrated probability. High confidence means high `accuracy`, consistently.
 
 ```typescript
 if (response.confidence > 0.9) {
@@ -213,6 +213,6 @@ Don't use Jev when:
 - You need text generation
 - You need reasoning steps visible
 - You're doing content creation
-- You need creative output
+- You need `creative` output
 
 Jev is a decision engine. Use it where decisions matter, speed matters, and reliability matters.
