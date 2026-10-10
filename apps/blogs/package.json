@@ -14,7 +14,7 @@
 		"check": "astro check",
 		"astro": "astro",
 		"generate-types": "cf workers types",
-		"deploy": "bun run build && wrangler deploy",
+		"deploy": "wrangler deploy --config dist/client/blogs/wrangler.json",
 		"cf-typegen": "cf workers types"
 	},
 	"dependencies": {

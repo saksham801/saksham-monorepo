@@ -11,7 +11,7 @@
 		"preview": "astro build && astro preview",
 		"astro": "astro",
 		"generate-types": "cf workers types",
-		"deploy": "astro build && wrangler deploy",
+		"deploy": "wrangler deploy --config dist/client/wrangler.json",
 		"cf-typegen": "cf workers types"
 	},
 	"dependencies": {

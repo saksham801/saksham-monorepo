@@ -437,12 +437,16 @@ package manager and workspace runner.
 | `apps/report` | `report` | Not recorded; confirm before deployment |
 
 To validate the current production deployment path without publishing, run
-these commands from only the app being checked:
+the Turbo build from the repository root, then run Wrangler from only the app
+being checked. The build produces the Astro-generated Wrangler config in
+`dist/`; Wrangler must use that config rather than the package-subpath `main`
+in the source `wrangler.jsonc`.
 
 ```bash
-cd /home/saksham/sakshampy.in/monorepo/apps/portfolio
-bun run build
-bunx wrangler deploy --dry-run
+cd /home/saksham/sakshampy.in/monorepo
+bunx turbo build --filter=portfolio
+cd apps/portfolio
+bunx wrangler deploy --dry-run --config dist/server/wrangler.json
 ```
 
 This dry run does not publish. Review output for the expected Worker name,
@@ -452,9 +456,12 @@ point. Repeat for `docs`, `blogs`, or `report` only when needed.
 `bun run cf-typegen` exercises the migrated `cf` configuration without
 deploying.
 
-The existing `deploy` script still runs Astro build plus Wrangler deploy. It
-performs a real deployment. Use it for one app at a time and only after the
-existing Cloudflare Worker, target account, router service bindings, production
+The `deploy` script only invokes Wrangler with that app's Astro-generated
+config; it does not repeat the build. Build first with the app's Turbo filter,
+then use the app deploy script for a real deployment or the matching Wrangler
+dry run above. `turbo run deploy` depends on the app build and never caches
+deployment side effects. Deploy one app at a time and only after the existing
+Cloudflare Worker, target account, router service bindings, production
 variables/secrets, and current deployment have been verified in Cloudflare.
 Do not add public routes or preview URLs to the Portfolio, Blogs, or Docs
 Workers. Never change DNS, Worker ownership, or secrets as part of local
@@ -469,9 +476,12 @@ not changed by this repository.
    deployment. For `report`, do not deploy until its production URL and target
    Worker settings are confirmed. Keep the old GitHub repositories and last
    working commits available for rollback.
-3. Run `bun run cf-typegen`, `bun run build`, and
-   `bunx wrangler deploy --dry-run` from that app's directory. Stop if output
-   does not match the verified Worker.
+3. From the repository root, run
+   `bunx turbo build --filter=<app>`. Then, from the app directory, run
+   `bunx wrangler deploy --dry-run --config <Astro-generated Wrangler config>`
+   (use the matching config path in the Workers Builds table below). Stop if
+   output does not match the verified Worker. `bun run cf-typegen` is an
+   optional check for the separate `cf` migration.
 4. Test the mount paths through an existing authorized router staging setup,
    if available. Do not enable workers.dev or preview URLs to do so.
    Authenticate with `bunx wrangler login` and verify the account with
@@ -514,7 +524,7 @@ account and `saksham801/saksham-monorepo`, then set:
 | Root directory | Repository root | Repository root | Repository root | Verify before connecting |
 | Production branch | `main` | `main` | `main` | Verify before connecting |
 | Build command | `bun install --frozen-lockfile && bunx turbo build --filter=portfolio` | `bun install --frozen-lockfile && bunx turbo build --filter=docs` | `bun install --frozen-lockfile && bunx turbo build --filter=blogs` | Verify before connecting |
-| Deploy command | `cd apps/portfolio && bunx wrangler deploy` | `cd apps/docs && bunx wrangler deploy` | `cd apps/blogs && bunx wrangler deploy` | Only after target verification |
+| Deploy command | `cd apps/portfolio && bunx wrangler deploy --config dist/server/wrangler.json` | `cd apps/docs && bunx wrangler deploy --config dist/client/docs/wrangler.json` | `cd apps/blogs && bunx wrangler deploy --config dist/client/blogs/wrangler.json` | Verify target, then use `cd apps/report && bunx wrangler deploy --config dist/client/wrangler.json` |
 
 **Use the repository root.** The apps depend on `@saksham/ui` through Bun
 workspaces and the single root `bun.lock`. Do not set the Cloudflare root
@@ -698,7 +708,7 @@ the production branch.
    `bunx turbo build --filter=<app>`.
 5. Review `git diff`, make sure no secrets/generated files are staged, and
    preserve the app-specific Cloudflare configuration.
-6. Run `bun run cf-typegen`, `bun run build`, and
-   `bunx wrangler deploy --dry-run` in the app for deployment validation. Do
-   not publish until the production account, Worker configuration, and
-   approval are confirmed.
+6. Run the filtered Turbo build from the repository root, followed by
+   `bunx wrangler deploy --dry-run --config <Astro-generated Wrangler config>`
+   from that app directory. Do not publish until the production account,
+   Worker configuration, and approval are confirmed.

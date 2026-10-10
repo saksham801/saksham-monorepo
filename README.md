@@ -37,14 +37,20 @@ in [DEVELOPMENT.md](./DEVELOPMENT.md#cloudflare-workers-builds-from-the-monorepo
 For an explicitly manual deployment, the app-specific scripts are:
 
 ```bash
+bunx turbo build --filter=portfolio
 bun --cwd apps/portfolio run deploy
+bunx turbo build --filter=docs
 bun --cwd apps/docs run deploy
+bunx turbo build --filter=blogs
 bun --cwd apps/blogs run deploy
+bunx turbo build --filter=report
 bun --cwd apps/report run deploy
 ```
 
-These commands perform real deployments. Run the app build and
-`wrangler deploy --dry-run` from the selected app first; see
+The build command must finish before the deploy script; deploy uses the
+Astro-generated Wrangler configuration without rebuilding. These deploy
+scripts perform real deployments. Run the build and a Wrangler dry run from
+the selected app first; see
 [DEVELOPMENT.md](./DEVELOPMENT.md#cloudflare-cli-builds-and-production-deployment).
 
 The Git remote `origin` points to
