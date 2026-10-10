@@ -111,6 +111,7 @@ export default defineConfig({
             { label: 'Welcome', slug: 'index' },
             { label: 'About these notes', slug: 'guides/about' },
             { label: 'Engineering toolbox', slug: 'reference/toolbox' },
+            { label: 'Jev AI', slug: 'reference/jev-ai' },
           ],
         },
         {
@@ -118,6 +119,7 @@ export default defineConfig({
           items: [
             { label: 'Overview', slug: 'languages/rust' },
             { label: 'Ownership', slug: 'languages/rust/ownership' },
+            { label: 'Async', slug: 'languages/rust/async' },
             { label: 'Tooling', slug: 'languages/rust/tooling' },
           ],
         },

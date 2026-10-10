@@ -13,7 +13,7 @@ const blog = defineCollection({
 			heroImage: z.optional(image()),
 			tags: z.array(z.string()).default([]),
 			topic: z
-				.enum(['cpp', 'rust', 'python', 'cloudflare', 'general'])
+				.enum(['cpp', 'rust', 'python', 'cloudflare', 'ai', 'general'])
 				.default('general'),
 		}),
 });

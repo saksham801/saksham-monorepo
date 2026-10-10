@@ -8,9 +8,10 @@ description: The tools and defaults behind these notes.
 | Area | Default |
 | --- | --- |
 | UI | Astro, React, Tailwind CSS |
-| Language | TypeScript |
-| Runtime | Node.js |
+| Language | TypeScript, Rust |
+| Runtime | Node.js, Tokio |
 | Data | PostgreSQL, SQLite, Redis |
+| AI Decisions | Jev AI (TypeSafe) |
 | Hosting | Cloudflare |
 
 ## Definition of done

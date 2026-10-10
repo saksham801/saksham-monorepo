@@ -15,6 +15,7 @@ const topicLabel: Record<string, string> = {
 	rust: "RUST",
 	python: "PYTHON",
 	cloudflare: "CLOUDFLARE WORKERS",
+	ai: "AI & DECISIONS",
 	general: "GENERAL",
 };
 
@@ -25,6 +26,7 @@ const accentFor: Record<string, string> = {
 	rust: "orange",
 	python: "blue",
 	cloudflare: "purple",
+	ai: "pink",
 	general: "purple",
 };
 ---
@@ -60,7 +62,7 @@ const accentFor: Record<string, string> = {
 					<em>notes.</em>
 				</h1>
 				<p class="intro">
-					{posts.length} posts across C++, Rust, Python, and Cloudflare Workers — optimized for
+					{posts.length} posts across C++, Rust, Python, Cloudflare Workers, and AI — optimized for
 					humans, crawlers, and LLMs.
 				</p>
 			</section>
@@ -328,6 +330,9 @@ const accentFor: Record<string, string> = {
 	}
 	.project-purple .code {
 		color: #d29aff;
+	}
+	.project-pink .code {
+		color: #ff7eb9;
 	}
 	.card-info {
 		display: flex;
