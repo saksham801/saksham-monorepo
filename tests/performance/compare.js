@@ -13,7 +13,7 @@ const rows = [
 console.log('Metric               Previous       Current        Change');
 console.log('-----------------------------------------------------------');
 let regression = false;
-for (const [name, before, after, unit] of rows) {
+for (const [name, before, after] of rows) {
   if (before == null || after == null) { console.log(`${name.padEnd(21)} n/a            n/a            n/a`); continue; }
   const change = before === 0 ? (after === 0 ? 0 : Infinity) : ((after - before) / Math.abs(before)) * 100;
   const label = Number.isFinite(change) ? `${change >= 0 ? '+' : ''}${change.toFixed(1)}%` : 'new';

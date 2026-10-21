@@ -3,12 +3,6 @@
 	"version": "0.0.1",
 	"private": true,
 	"type": "module",
-	"peerDependencies": {
-		"astro": "^7.3.5"
-	},
-	"devDependencies": {
-		"astro": "7.4.1"
-	},
 	"exports": {
 		".": "./src/index.ts",
 		"./components/*": "./src/components/*",
@@ -26,5 +20,11 @@
 		"format:check": "oxfmt --check .",
 		"typecheck": "tsc --noEmit -p ../../tsconfig.json",
 		"check": "tsc --noEmit -p ../../tsconfig.json"
+	},
+	"devDependencies": {
+		"astro": "7.4.1"
+	},
+	"peerDependencies": {
+		"astro": "^7.3.5"
 	}
 }
