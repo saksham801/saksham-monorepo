@@ -27,13 +27,25 @@ const person = {
 	url: siteUrl,
 	email: "mailto:hello@sakshampy.in",
 	jobTitle: "Full Stack Engineer",
-	description: "Full stack engineer in New Delhi building scalable web applications and reliable software.",
+	description:
+		"Full stack engineer in New Delhi building scalable web applications and reliable software.",
 	address: {
 		"@type": "PostalAddress",
 		addressLocality: "New Delhi",
 		addressCountry: "IN",
 	},
-	knowsAbout: ["React.js", "Angular", "Next.js", "TypeScript", "Node.js", "NestJS", "Python", "PostgreSQL", "MongoDB", "Microservices"],
+	knowsAbout: [
+		"React.js",
+		"Angular",
+		"Next.js",
+		"TypeScript",
+		"Node.js",
+		"NestJS",
+		"Python",
+		"PostgreSQL",
+		"MongoDB",
+		"Microservices",
+	],
 	sameAs: ["https://github.com/saksham-dubey"],
 };
 const structuredData = jsonLd ?? {
@@ -76,13 +88,8 @@ const structuredData = jsonLd ?? {
 			robots={robots}
 			jsonLd={robots.includes("noindex") ? undefined : structuredData}
 		/>
-		<link
-			rel="alternate"
-			type="text/markdown"
-			href="/llms.txt"
-			title="LLM-friendly profile"
-		/>
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="alternate" type="text/markdown" href="/llms.txt" title="LLM-friendly profile" />
+		<link rel="icon" type="image/svg+xml" href="/logo.svg" />
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
 		<link

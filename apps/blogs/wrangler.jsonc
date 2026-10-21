@@ -1,29 +1,27 @@
 {
 	"$schema": "./node_modules/wrangler/config-schema.json",
 	"compatibility_date": "2026-09-18",
-	"compatibility_flags": [
-		"global_fetch_strictly_public"
-	],
+	"compatibility_flags": ["global_fetch_strictly_public"],
 	"name": "blogs",
 	"vars": {
 		"TURBO_TEAM": "saksham-dubeys-projects",
-		"TURBO_TEAMID": "team_xf3FXzFrtsA27OX9SDyzR5AC"
+		"TURBO_TEAMID": "team_xf3FXzFrtsA27OX9SDyzR5AC",
 	},
 	"main": "@astrojs/cloudflare/entrypoints/server",
 	"assets": {
 		"directory": "./dist",
 		"binding": "ASSETS",
-		"not_found_handling": "404-page"
+		"not_found_handling": "404-page",
 	},
 	"cache": {
-		"enabled": true
+		"enabled": true,
 	},
 	"observability": {
 		"enabled": true,
 		"traces": {
-			"enabled": true
-		}
+			"enabled": true,
+		},
 	},
 	"workers_dev": false,
-	"preview_urls": false
+	"preview_urls": false,
 }

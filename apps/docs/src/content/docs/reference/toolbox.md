@@ -5,14 +5,14 @@ description: The tools and defaults behind these notes.
 
 ## Stack
 
-| Area | Default |
-| --- | --- |
-| UI | Astro, React, Tailwind CSS |
-| Language | TypeScript, Rust |
-| Runtime | Node.js, Tokio |
-| Data | PostgreSQL, SQLite, Redis |
-| AI Decisions | Jev AI (TypeSafe) |
-| Hosting | Cloudflare |
+| Area         | Default                    |
+| ------------ | -------------------------- |
+| UI           | Astro, React, Tailwind CSS |
+| Language     | TypeScript, Rust           |
+| Runtime      | Node.js, Tokio             |
+| Data         | PostgreSQL, SQLite, Redis  |
+| AI Decisions | Jev AI (TypeSafe)          |
+| Hosting      | Cloudflare                 |
 
 ## Definition of done
 

@@ -73,6 +73,7 @@ const excludedHeadTag = ({ tag, attrs }: (typeof Astro.locals.starlightRoute.hea
 };
 const preservedHead = Astro.locals.starlightRoute.head.filter((tag) => !excludedHeadTag(tag));
 ---
+
 <SeoHead
 	title={title}
 	description={description}
@@ -82,4 +83,6 @@ const preservedHead = Astro.locals.starlightRoute.head.filter((tag) => !excluded
 	robots={notFound ? "noindex, follow" : undefined}
 	jsonLd={structuredData}
 />
-{preservedHead.map(({ tag: Tag, attrs, content }) => <Tag {...attrs} set:html={content} />)}
+{preservedHead.map(({ tag: Tag, attrs, content }) => (
+	<Tag {...attrs} set:html={content} />
+))}

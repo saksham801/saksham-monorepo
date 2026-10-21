@@ -14,23 +14,27 @@ An HTTP handler should validate input, perform bounded work, and return a respon
 
 ```ts
 export default {
-  async fetch(request, env, ctx) {
-    const requestId = crypto.randomUUID();
-    const started = Date.now();
+	async fetch(request, env, ctx) {
+		const requestId = crypto.randomUUID();
+		const started = Date.now();
 
-    try {
-      const url = new URL(request.url);
-      if (request.method === "GET" && url.pathname === "/health") {
-        return Response.json({ ok: true, requestId });
-      }
-      return new Response("Not found", { status: 404 });
-    } finally {
-      ctx.waitUntil(env.LOGS.write(JSON.stringify({
-        requestId,
-        durationMs: Date.now() - started,
-      })));
-    }
-  },
+		try {
+			const url = new URL(request.url);
+			if (request.method === "GET" && url.pathname === "/health") {
+				return Response.json({ ok: true, requestId });
+			}
+			return new Response("Not found", { status: 404 });
+		} finally {
+			ctx.waitUntil(
+				env.LOGS.write(
+					JSON.stringify({
+						requestId,
+						durationMs: Date.now() - started,
+					}),
+				),
+			);
+		}
+	},
 };
 ```
 

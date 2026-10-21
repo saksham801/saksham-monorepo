@@ -1,35 +1,43 @@
 {
-  "name": "@saksham/sites",
-  "private": true,
-  "type": "module",
-  "packageManager": "bun@1.4.2",
-  "engines": {
-    "bun": ">=1.4.0"
-  },
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ],
-  "scripts": {
-    "dev": "turbo run dev",
-    "build": "turbo run build",
-    "preview": "turbo run preview",
-    "lint": "turbo run lint",
-    "typecheck": "turbo run typecheck",
-    "check": "turbo run check",
-    "test:smoke": "bun run tests/performance/run.js smoke",
-    "test:load": "bun run tests/performance/run.js load",
-    "test:stress": "bun run tests/performance/run.js stress",
-    "test:spike": "bun run tests/performance/run.js spike",
-    "test:soak": "bun run tests/performance/run.js soak",
-    "test:browser": "bun run tests/performance/run.js browser",
-    "test:compare": "bun run tests/performance/compare.js"
-  },
-  "devDependencies": {
-    "eslint": "^9.39.5",
-    "eslint-plugin-astro": "^1.7.0",
-    "turbo": "^2.11.7",
-    "typescript": "^6.0.3",
-    "typescript-eslint": "^8.71.1"
-  }
+	"name": "@saksham/sites",
+	"private": true,
+	"workspaces": [
+		"apps/*",
+		"packages/*"
+	],
+	"type": "module",
+	"scripts": {
+		"dev": "turbo run dev",
+		"build": "turbo run build",
+		"preview": "turbo run preview",
+		"lint": "turbo run lint",
+		"lint:fix": "turbo run lint:fix",
+		"format": "oxfmt package.json turbo.json .github/workflows/ci.yml TOOLING.md .oxlintrc.json .oxfmtrc.json && turbo run format",
+		"format:check": "oxfmt --check package.json turbo.json .github/workflows/ci.yml TOOLING.md .oxlintrc.json .oxfmtrc.json && turbo run format:check",
+		"typecheck": "turbo run typecheck",
+		"typecheck:tsrs": "turbo run typecheck:tsrs",
+		"check": "bun run format:check && turbo run lint typecheck build",
+		"test:smoke": "bun run tests/performance/run.js smoke",
+		"test:load": "bun run tests/performance/run.js load",
+		"test:stress": "bun run tests/performance/run.js stress",
+		"test:spike": "bun run tests/performance/run.js spike",
+		"test:soak": "bun run tests/performance/run.js soak",
+		"test:browser": "bun run tests/performance/run.js browser",
+		"test:compare": "bun run tests/performance/compare.js"
+	},
+	"devDependencies": {
+		"@astrojs/compiler-rs": "0.5.2",
+		"eslint": "^9.39.5",
+		"eslint-plugin-astro": "^1.7.0",
+		"oxfmt": "0.74.0",
+		"oxlint": "1.89.0",
+		"tsrs": "0.18.0-ts7.1.0-dev.20260929",
+		"turbo": "^2.11.10",
+		"typescript": "^6.0.3",
+		"typescript-eslint": "^8.72.0"
+	},
+	"engines": {
+		"bun": ">=1.4.0"
+	},
+	"packageManager": "bun@1.4.3"
 }

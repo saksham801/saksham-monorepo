@@ -22,11 +22,11 @@ Under the hood, this is a state machine. The compiler converts your async code i
 
 Rust doesn't include a runtime in the standard library. Choose one:
 
-| Runtime | Use case |
-| --- | --- |
-| `tokio` | Most common, full-featured |
-| `async-std` | Std-like API |
-| `smol` | Minimal, executor-agnostic |
+| Runtime     | Use case                   |
+| ----------- | -------------------------- |
+| `tokio`     | Most common, full-featured |
+| `async-std` | Std-like API               |
+| `smol`      | Minimal, executor-agnostic |
 
 Most production code uses Tokio:
 

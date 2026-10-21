@@ -13,14 +13,12 @@ const classes = [
 	.join(" ");
 ---
 
-{
-	href ? (
-		<a class={classes} href={href} {...attributes}>
-			<slot />
-		</a>
-	) : (
-		<article class={classes} {...attributes}>
-			<slot />
-		</article>
-	)
-}
+{href ? (
+	<a class={classes} href={href} {...attributes}>
+		<slot />
+	</a>
+) : (
+	<article class={classes} {...attributes}>
+		<slot />
+	</article>
+)}

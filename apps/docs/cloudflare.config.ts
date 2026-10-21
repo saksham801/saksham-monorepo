@@ -4,9 +4,7 @@ export default defineConfig({
 	worker: {
 		name: "docs",
 		compatibilityDate: "2026-09-15",
-		compatibilityFlags: [
-			"global_fetch_strictly_public",
-		],
+		compatibilityFlags: ["global_fetch_strictly_public"],
 		entrypoint: "@astrojs/cloudflare/entrypoints/server",
 		workersDev: false,
 		previewUrls: false,

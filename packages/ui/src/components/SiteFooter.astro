@@ -38,7 +38,9 @@ const Tag = element;
 		className,
 	]}
 >
-	<span>© {year} {copyright}</span>
+	<span>
+		© {year} {copyright}
+	</span>
 	{note && <span class="text-ui-dim">{note}</span>}
 	<slot />
 	<SystemStatus />

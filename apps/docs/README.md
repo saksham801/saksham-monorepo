@@ -17,13 +17,13 @@ Starlight, and Tailwind CSS.
 
 ## Commands
 
-| Command | Action |
-| --- | --- |
-| `bun install` | Install dependencies |
-| `bun dev` | Start the local site at `localhost:4321` |
-| `bun run build` | Build the production site to `./dist/` |
-| `bun run preview` | Preview the production build |
-| `bun run deploy` | Deploy the existing Turbo build with Wrangler |
+| Command           | Action                                        |
+| ----------------- | --------------------------------------------- |
+| `bun install`     | Install dependencies                          |
+| `bun dev`         | Start the local site at `localhost:4321`      |
+| `bun run build`   | Build the production site to `./dist/`        |
+| `bun run preview` | Preview the production build                  |
+| `bun run deploy`  | Deploy the existing Turbo build with Wrangler |
 
 Run `bunx turbo build --filter=docs` from the monorepo root before deploying.
 The deploy script uses Astro's generated Wrangler configuration in `dist/`

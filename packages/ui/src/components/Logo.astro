@@ -1,0 +1,22 @@
+---
+/// <reference types="astro/client" />
+import { Image } from "astro:assets";
+import logo from "../assets/logo.svg";
+
+interface Props {
+	alt?: string;
+	class?: string;
+	size?: number;
+}
+
+const { alt = "", class: className = "", size = 34 } = Astro.props;
+---
+
+<Image
+	class={`aspect-square shrink-0 rounded-full border border-ui-accent object-cover ${className}`}
+	style="clip-path: circle(50%);"
+	src={logo}
+	alt={alt}
+	width={size}
+	height={size}
+/>

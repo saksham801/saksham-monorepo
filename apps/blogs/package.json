@@ -1,17 +1,17 @@
 {
 	"name": "blogs",
-	"type": "module",
 	"version": "0.0.1",
-	"engines": {
-		"bun": ">=1.4.0"
-
-	},
+	"type": "module",
 	"scripts": {
 		"dev": "astro dev",
 		"build": "astro build && bun ../../scripts/copy-mounted-headers.mjs blogs",
 		"preview": "bun run build && astro preview",
-		"lint": "eslint .",
+		"lint": "oxlint . && eslint '**/*.astro' --no-warn-ignored",
+		"lint:fix": "oxlint . --fix && eslint '**/*.astro' --no-warn-ignored --fix",
+		"format": "oxfmt .",
+		"format:check": "oxfmt --check .",
 		"typecheck": "astro check",
+		"typecheck:tsrs": "tsrs --noEmit -p tsconfig.json",
 		"check": "astro check",
 		"astro": "astro",
 		"generate-types": "cf workers types",
@@ -19,22 +19,25 @@
 		"cf-typegen": "cf workers types"
 	},
 	"dependencies": {
-		"@saksham/ui": "workspace:*",
-		"@astrojs/cloudflare": "^14.3.2",
-		"@astrojs/mdx": "^8.0.1",
+		"@astrojs/cloudflare": "14.4.1",
+		"@astrojs/mdx": "8.1.0",
 		"@astrojs/rss": "^4.0.19",
-		"astro": "^7.3.3",
+		"@saksham/ui": "workspace:*",
+		"astro": "7.4.1",
 		"sharp": "^0.35.0"
 	},
-	"allowScripts": {
-		"esbuild": true
-	},
 	"devDependencies": {
-		"@astrojs/check": "^0.9.10",
+		"@astrojs/check": "0.9.11",
 		"@tailwindcss/vite": "^4.3.3",
 		"@types/node": "^26.6.2",
 		"cf": "^1.0.0-beta.7",
 		"tailwindcss": "^4.3.3",
 		"wrangler": "^4.135.0"
+	},
+	"engines": {
+		"bun": ">=1.4.0"
+	},
+	"allowScripts": {
+		"esbuild": true
 	}
 }

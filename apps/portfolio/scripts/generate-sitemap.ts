@@ -20,7 +20,9 @@ async function contentPaths(
 			continue;
 		}
 		if (![".md", ".mdx"].includes(extname(entry.name))) continue;
-		const route = relative(fileURLToPath(rootDirectory), fileURLToPath(path)).split(sep).join("/");
+		const route = relative(fileURLToPath(rootDirectory), fileURLToPath(path))
+			.split(sep)
+			.join("/");
 		const page = route.slice(0, -extname(route).length);
 		if (excluded.has(page)) continue;
 		paths.push(page === "index" ? "" : page.replace(/\/index$/, ""));
@@ -43,7 +45,12 @@ const paths = [
 const uniquePaths = [...new Set(paths)].sort();
 const encodePath = (path: string) => path.split("/").map(encodeURIComponent).join("/");
 const escapeXml = (value: string) =>
-	value.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&apos;");
+	value
+		.replace(/&/g, "&amp;")
+		.replace(/</g, "&lt;")
+		.replace(/>/g, "&gt;")
+		.replace(/"/g, "&quot;")
+		.replace(/'/g, "&apos;");
 const urls = uniquePaths
 	.map((path) => `  <url><loc>https://sakshampy.in${escapeXml(encodePath(path))}</loc></url>`)
 	.join("\n");

@@ -16,10 +16,7 @@ Choose a supported Python version and make it visible in `pyproject.toml`, CI, a
 [project]
 name = "events-api"
 requires-python = ">=3.12,<3.13"
-dependencies = [
-  "fastapi>=0.115,<0.116",
-  "uvicorn[standard]>=0.34,<0.35",
-]
+dependencies = ["fastapi>=0.115,<0.116", "uvicorn[standard]>=0.34,<0.35"]
 ```
 
 Keep application dependencies separate from development tools. This makes the production image smaller and makes it clear which packages are on the request path.

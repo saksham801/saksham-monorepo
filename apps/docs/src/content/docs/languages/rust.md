@@ -24,14 +24,14 @@ fn main() {
 
 ## Core vocabulary
 
-| Concept | Use it for |
-| --- | --- |
-| `struct` | Data with named fields |
-| `enum` | A value with one of several variants |
-| `trait` | Shared behaviour and generic constraints |
-| `Option<T>` | A value that may be absent |
-| `Result<T, E>` | An operation that may fail |
-| `Vec<T>` | Growable contiguous collection |
+| Concept        | Use it for                               |
+| -------------- | ---------------------------------------- |
+| `struct`       | Data with named fields                   |
+| `enum`         | A value with one of several variants     |
+| `trait`        | Shared behaviour and generic constraints |
+| `Option<T>`    | A value that may be absent               |
+| `Result<T, E>` | An operation that may fail               |
+| `Vec<T>`       | Growable contiguous collection           |
 
 For exhaustive language and standard-library coverage, use the [Rust Book](https://doc.rust-lang.org/book/), [Rust Reference](https://doc.rust-lang.org/reference/), and [standard library docs](https://doc.rust-lang.org/std/).
 

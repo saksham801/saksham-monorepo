@@ -1,12 +1,28 @@
+---
+import SeoHead from "@saksham/ui/components/SeoHead.astro";
+
+const title = "Engineering Reports — Saksham Dubey";
+const description =
+	"Engineering reports and performance measurements from Saksham Dubey's software projects.";
+const jsonLd = {
+	"@context": "https://schema.org",
+	"@type": "WebPage",
+	name: title,
+	description,
+	inLanguage: "en-IN",
+};
+---
 <!doctype html>
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="theme-color" content="#090b0d" />
+		<SeoHead title={title} description={description} sitemap={false} jsonLd={jsonLd} />
+		<link rel="icon" type="image/svg+xml" href="/logo.svg" />
 		<link rel="icon" href="/favicon.ico" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
+		<title>{title}</title>
 	</head>
 	<body>
 		<slot />

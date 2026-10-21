@@ -56,20 +56,20 @@ Binary yes/no with a single probability.
 
 ```typescript
 {
-  noul: 0.87
+	noul: 0.87;
 }
 ```
 
 ## Limits and pricing
 
-| Property | Value |
-| --- | --- |
-| Input price | $0.042 per million tokens |
-| Output price | Free |
-| Context window | 64k tokens |
-| Choice options | Up to 255 |
-| Score levels | 2-10 |
-| Latency | 70-500ms |
+| Property       | Value                     |
+| -------------- | ------------------------- |
+| Input price    | $0.042 per million tokens |
+| Output price   | Free                      |
+| Context window | 64k tokens                |
+| Choice options | Up to 255                 |
+| Score levels   | 2-10                      |
+| Latency        | 70-500ms                  |
 
 ## API usage
 
@@ -82,19 +82,21 @@ npm install @typesafe/jev
 ### Basic usage
 
 ```typescript
-import { Jev } from '@typesafe/jev';
+import { Jev } from "@typesafe/jev";
 
 const jev = new Jev({ apiKey: process.env.JEV_API_KEY });
 
 const result = await jev.decide({
-  state: "User message: 'I need help with billing'",
-  questions: [{
-    id: "intent",
-    choice: {
-      options: ["billing", "technical", "sales", "general"],
-      instruction: "Select the primary intent"
-    }
-  }]
+	state: "User message: 'I need help with billing'",
+	questions: [
+		{
+			id: "intent",
+			choice: {
+				options: ["billing", "technical", "sales", "general"],
+				instruction: "Select the primary intent",
+			},
+		},
+	],
 });
 ```
 
@@ -104,29 +106,29 @@ Ask multiple questions in a single request:
 
 ```typescript
 const result = await jev.decide({
-  state: document,
-  questions: [
-    {
-      id: "category",
-      choice: {
-        options: ["invoice", "contract", "email", "other"],
-        instruction: "What type of document is this?"
-      }
-    },
-    {
-      id: "urgency",
-      score: {
-        levels: 5,
-        instruction: "Rate urgency from 1 (low) to 5 (critical)"
-      }
-    },
-    {
-      id: "needs-review",
-      noul: {
-        instruction: "Does this document need human review?"
-      }
-    }
-  ]
+	state: document,
+	questions: [
+		{
+			id: "category",
+			choice: {
+				options: ["invoice", "contract", "email", "other"],
+				instruction: "What type of document is this?",
+			},
+		},
+		{
+			id: "urgency",
+			score: {
+				levels: 5,
+				instruction: "Rate urgency from 1 (low) to 5 (critical)",
+			},
+		},
+		{
+			id: "needs-review",
+			noul: {
+				instruction: "Does this document need human review?",
+			},
+		},
+	],
 });
 ```
 
@@ -136,18 +138,20 @@ const result = await jev.decide({
 
 ```typescript
 async function routeRequest(request: Request) {
-  const decision = await jev.decide({
-    state: request.body,
-    questions: [{
-      id: "route",
-      choice: {
-        options: ["support", "sales", "engineering"],
-        instruction: "Where should this request go?"
-      }
-    }]
-  });
+	const decision = await jev.decide({
+		state: request.body,
+		questions: [
+			{
+				id: "route",
+				choice: {
+					options: ["support", "sales", "engineering"],
+					instruction: "Where should this request go?",
+				},
+			},
+		],
+	});
 
-  return services[decision.choice].handle(request);
+	return services[decision.choice].handle(request);
 }
 ```
 
@@ -155,22 +159,24 @@ async function routeRequest(request: Request) {
 
 ```typescript
 async function processPayment(amount: number, context: string) {
-  const decision = await jev.decide({
-    state: context,
-    questions: [{
-      id: "risk",
-      score: {
-        levels: 5,
-        instruction: "Rate fraud risk from 1 (safe) to 5 (dangerous)"
-      }
-    }]
-  });
+	const decision = await jev.decide({
+		state: context,
+		questions: [
+			{
+				id: "risk",
+				score: {
+					levels: 5,
+					instruction: "Rate fraud risk from 1 (safe) to 5 (dangerous)",
+				},
+			},
+		],
+	});
 
-  if (decision.score > 3) {
-    return requireManualReview(amount, context);
-  }
+	if (decision.score > 3) {
+		return requireManualReview(amount, context);
+	}
 
-  return processPayment(amount);
+	return processPayment(amount);
 }
 ```
 
@@ -178,23 +184,25 @@ async function processPayment(amount: number, context: string) {
 
 ```typescript
 async function autoApprove(ticket: Ticket) {
-  const decision = await jev.decide({
-    state: ticket.description,
-    questions: [{
-      id: "approve",
-      noul: {
-        instruction: "Should this be auto-approved?"
-      }
-    }]
-  });
+	const decision = await jev.decide({
+		state: ticket.description,
+		questions: [
+			{
+				id: "approve",
+				noul: {
+					instruction: "Should this be auto-approved?",
+				},
+			},
+		],
+	});
 
-  if (decision.noul > 0.85) {
-    ticket.approve();
-  } else if (decision.noul > 0.5) {
-    ticket.flagForReview();
-  } else {
-    ticket.reject();
-  }
+	if (decision.noul > 0.85) {
+		ticket.approve();
+	} else if (decision.noul > 0.5) {
+		ticket.flagForReview();
+	} else {
+		ticket.reject();
+	}
 }
 ```
 
@@ -219,10 +227,10 @@ Be specific about what you want:
 
 ```typescript
 // Good
-instruction: "Select the department that handles this issue"
+instruction: "Select the department that handles this issue";
 
 // Bad
-instruction: "Where should this go?"
+instruction: "Where should this go?";
 ```
 
 ### Probability thresholds
@@ -231,11 +239,11 @@ Use confidence to gate automation:
 
 ```typescript
 if (response.confidence > 0.9) {
-  // Auto-execute
+	// Auto-execute
 } else if (response.confidence > 0.7) {
-  // Execute with monitoring
+	// Execute with monitoring
 } else {
-  // Escalate to human
+	// Escalate to human
 }
 ```
 
@@ -243,20 +251,21 @@ if (response.confidence > 0.9) {
 
 ```typescript
 try {
-  const result = await jev.decide(request);
-  // Handle result
+	const result = await jev.decide(request);
+	// Handle result
 } catch (error) {
-  if (error instanceof JevApiError) {
-    // API error — retry or fallback
-  } else {
-    // Other error
-  }
+	if (error instanceof JevApiError) {
+		// API error — retry or fallback
+	} else {
+		// Other error
+	}
 }
 ```
 
 ## When to use Jev
 
 **Use Jev when:**
+
 - You need a decision, not a conversation
 - Latency matters (70-500ms)
 - You want type-safe, structured output
@@ -264,6 +273,7 @@ try {
 - You're doing high-volume decisions
 
 **Don't use Jev when:**
+
 - You need text generation
 - You need reasoning steps visible
 - You're doing content creation

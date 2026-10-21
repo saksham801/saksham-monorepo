@@ -1,4 +1,6 @@
 ---
+import Logo from "./Logo.astro";
+
 interface Props {
 	href?: string;
 	name?: string;
@@ -19,12 +21,12 @@ const {
 	href={href}
 	aria-label={ariaLabel}
 >
-	<span
-		class="inline-flex size-[2.125rem] items-center justify-center border border-ui-accent font-ui-sans text-[1.0625rem] font-bold tracking-[-0.12em] text-ui-accent"
-	>
-		S<span class="text-[#dce7eb]">D</span>
-	</span>
+	<Logo size={34} />
 	<span class="font-ui-sans text-[0.6875rem] leading-[1.2] font-semibold tracking-[0.06em] text-[#dce7eb]">
-		{name}<br /><small class="font-ui-mono text-[0.5rem] font-normal tracking-[0.08em] text-[#667780]">{subtitle}</small>
+		{name}
+		<br />
+		<small class="font-ui-mono text-[0.5rem] font-normal tracking-[0.08em] text-[#667780]">
+			{subtitle}
+		</small>
 	</span>
 </a>

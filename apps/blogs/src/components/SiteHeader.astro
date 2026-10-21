@@ -16,40 +16,44 @@ const links = [
 ] as const;
 ---
 
-<a class="skip-link" href="#main-content">Skip to main content</a>
-<div
-	class="relative z-ui-content flex justify-between border-b border-[#202a30] px-[5vw] py-[9px] font-ui-mono text-[9px] tracking-[0.1em] text-[#617078]"
->
+<a class="skip-link" href="#main-content">
+	Skip to main content
+</a>
+<div class="relative z-ui-content flex justify-between border-b border-[#202a30] px-[5vw] py-[9px] font-ui-mono text-[9px] tracking-[0.1em] text-[#617078]">
 	<span>SAKSHAM.DUBEY // BLOG_V1.0</span>
 	<span class="flex items-center gap-3 max-[50rem]:[&>b]:hidden">
 		<i class="inline-block size-1.5 rounded-full bg-ui-accent"></i> C++, RUST &amp; PYTHON NOTES
 	</span>
 </div>
-<header
-	class="site-header sticky top-0 z-ui-header mx-auto flex max-w-7xl items-center justify-between border-b border-[#202a30] bg-[rgba(9,11,13,0.88)] px-5 py-4 backdrop-blur-[18px] lg:px-10"
->
+<header class="site-header sticky top-0 z-ui-header mx-auto flex max-w-7xl items-center justify-between border-b border-[#202a30] bg-[rgba(9,11,13,0.88)] px-5 py-4 backdrop-blur-[18px] lg:px-10">
 	<Brand href="/blogs/" subtitle="ENGINEERING BLOG" />
 	<nav class="site-nav flex gap-[29px]" id="site-navigation" aria-label="Primary">
-		{
-			links.map((link) => (
-				<a
-					href={link.href}
-					class="font-ui-mono text-ui-sm tracking-[0.1em] text-[#89989f] uppercase no-underline transition-colors hover:text-ui-accent focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ui-accent aria-[current=page]:text-ui-accent"
-					aria-current={active === link.key ? "page" : undefined}
-					target={"external" in link && link.external ? "_blank" : undefined}
-					rel={"external" in link && link.external ? "noopener noreferrer" : undefined}
-				>
-					{link.label}
-				</a>
-			))
-		}
+		{links.map((link) => (
+			<a
+				href={link.href}
+				class="font-ui-mono text-ui-sm tracking-[0.1em] text-[#89989f] uppercase no-underline transition-colors hover:text-ui-accent focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ui-accent aria-[current=page]:text-ui-accent"
+				aria-current={active === link.key ? "page" : undefined}
+				target={"external" in link && link.external ? "_blank" : undefined}
+				rel={"external" in link && link.external ? "noopener noreferrer" : undefined}
+			>
+				{link.label}
+			</a>
+		))}
 		<details class="site-menu">
-			<summary>/ more <span aria-hidden="true">⌄</span></summary>
+			<summary>
+				/ more <span aria-hidden="true">⌄</span>
+			</summary>
 			<div class="site-menu-panel">
 				<strong>EXPLORE</strong>
-				<a href="/blogs/terms/" aria-current={active === "terms" ? "page" : undefined}>Terms and conditions</a>
-				<a href={PORTFOLIO_URL} target="_blank" rel="noopener noreferrer">Portfolio <span>↗</span></a>
-				<a href={`mailto:${SITE_EMAIL}`}>Get in touch <span>↗</span></a>
+				<a href="/blogs/terms/" aria-current={active === "terms" ? "page" : undefined}>
+					Terms and conditions
+				</a>
+				<a href={PORTFOLIO_URL} target="_blank" rel="noopener noreferrer">
+					Portfolio <span>↗</span>
+				</a>
+				<a href={`mailto:${SITE_EMAIL}`}>
+					Get in touch <span>↗</span>
+				</a>
 			</div>
 		</details>
 	</nav>
@@ -59,7 +63,12 @@ const links = [
 	>
 		WRITE ME <span>↗</span>
 	</a>
-	<button class="site-menu-toggle" type="button" aria-controls="site-navigation" aria-expanded="false">
+	<button
+		class="site-menu-toggle"
+		type="button"
+		aria-controls="site-navigation"
+		aria-expanded="false"
+	>
 		<span class="site-menu-label">[ MENU ]</span>
 	</button>
 </header>
@@ -75,8 +84,12 @@ const links = [
 		button?.setAttribute("aria-expanded", String(isOpen));
 		if (label) label.textContent = isOpen ? "[ CLOSE ]" : "[ MENU ]";
 	};
-	button?.addEventListener("click", () => setMenuOpen(button.getAttribute("aria-expanded") !== "true"));
-	menu?.querySelectorAll("a").forEach((link) => link.addEventListener("click", () => setMenuOpen(false)));
+	button?.addEventListener("click", () =>
+		setMenuOpen(button.getAttribute("aria-expanded") !== "true"),
+	);
+	menu?.querySelectorAll("a").forEach((link) =>
+		link.addEventListener("click", () => setMenuOpen(false)),
+	);
 	document.addEventListener("keydown", (event) => {
 		if (event.key === "Escape" && button?.getAttribute("aria-expanded") === "true") {
 			setMenuOpen(false);
@@ -87,14 +100,15 @@ const links = [
 		if (event.target instanceof Node && !header?.contains(event.target)) setMenuOpen(false);
 	});
 	window.matchMedia("(min-width: 801px)").addEventListener("change", () => setMenuOpen(false));
-
 </script>
 
 <style>
 	.skip-link {
 		background: #a8ff60;
 		color: #090b0d;
-		font: 600 0.7rem "DM Mono", monospace;
+		font:
+			600 0.7rem "DM Mono",
+			monospace;
 		left: 1rem;
 		padding: 0.75rem 1rem;
 		position: fixed;
@@ -103,10 +117,21 @@ const links = [
 		transition: transform 160ms ease;
 		z-index: 100;
 	}
-	.skip-link:focus { transform: translateY(0); }
-	.site-header { min-height: 4.75rem; position: relative; }
-	.site-nav { align-items: center; gap: clamp(0.85rem, 1.7vw, 1.6rem); justify-content: flex-end; }
-	.site-menu-toggle { display: none; }
+	.skip-link:focus {
+		transform: translateY(0);
+	}
+	.site-header {
+		min-height: 4.75rem;
+		position: relative;
+	}
+	.site-nav {
+		align-items: center;
+		gap: clamp(0.85rem, 1.7vw, 1.6rem);
+		justify-content: flex-end;
+	}
+	.site-menu-toggle {
+		display: none;
+	}
 	.site-nav a {
 		position: relative;
 		padding-block: 0.45rem;
@@ -137,11 +162,15 @@ const links = [
 		color: var(--color-ui-accent, #a8ff60);
 		content: "• ";
 	}
-	.site-menu { position: relative; }
+	.site-menu {
+		position: relative;
+	}
 	.site-menu summary {
 		color: #89989f;
 		cursor: pointer;
-		font: 0.625rem "DM Mono", monospace;
+		font:
+			0.625rem "DM Mono",
+			monospace;
 		letter-spacing: 0.1em;
 		list-style: none;
 		padding-block: 0.45rem;
@@ -149,8 +178,13 @@ const links = [
 		text-transform: uppercase;
 		white-space: nowrap;
 	}
-	.site-menu summary::-webkit-details-marker { display: none; }
-	.site-menu summary:hover, .site-menu[open] summary { color: #a8ff60; }
+	.site-menu summary::-webkit-details-marker {
+		display: none;
+	}
+	.site-menu summary:hover,
+	.site-menu[open] summary {
+		color: #a8ff60;
+	}
 	.site-menu-panel {
 		background: #101a20;
 		border: 1px solid #33464f;
@@ -164,14 +198,38 @@ const links = [
 		top: calc(100% + 0.35rem);
 		z-index: 3;
 	}
-	.site-menu-panel strong { color: #63757d; font: 0.5rem "DM Mono", monospace; letter-spacing: 0.12em; padding: 0.35rem 0.5rem; }
-	.site-menu-panel a { color: #b6c3c8; font-size: 0.65rem; padding: 0.55rem; text-decoration: none; }
-	.site-menu-panel a:hover { background: #142127; color: #a8ff60; }
-	.site-menu-panel a span { color: #a8ff60; }
+	.site-menu-panel strong {
+		color: #63757d;
+		font:
+			0.5rem "DM Mono",
+			monospace;
+		letter-spacing: 0.12em;
+		padding: 0.35rem 0.5rem;
+	}
+	.site-menu-panel a {
+		color: #b6c3c8;
+		font-size: 0.65rem;
+		padding: 0.55rem;
+		text-decoration: none;
+	}
+	.site-menu-panel a:hover {
+		background: #142127;
+		color: #a8ff60;
+	}
+	.site-menu-panel a span {
+		color: #a8ff60;
+	}
 	@media (max-width: 950px) and (min-width: 801px) {
-		.site-header { gap: 1rem; }
-		.site-nav { gap: 0.8rem; }
-		.site-nav > a, .site-menu summary { font-size: 0.55rem; }
+		.site-header {
+			gap: 1rem;
+		}
+		.site-nav {
+			gap: 0.8rem;
+		}
+		.site-nav > a,
+		.site-menu summary {
+			font-size: 0.55rem;
+		}
 	}
 	@media (max-width: 800px) {
 		.site-header.has-js .site-menu-toggle {
@@ -181,7 +239,9 @@ const links = [
 			color: #a8ff60;
 			cursor: pointer;
 			display: inline-flex;
-			font: 0.6rem "DM Mono", monospace;
+			font:
+				0.6rem "DM Mono",
+				monospace;
 			justify-content: center;
 			letter-spacing: 0.08em;
 			line-height: 1;
@@ -189,7 +249,11 @@ const links = [
 			min-width: 4.8rem;
 			padding: 0 0.55rem;
 		}
-		.site-menu-toggle:hover, .site-menu-toggle[aria-expanded="true"] { border-color: #a8ff60; color: #e8edf0; }
+		.site-menu-toggle:hover,
+		.site-menu-toggle[aria-expanded="true"] {
+			border-color: #a8ff60;
+			color: #e8edf0;
+		}
 		.site-nav,
 		.site-nav.is-open {
 			align-items: stretch;
@@ -205,14 +269,36 @@ const links = [
 			top: calc(100% + 0.25rem);
 			z-index: 5;
 		}
-		.site-header.has-js .site-nav { display: none; }
-		.site-header.has-js .site-nav.is-open { display: flex; }
-		.site-nav > a, .site-menu summary { display: block; padding: 0.75rem; }
-		.site-nav > a { border-bottom: 1px solid #202a30; }
-		.site-menu { padding: 0.2rem 0; }
-		.site-menu-panel { border: 0; border-top: 1px solid #26343b; box-shadow: none; min-width: 0; position: static; }
+		.site-header.has-js .site-nav {
+			display: none;
+		}
+		.site-header.has-js .site-nav.is-open {
+			display: flex;
+		}
+		.site-nav > a,
+		.site-menu summary {
+			display: block;
+			padding: 0.75rem;
+		}
+		.site-nav > a {
+			border-bottom: 1px solid #202a30;
+		}
+		.site-menu {
+			padding: 0.2rem 0;
+		}
+		.site-menu-panel {
+			border: 0;
+			border-top: 1px solid #26343b;
+			box-shadow: none;
+			min-width: 0;
+			position: static;
+		}
 	}
 	@media (prefers-reduced-motion: reduce) {
-		.skip-link, .site-nav a::after, .site-menu summary::after { transition: none; }
+		.skip-link,
+		.site-nav a::after,
+		.site-menu summary::after {
+			transition: none;
+		}
 	}
 </style>

@@ -1,0 +1,23 @@
+{
+	"$schema": "./node_modules/oxlint/configuration_schema.json",
+	"categories": {
+		"correctness": "error",
+		"suspicious": "warn",
+		"pedantic": "off"
+	},
+	"plugins": ["eslint", "typescript", "unicorn", "oxc", "import"],
+	"ignorePatterns": [
+		"**/dist/**",
+		"**/.astro/**",
+		"**/.cloudflare/**",
+		"**/.wrangler/**",
+		"**/node_modules/**",
+		"**/worker-configuration.d.ts",
+		"**/src/content/**",
+		"**/*.astro"
+	],
+	"rules": {
+		"typescript/no-unused-vars": "error",
+		"unicorn/no-array-sort": "off"
+	}
+}

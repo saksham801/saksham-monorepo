@@ -52,6 +52,7 @@ async fn process_batch(items: Vec<Item>) {
 ```
 
 Don't spawn when:
+
 - You need the result in the next line (use `await` instead)
 - The work is CPU-bound (use `rayon` instead)
 - You're already inside a spawned task (you're just adding overhead)

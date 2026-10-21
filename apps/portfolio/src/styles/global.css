@@ -3,6 +3,6 @@
 @source "../../../packages/ui/src";
 
 @theme {
-  --font-sans: 'Manrope', sans-serif;
-  --font-mono: 'DM Mono', monospace;
+	--font-sans: "Manrope", sans-serif;
+	--font-mono: "DM Mono", monospace;
 }

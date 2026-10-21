@@ -1,13 +1,7 @@
 ---
 import "../styles/global.css";
-	import SeoHead from "@saksham/ui/components/SeoHead.astro";
-import {
-	SITE_AUTHOR,
-	SITE_DESCRIPTION,
-	SITE_EMAIL,
-	SITE_TITLE,
-	SITE_URL,
-} from "../consts";
+import SeoHead from "@saksham/ui/components/SeoHead.astro";
+import { SITE_AUTHOR, SITE_DESCRIPTION, SITE_EMAIL, SITE_TITLE, SITE_URL } from "../consts";
 
 interface Props {
 	title?: string;
@@ -51,17 +45,23 @@ const websiteSchema = {
 	author: { "@id": `${SITE_URL}/#person` },
 	inLanguage: "en",
 };
-const pageNodes = (jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [{
-	"@type": "WebPage",
-	"@id": `${SITE_URL}${canonicalPath}#webpage`,
-	name: pageTitle,
-	url: `${SITE_URL}${canonicalPath}`,
-	description,
-	isPartOf: { "@id": `${SITE_URL}/blogs/#website` },
-	inLanguage: "en",
-}]).map((node) =>
-	Object.fromEntries(Object.entries(node).filter(([key]) => key !== "@context")),
-);
+const pageNodes = (
+	jsonLd
+		? Array.isArray(jsonLd)
+			? jsonLd
+			: [jsonLd]
+		: [
+				{
+					"@type": "WebPage",
+					"@id": `${SITE_URL}${canonicalPath}#webpage`,
+					name: pageTitle,
+					url: `${SITE_URL}${canonicalPath}`,
+					description,
+					isPartOf: { "@id": `${SITE_URL}/blogs/#website` },
+					inLanguage: "en",
+				},
+			]
+).map((node) => Object.fromEntries(Object.entries(node).filter(([key]) => key !== "@context")));
 const pageTypes = pageNodes.map((node) => node["@type"]);
 const structuredData = {
 	"@context": "https://schema.org",
@@ -94,7 +94,7 @@ const structuredData = {
 		<link
 			rel="alternate"
 			type="text/markdown"
-			href={`${import.meta.env.BASE_URL}/llms.txt`}
+			href={`${import.meta.env.BASE_URL}llms.txt`}
 			title="LLM-friendly blog profile"
 		/>
 		<link
@@ -103,24 +103,19 @@ const structuredData = {
 			title={SITE_TITLE}
 			href={new URL("/blogs/rss.xml", SITE_URL).href}
 		/>
-		{tags.map((tag) => <meta property="article:tag" content={tag} />)}
-		<link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}/favicon.svg`} />
+		{tags.map((tag) => (
+			<meta property="article:tag" content={tag} />
+		))}
+		<link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}logo.svg`} />
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
-		<link
-			rel="preconnect"
-			href="https://fonts.gstatic.com"
-			crossorigin="anonymous"
-		/>
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
 		<link
 			href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap"
 			rel="stylesheet"
 		/>
 		<title>{pageTitle}</title>
-
 	</head>
-	<body
-		class="bg-[#090b0d] text-[#e8edf0] antialiased selection:bg-[#a8ff60] selection:text-[#090b0d]"
-	>
+	<body class="bg-[#090b0d] text-[#e8edf0] antialiased selection:bg-[#a8ff60] selection:text-[#090b0d]">
 		<slot />
 	</body>
 </html>

@@ -4,24 +4,39 @@ description: The requested documentation page could not be found.
 template: splash
 editUrl: false
 head:
-  - tag: meta
-    attrs:
-      name: robots
-      content: noindex, follow
+    - tag: meta
+      attrs:
+          name: robots
+          content: noindex, follow
 ---
 
 import Button from "@saksham/ui/components/Button.astro";
 
 <div class="portfolio-home not-found">
-  <section class="docs-hero docs-hero-simple">
-    <div class="docs-hero-copy">
-      <p class="kicker"><span>&gt;_</span> 404 — ROUTE MISSING</p>
-      <h1>THIS PATH<br /><em>DOESN'T</em><br />EXIST<span>_</span></h1>
-      <p class="hero-intro">The page you requested is not in these notes. It may have moved, or the URL might be incomplete.</p>
-      <div class="hero-actions">
-        <Button href="/">BACK TO HOME <span>↑</span></Button>
-        <a href="https://sakshampy.in/docs/guides/about/" class="text-link">BROWSE GUIDES <span>↗</span></a>
-      </div>
-    </div>
-  </section>
+	<section class="docs-hero docs-hero-simple">
+		<div class="docs-hero-copy">
+			<p class="kicker">
+				<span>&gt;_</span> 404 — ROUTE MISSING
+			</p>
+			<h1>
+				THIS PATH
+				<br />
+				<em>DOESN'T</em>
+				<br />
+				EXIST<span>_</span>
+			</h1>
+			<p class="hero-intro">
+				The page you requested is not in these notes. It may have moved, or the URL might be
+				incomplete.
+			</p>
+			<div class="hero-actions">
+				<Button href="/">
+					BACK TO HOME <span>↑</span>
+				</Button>
+				<a href="https://sakshampy.in/docs/guides/about/" class="text-link">
+					BROWSE GUIDES <span>↗</span>
+				</a>
+			</div>
+		</div>
+	</section>
 </div>

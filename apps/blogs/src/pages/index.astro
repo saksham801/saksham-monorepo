@@ -62,65 +62,82 @@ const accentFor: Record<string, string> = {
 					<em>notes.</em>
 				</h1>
 				<p class="intro">
-					{posts.length} posts across C++, Rust, Python, Cloudflare Workers, and AI — optimized for
-					humans, crawlers, and LLMs.
+					{posts.length} posts across C++, Rust, Python, Cloudflare Workers, and AI —
+					optimized for humans, crawlers, and LLMs.
 				</p>
 			</section>
 			<section class="post-tools" aria-label="Find articles">
 				<label class="article-search">
 					<span>SEARCH ARTICLES</span>
-					<input id="article-search" type="search" placeholder="Title, topic, or keyword" autocomplete="off" />
+					<input
+						id="article-search"
+						type="search"
+						placeholder="Title, topic, or keyword"
+						autocomplete="off"
+					/>
 				</label>
 				<div class="topic-filters" aria-label="Filter articles by topic">
-					<button type="button" data-filter="all" aria-pressed="true">ALL <span>{posts.length}</span></button>
+					<button type="button" data-filter="all" aria-pressed="true">
+						ALL <span>{posts.length}</span>
+					</button>
 					{filterTopics.map((topic) => (
 						<button type="button" data-filter={topic} aria-pressed="false">
-							{topicLabel[topic] ?? topic} <span>{posts.filter((post) => post.data.topic === topic).length}</span>
+							{topicLabel[topic] ?? topic}{" "}
+							<span>{posts.filter((post) => post.data.topic === topic).length}</span>
 						</button>
 					))}
 				</div>
-				<p class="filter-count" id="filter-count" role="status" aria-live="polite">{posts.length} articles</p>
+				<p class="filter-count" id="filter-count" role="status" aria-live="polite">
+					{posts.length} articles
+				</p>
 			</section>
 			<section class="grid" aria-label="Engineering articles">
-				{
-					posts.map((post, index) => (
-						<a
-							href={`/blogs/${post.id}/`}
-							class={`ui-card card project-${accentFor[post.data.topic] ?? "lime"} ${index === 0 ? "featured" : ""}`}
-							data-topic={post.data.topic}
-							data-search={[post.data.title, post.data.description, post.data.topic, ...post.data.tags].join(" ").toLowerCase()}
-						>
-							<div class="card-top">
-								<span>
-									{String(index + 1).padStart(2, "0")} /{" "}
-									{String(posts.length).padStart(2, "0")}
-								</span>
-								<span class="status">
-									<i /> PUBLISHED
-								</span>
-							</div>
-							<div class="card-visual">
-								<span class="bracket">{"{"}</span>
-								<span class="code">{post.data.topic}</span>
-								<span class="bracket">{"}"}</span>
-							</div>
-							<div class="card-info">
-								<p>{topicLabel[post.data.topic] ?? post.data.topic}</p>
-								<h2>{post.data.title}</h2>
-								<span class="arrow">↗</span>
-								<p class="text">{post.data.description}</p>
-								<p class="meta">
-									<FormattedDate date={post.data.pubDate} />
-									{post.data.tags.length > 0 && (
-										<> · {post.data.tags.slice(0, 3).join(" · ")}</>
-									)}
-								</p>
-							</div>
-						</a>
-					))
-				}
+				{posts.map((post, index) => (
+					<a
+						href={`/blogs/${post.id}/`}
+						class={`ui-card card project-${accentFor[post.data.topic] ?? "lime"} ${index === 0 ? "featured" : ""}`}
+						data-topic={post.data.topic}
+						data-search={[
+							post.data.title,
+							post.data.description,
+							post.data.topic,
+							...post.data.tags,
+						]
+							.join(" ")
+							.toLowerCase()}
+					>
+						<div class="card-top">
+							<span>
+								{String(index + 1).padStart(2, "0")} /{" "}
+								{String(posts.length).padStart(2, "0")}
+							</span>
+							<span class="status">
+								<i /> PUBLISHED
+							</span>
+						</div>
+						<div class="card-visual">
+							<span class="bracket">{"{"}</span>
+							<span class="code">{post.data.topic}</span>
+							<span class="bracket">{"}"}</span>
+						</div>
+						<div class="card-info">
+							<p>{topicLabel[post.data.topic] ?? post.data.topic}</p>
+							<h2>{post.data.title}</h2>
+							<span class="arrow">↗</span>
+							<p class="text">{post.data.description}</p>
+							<p class="meta">
+								<FormattedDate date={post.data.pubDate} />
+								{post.data.tags.length > 0 && (
+									<> · {post.data.tags.slice(0, 3).join(" · ")}</>
+								)}
+							</p>
+						</div>
+					</a>
+				))}
 			</section>
-		<p class="filter-empty" id="filter-empty" hidden>No articles match that search. Try another keyword or topic.</p>
+			<p class="filter-empty" id="filter-empty" hidden>
+				No articles match that search. Try another keyword or topic.
+			</p>
 		</main>
 		<SiteFooter
 			links={[
@@ -157,11 +174,13 @@ const accentFor: Record<string, string> = {
 
 	shell?.classList.add("has-filter");
 	search?.addEventListener("input", updateArticles);
-	filters.forEach((button) => button.addEventListener("click", () => {
-		activeTopic = button.dataset.filter || "all";
-		filters.forEach((item) => item.setAttribute("aria-pressed", String(item === button)));
-		updateArticles();
-	}));
+	filters.forEach((button) =>
+		button.addEventListener("click", () => {
+			activeTopic = button.dataset.filter || "all";
+			filters.forEach((item) => item.setAttribute("aria-pressed", String(item === button)));
+			updateArticles();
+		}),
+	);
 </script>
 
 <style>
@@ -207,7 +226,9 @@ const accentFor: Record<string, string> = {
 		margin: 24px 0 0;
 		max-width: 480px;
 	}
-	.post-tools { display: none; }
+	.post-tools {
+		display: none;
+	}
 	.site-shell.has-filter .post-tools {
 		align-items: end;
 		border-block: 1px solid #26343b;
@@ -217,38 +238,82 @@ const accentFor: Record<string, string> = {
 		margin-bottom: 1.25rem;
 		padding-block: 1rem;
 	}
-	.article-search { display: grid; gap: 0.45rem; }
-	.article-search > span { color: #63757d; font-size: 0.52rem; letter-spacing: 0.12em; }
+	.article-search {
+		display: grid;
+		gap: 0.45rem;
+	}
+	.article-search > span {
+		color: #63757d;
+		font-size: 0.52rem;
+		letter-spacing: 0.12em;
+	}
 	.article-search input {
 		background: #0d1519;
 		border: 1px solid #33464f;
 		border-radius: 0;
 		color: #e8edf0;
-		font: 0.68rem "DM Mono", monospace;
+		font:
+			0.68rem "DM Mono",
+			monospace;
 		min-height: 2.6rem;
 		min-width: 0;
 		padding: 0.65rem 0.75rem;
 		width: 100%;
 	}
-	.article-search input::placeholder { color: #63757d; }
-	.article-search input:focus-visible { border-color: #a8ff60; outline: 2px solid #a8ff60; outline-offset: 2px; }
-	.topic-filters { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+	.article-search input::placeholder {
+		color: #63757d;
+	}
+	.article-search input:focus-visible {
+		border-color: #a8ff60;
+		outline: 2px solid #a8ff60;
+		outline-offset: 2px;
+	}
+	.topic-filters {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.4rem;
+	}
 	.topic-filters button {
 		background: transparent;
 		border: 1px solid #26343b;
 		color: #91a2aa;
 		cursor: pointer;
-		font: 0.54rem "DM Mono", monospace;
+		font:
+			0.54rem "DM Mono",
+			monospace;
 		letter-spacing: 0.04em;
 		min-height: 2.35rem;
 		padding: 0.45rem 0.6rem;
-		transition: border-color 160ms ease, color 160ms ease, background 160ms ease;
+		transition:
+			border-color 160ms ease,
+			color 160ms ease,
+			background 160ms ease;
 	}
-	.topic-filters button span { color: #63757d; margin-inline-start: 0.25rem; }
-	.topic-filters button:hover, .topic-filters button[aria-pressed="true"] { background: #101a20; border-color: #a8ff60; color: #a8ff60; }
-	.filter-count { color: #63757d; font-size: 0.58rem; margin: 0; white-space: nowrap; }
-	.filter-empty { border: 1px dashed #33464f; color: #91a2aa; margin: 1rem 0; padding: 1.5rem; }
-	.card[hidden] { display: none; }
+	.topic-filters button span {
+		color: #63757d;
+		margin-inline-start: 0.25rem;
+	}
+	.topic-filters button:hover,
+	.topic-filters button[aria-pressed="true"] {
+		background: #101a20;
+		border-color: #a8ff60;
+		color: #a8ff60;
+	}
+	.filter-count {
+		color: #63757d;
+		font-size: 0.58rem;
+		margin: 0;
+		white-space: nowrap;
+	}
+	.filter-empty {
+		border: 1px dashed #33464f;
+		color: #91a2aa;
+		margin: 1rem 0;
+		padding: 1.5rem;
+	}
+	.card[hidden] {
+		display: none;
+	}
 	.grid {
 		display: grid;
 		gap: 12px;
@@ -376,8 +441,12 @@ const accentFor: Record<string, string> = {
 		text-transform: uppercase;
 	}
 	@media (max-width: 900px) {
-		.site-shell.has-filter .post-tools { grid-template-columns: 1fr; }
-		.filter-count { justify-self: end; }
+		.site-shell.has-filter .post-tools {
+			grid-template-columns: 1fr;
+		}
+		.filter-count {
+			justify-self: end;
+		}
 	}
 	@media (max-width: 800px) {
 		.grid {

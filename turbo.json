@@ -1,60 +1,58 @@
 {
-  "$schema": "https://turbo.build/schema.json",
-  "globalDependencies": [
-    "bun.lock",
-    "tsconfig.json",
-    "scripts/copy-mounted-headers.mjs"
-  ],
-  "cacheDir": ".turbo/cache",
-  "cacheMaxAge": "30d",
-  "cacheMaxSize": "5GB",
-  "tasks": {
-    "dev": {
-      "cache": false,
-      "persistent": true
-    },
-    "build": {
-      "dependsOn": [
-        "typecheck",
-        "^build"
-      ],
-      "outputs": [
-        "dist/**"
-      ]
-    },
-    "preview": {
-      "cache": false,
-      "persistent": true
-    },
-    "lint": {
-      "dependsOn": [
-        "^lint"
-      ],
-      "outputs": []
-    },
-    "typecheck": {
-      "dependsOn": [
-        "^typecheck"
-      ],
-      "outputs": []
-    },
-    "check": {
-      "dependsOn": [
-        "lint",
-        "typecheck",
-        "build"
-      ],
-      "outputs": []
-    },
-    "deploy": {
-      "dependsOn": [
-        "build"
-      ],
-      "cache": false,
-      "env": [
-        "CLOUDFLARE_API_TOKEN",
-        "CLOUDFLARE_ACCOUNT_ID"
-      ]
-    }
-  }
+	"$schema": "https://turbo.build/schema.json",
+	"globalDependencies": [
+		"bun.lock",
+		"tsconfig.json",
+		".oxlintrc.json",
+		".oxfmtrc.json",
+		"eslint.config.js",
+		"scripts/copy-mounted-headers.mjs"
+	],
+	"cacheDir": ".turbo/cache",
+	"cacheMaxAge": "30d",
+	"cacheMaxSize": "5GB",
+	"tasks": {
+		"dev": {
+			"cache": false,
+			"persistent": true
+		},
+		"build": {
+			"dependsOn": ["typecheck", "^build"],
+			"outputs": ["dist/**"]
+		},
+		"preview": {
+			"cache": false,
+			"persistent": true
+		},
+		"lint": {
+			"dependsOn": ["^lint"],
+			"outputs": []
+		},
+		"lint:fix": {
+			"dependsOn": ["^lint:fix"],
+			"cache": false
+		},
+		"format": {
+			"dependsOn": ["^format"],
+			"cache": false
+		},
+		"format:check": {
+			"dependsOn": ["^format:check"],
+			"outputs": []
+		},
+		"typecheck:tsrs": {
+			"dependsOn": ["^typecheck:tsrs"],
+			"outputs": []
+		},
+		"typecheck": {
+			"dependsOn": ["^typecheck"],
+			"outputs": []
+		},
+
+		"deploy": {
+			"dependsOn": ["build"],
+			"cache": false,
+			"env": ["CLOUDFLARE_API_TOKEN", "CLOUDFLARE_ACCOUNT_ID"]
+		}
+	}
 }

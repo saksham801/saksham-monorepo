@@ -69,20 +69,13 @@ const sections = [
 ];
 ---
 
-<article
-	class="max-w-[47.5rem] border-t border-ui-line"
-	aria-label="Terms and Conditions"
->
+<article class="max-w-[47.5rem] border-t border-ui-line" aria-label="Terms and Conditions">
 	{sections.map(({ title, paragraphs }, index) => (
 		<section class="border-b border-ui-line py-9">
-			<span
-				class="mb-3.5 block font-ui-mono text-ui-xs tracking-[0.12em] text-ui-accent"
-			>
+			<span class="mb-3.5 block font-ui-mono text-ui-xs tracking-[0.12em] text-ui-accent">
 				{String(index + 1).padStart(2, "0")}
 			</span>
-			<h2
-				class="mb-3.5 font-ui-sans text-[1.375rem] leading-normal font-semibold tracking-[-0.04em] text-ui-fg"
-			>
+			<h2 class="mb-3.5 font-ui-sans text-[1.375rem] leading-normal font-semibold tracking-[-0.04em] text-ui-fg">
 				{title}
 			</h2>
 			{paragraphs.map((paragraph, paragraphIndex) => (
@@ -98,7 +91,9 @@ const sections = [
 		</section>
 	))}
 	<section class="border-b border-ui-line py-9">
-		<span class="mb-3.5 block font-ui-mono text-ui-xs tracking-[0.12em] text-ui-accent">11</span>
+		<span class="mb-3.5 block font-ui-mono text-ui-xs tracking-[0.12em] text-ui-accent">
+			11
+		</span>
 		<h2 class="mb-3.5 font-ui-sans text-[1.375rem] leading-normal font-semibold tracking-[-0.04em] text-ui-fg">
 			Contact
 		</h2>

@@ -1,17 +1,15 @@
 ---
-const id = 'top';
+const id = "top";
 const { entry } = Astro.locals.starlightRoute;
-const isSplash = entry.data.template === 'splash';
+const isSplash = entry.data.template === "splash";
 ---
 
-{
-	!isSplash && (
-		<h1 id={id}>{Astro.locals.starlightRoute.entry.data.title}</h1>
-	)
-}
-{
-	isSplash && <span id={id} class="sr-only">{Astro.locals.starlightRoute.entry.data.title}</span>
-}
+{!isSplash && <h1 id={id}>{Astro.locals.starlightRoute.entry.data.title}</h1>}
+{isSplash && (
+	<span id={id} class="sr-only">
+		{Astro.locals.starlightRoute.entry.data.title}
+	</span>
+)}
 
 <style>
 	@layer starlight.core {

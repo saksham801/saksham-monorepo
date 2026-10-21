@@ -1,18 +1,18 @@
 {
 	"name": "docs",
-	"type": "module",
 	"version": "0.0.1",
-	"engines": {
-	"bun": ">=1.4.0"
-
-	},
+	"type": "module",
 	"scripts": {
 		"dev": "astro dev",
 		"start": "astro dev",
 		"build": "astro build && bun ../../scripts/copy-mounted-headers.mjs docs",
 		"preview": "bun run build && astro preview",
-		"lint": "eslint .",
+		"lint": "oxlint . && eslint '**/*.astro' --no-warn-ignored",
+		"lint:fix": "oxlint . --fix && eslint '**/*.astro' --no-warn-ignored --fix",
+		"format": "oxfmt .",
+		"format:check": "oxfmt --check .",
 		"typecheck": "astro check",
+		"typecheck:tsrs": "tsrs --noEmit -p tsconfig.json",
 		"check": "astro check",
 		"astro": "astro",
 		"generate-types": "cf workers types",
@@ -20,12 +20,12 @@
 		"cf-typegen": "cf workers types"
 	},
 	"dependencies": {
+		"@astrojs/check": "0.9.11",
+		"@astrojs/cloudflare": "14.4.1",
+		"@astrojs/starlight": "0.42.6",
 		"@saksham/ui": "workspace:*",
-		"@astrojs/check": "^0.9.10",
-		"@astrojs/cloudflare": "^14.3.1",
-		"@astrojs/starlight": "^0.42.1",
 		"@tailwindcss/vite": "^4.3.3",
-		"astro": "^7.3.2",
+		"astro": "7.4.1",
 		"hast-util-from-html": "2",
 		"rehype": "13",
 		"rehype-format": "5",
@@ -35,8 +35,11 @@
 	},
 	"devDependencies": {
 		"@types/node": "^22.20.3",
-		"playwright": "^1.63.0",
 		"cf": "^1.0.0-beta.7",
+		"playwright": "^1.63.0",
 		"wrangler": "^4.132.0"
+	},
+	"engines": {
+		"bun": ">=1.4.0"
 	}
 }
