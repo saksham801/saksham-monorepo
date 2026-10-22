@@ -4,8 +4,11 @@ import starlight from "@astrojs/starlight";
 import cloudflare from "@astrojs/cloudflare";
 import tailwindcss from "@tailwindcss/vite";
 
+import sitemap from "@astrojs/sitemap";
+
 // https://astro.build/config
 export default defineConfig({
+	site: "https://sakshampy.in",
 	output: "static",
 	base: "/docs",
 	compressHTML: true,
@@ -142,6 +145,7 @@ export default defineConfig({
 				{ label: "Terms and Conditions", slug: "terms" },
 			],
 		}),
+		sitemap(),
 	],
 	adapter: cloudflare({
 		inspectorPort: 9231,

@@ -22,17 +22,18 @@
 		"@astrojs/cloudflare": "14.4.1",
 		"@astrojs/mdx": "8.1.0",
 		"@astrojs/rss": "^4.0.19",
+		"@astrojs/sitemap": "^3.7.4",
 		"@saksham/ui": "workspace:*",
 		"astro": "7.4.1",
-		"sharp": "^0.35.0"
+		"sharp": "^0.35.5"
 	},
 	"devDependencies": {
 		"@astrojs/check": "0.9.11",
 		"@tailwindcss/vite": "^4.3.3",
-		"@types/node": "^26.6.2",
-		"cf": "^1.0.0-beta.7",
+		"@types/node": "^26.6.5",
+		"cf": "^1.0.0-beta.20",
 		"tailwindcss": "^4.3.3",
-		"wrangler": "^4.135.0"
+		"wrangler": "^4.151.3"
 	},
 	"engines": {
 		"bun": ">=1.4.0"

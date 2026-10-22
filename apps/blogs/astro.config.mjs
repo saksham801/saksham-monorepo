@@ -5,12 +5,14 @@ import { defineConfig } from "astro/config";
 import cloudflare from "@astrojs/cloudflare";
 import tailwindcss from "@tailwindcss/vite";
 
+import sitemap from "@astrojs/sitemap";
+
 // https://astro.build/config
 export default defineConfig({
 	site: "https://sakshampy.in",
 	base: "/blogs",
 	output: "static",
-	integrations: [mdx()],
+	integrations: [mdx(), sitemap()],
 	adapter: cloudflare({ inspectorPort: 9230 }),
 	vite: {
 		plugins: [tailwindcss()],
