@@ -3,41 +3,62 @@ import Search from "@astrojs/starlight/components/Search.astro";
 import Brand from "@saksham/ui/components/Brand.astro";
 
 const navLinks = [
-	{ href: "/docs/", label: "/ docs home" },
-	{ href: "/docs/guides/about/", label: "/ guides" },
-	{ href: "/docs/reference/toolbox/", label: "/ reference" },
-	{ href: "/docs/terms/", label: "/ terms" },
-	{ href: "https://sakshampy.in/", label: "/ portfolio", external: true },
+	{ href: "/blogs/", label: "/ articles" },
+	{ href: "/docs/", label: "/ docs" },
 ];
+
+const isCurrent = (href: string) =>
+	Astro.url.pathname === href || (href === "/docs/" && Astro.url.pathname.startsWith("/docs/"));
 ---
 
-<div class="topline">
+<div class="relative z-40 flex min-h-[1.9rem] items-center justify-between border-b border-[#202a30] px-[max(5vw,calc((100vw-80rem)/2))] font-mono text-[9px] tracking-[0.1em] text-[#718189] max-[36rem]:px-4" aria-label="Site information">
 	<span>SAKSHAM.DUBEY // DOCS_V1.0</span>
-	<span class="topline-right">
-		<i></i> SYSTEMS ONLINE
+	<span class="flex items-center gap-2.5 max-[36rem]:hidden">
+		<i class="size-1.5 rounded-full bg-[#a8ff60] shadow-[0_0_10px_rgba(168,255,96,0.7)]" aria-hidden="true"></i>
+		SYSTEMS ONLINE
 	</span>
 </div>
-<div class="header">
+<div class="docs-header sticky top-0 z-40 mx-auto grid min-h-[5rem] max-w-7xl grid-cols-[auto_minmax(0,1fr)_auto_auto] items-center gap-[clamp(0.75rem,1.5vw,1.5rem)] border-b border-[#202a30] bg-[rgba(9,11,13,0.9)] px-[clamp(1rem,5vw,3rem)] py-3 font-mono backdrop-blur-[18px] max-[59.375rem]:grid-cols-[auto_minmax(0,1fr)] max-[59.375rem]:gap-4 max-[50rem]:grid-cols-[minmax(0,1fr)_auto_auto] max-[50rem]:gap-2">
 	<Brand
 		href="/docs/"
 		name="SAKSHAM"
 		subtitle="ENGINEERING DOCS"
 		ariaLabel="Saksham's Docs home"
 	/>
-	<Search class="docs-search" />
-	<nav class="docs-nav print:hidden" aria-label="Primary">
-		{navLinks.map((link) =>
-			link.external ? (
-				<a href={link.href} target="_blank" rel="noopener noreferrer">
-					{link.label}
-				</a>
-			) : (
-				<a href={link.href}>{link.label}</a>
-			),
-		)}
-		<details class="docs-menu">
-			<summary>/ docs</summary>
-			<div class="docs-menu-panel">
+	<Search class="docs-search justify-self-start max-[59.375rem]:hidden max-[50rem]:block max-[50rem]:justify-self-end" />
+	<nav
+		class="docs-nav print:hidden flex min-w-0 items-center justify-end gap-[clamp(0.8rem,1.5vw,1.5rem)] max-[59.375rem]:gap-2.5 max-[59.375rem]:[&>a]:text-[0.58rem]"
+		id="docs-navigation"
+		aria-label="Primary"
+	>
+		<a
+			href="/"
+			class="docs-nav-link relative whitespace-nowrap border border-transparent px-2.5 py-2 font-mono text-[0.61rem] tracking-[0.09em] text-[#89989f] no-underline uppercase transition-colors duration-200 hover:border-[#26343b] hover:bg-[#101a20] hover:text-[#dce7eb] focus-visible:text-[#a8ff60] aria-[current=page]:border-[#354b42] aria-[current=page]:bg-[#101a20] aria-[current=page]:text-[#a8ff60]"
+			aria-current={Astro.url.pathname === "/" ? "page" : undefined}
+		>
+			/ portfolio
+		</a>
+		{navLinks.map((link) => (
+			<a
+				href={link.href}
+				class="docs-nav-link relative whitespace-nowrap border border-transparent px-2.5 py-2 font-mono text-[0.61rem] tracking-[0.09em] text-[#89989f] no-underline uppercase transition-colors duration-200 hover:border-[#26343b] hover:bg-[#101a20] hover:text-[#dce7eb] focus-visible:text-[#a8ff60] aria-[current=page]:border-[#354b42] aria-[current=page]:bg-[#101a20] aria-[current=page]:text-[#a8ff60]"
+				aria-current={isCurrent(link.href) ? "page" : undefined}
+			>
+				{link.label}
+			</a>
+		))}
+		<details class="docs-menu relative">
+			<summary class="relative cursor-pointer list-none whitespace-nowrap border border-transparent px-2.5 py-2 font-mono text-[0.61rem] tracking-[0.09em] text-[#89989f] uppercase transition-colors duration-200 hover:border-[#26343b] hover:bg-[#101a20] hover:text-[#a8ff60] [&::-webkit-details-marker]:hidden">
+				/ explore <span class="ml-1 inline-block text-[#a8ff60] transition-transform duration-200" aria-hidden="true">⌄</span>
+			</summary>
+			<div class="docs-menu-panel absolute right-0 top-[calc(100%+0.5rem)] z-50 grid w-[min(36rem,calc(100vw-2rem))] grid-cols-2 gap-x-4 gap-y-3 border border-[#33464f] bg-[#0d1519] p-4 shadow-[0_1.25rem_3rem_rgba(0,0,0,0.48)] max-[50rem]:static max-[50rem]:w-full max-[50rem]:border-x-0 max-[50rem]:border-b-0 max-[50rem]:border-t-[#26343b] max-[50rem]:bg-transparent max-[50rem]:p-2 max-[50rem]:shadow-none max-[28rem]:grid-cols-1">
+				<div class="docs-menu-intro col-span-full flex items-center justify-between gap-4 border-b border-[#26343b] px-1 pb-3 max-[50rem]:hidden">
+					<div>
+						<strong>DOCS INDEX</strong>
+						<p>Guides and references for practical engineering.</p>
+					</div>
+					<a href="/docs/" class="docs-menu-all">ALL NOTES <span>↗</span></a>
+				</div>
 				<div class="docs-menu-group">
 					<strong>GUIDES</strong>
 					<a href="/docs/guides/about/">About these notes</a>
@@ -45,213 +66,177 @@ const navLinks = [
 				<div class="docs-menu-group">
 					<strong>REFERENCE</strong>
 					<a href="/docs/reference/toolbox/">Engineering toolbox</a>
+					<a href="/docs/reference/jev-ai/">Jev AI</a>
 				</div>
 				<div class="docs-menu-group">
-					<strong>LANGUAGES / RUST</strong>
+					<strong><span>01</span> RUST</strong>
 					<a href="/docs/languages/rust/">Overview</a>
 					<a href="/docs/languages/rust/ownership/">Ownership</a>
+					<a href="/docs/languages/rust/async/">Async</a>
 					<a href="/docs/languages/rust/tooling/">Tooling</a>
 				</div>
 				<div class="docs-menu-group">
-					<strong>LANGUAGES / C++</strong>
+					<strong><span>02</span> C++</strong>
 					<a href="/docs/languages/cpp/">Overview</a>
 					<a href="/docs/languages/cpp/memory/">Memory</a>
 					<a href="/docs/languages/cpp/tooling/">Tooling</a>
 				</div>
 				<div class="docs-menu-group">
-					<strong>LANGUAGES / PYTHON</strong>
+					<strong><span>03</span> PYTHON</strong>
 					<a href="/docs/languages/python/">Overview</a>
 					<a href="/docs/languages/python/packaging/">Packaging</a>
 					<a href="/docs/languages/python/tooling/">Tooling</a>
 				</div>
+				<div class="docs-menu-group">
+					<strong>ELSEWHERE</strong>
+					<a href="/docs/terms/">Terms and conditions</a>
+					<a href="mailto:hello@sakshampy.in">Get in touch <span>↗</span></a>
+				</div>
 			</div>
 		</details>
 	</nav>
-	<a href="mailto:hello@sakshampy.in" class="hire-button">
-		WRITE ME <span>↗</span>
+	<a
+		href="mailto:hello@sakshampy.in"
+		class="hire-button whitespace-nowrap border border-[#3b4b53] px-3.5 py-2.5 font-mono text-[0.6rem] tracking-[0.09em] text-[#dce7eb] no-underline uppercase transition-colors duration-200 hover:border-[#a8ff60] hover:bg-[#101a20] hover:text-[#a8ff60] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#a8ff60] max-[59.375rem]:hidden"
+	>
+		WRITE ME <span class="text-[#a8ff60]" aria-hidden="true">↗</span>
 	</a>
+	<button
+		class="docs-menu-toggle hidden min-h-8 min-w-[4.8rem] items-center justify-center border border-[#33464f] bg-transparent px-2 font-mono text-[0.6rem] tracking-[0.08em] text-[#a8ff60] hover:border-[#a8ff60] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#a8ff60] max-[50rem]:inline-flex"
+		type="button"
+		aria-controls="docs-navigation"
+		aria-expanded="false"
+	>
+		<span class="docs-menu-label">[ MENU ]</span>
+	</button>
 </div>
 
+<script>
+	const header = document.querySelector<HTMLElement>(".docs-header");
+	const button = header?.querySelector<HTMLButtonElement>(".docs-menu-toggle");
+	const navigation = header?.querySelector<HTMLElement>("#docs-navigation");
+	const label = button?.querySelector<HTMLElement>(".docs-menu-label");
+	const mobileQuery = window.matchMedia("(max-width: 800px)");
+	header?.classList.add("has-js");
+	const setMenuOpen = (isOpen: boolean) => {
+		navigation?.classList.toggle("is-open", isOpen);
+		button?.setAttribute("aria-expanded", String(isOpen));
+		if (label) label.textContent = isOpen ? "[ CLOSE ]" : "[ MENU ]";
+	};
+
+	button?.addEventListener("click", () =>
+		setMenuOpen(button.getAttribute("aria-expanded") !== "true"),
+	);
+	navigation?.querySelectorAll("a").forEach((link) =>
+		link.addEventListener("click", () => setMenuOpen(false)),
+	);
+	document.addEventListener("keydown", (event) => {
+		if (event.key === "Escape" && button?.getAttribute("aria-expanded") === "true") {
+			setMenuOpen(false);
+			button.focus();
+		}
+	});
+	document.addEventListener("click", (event) => {
+		if (event.target instanceof Node && !header?.contains(event.target)) setMenuOpen(false);
+	});
+	mobileQuery.addEventListener("change", () => setMenuOpen(false));
+</script>
+
 <style>
+	@reference "../styles/docs.css";
+
 	@layer starlight.core {
-		.header {
-			align-items: center;
-			display: grid;
-			gap: clamp(0.75rem, 1.5vw, 1.5rem);
-			grid-template-columns: auto auto minmax(0, 1fr) auto;
-			min-width: 0;
-		}
-		.docs-search {
-			justify-self: start;
-		}
-		.docs-nav {
-			align-items: center;
-			display: flex;
-			gap: clamp(0.75rem, 1.25vw, 1.25rem);
-			justify-content: flex-end;
-			min-width: 0;
-		}
-		:global(site-search button[data-open-modal]) {
-			background: transparent;
-			border: 1px solid #3b4b53;
-			border-radius: 0;
-			color: #91a2aa;
+		:global(header.header) {
 			font-family: "DM Mono", monospace;
-			font-size: 0.625rem;
-			min-height: 2.15rem;
-			padding-inline: 0.65rem;
-			width: auto;
 		}
-		:global(site-search button[data-open-modal]:hover) {
-			border-color: #a8ff60;
-			color: #a8ff60;
+		.docs-nav-link::after,
+		.docs-menu summary::after {
+			@apply absolute inset-x-0 bottom-1 h-px origin-left scale-x-0 bg-current transition-transform duration-200 content-[''];
 		}
-
-		.docs-nav a {
-			color: #89989f;
-			font-size: 0.625rem;
-			letter-spacing: 0.1em;
-			text-transform: uppercase;
-			text-decoration: none;
-			transition: color 0.2s ease;
-			white-space: nowrap;
-		}
-
-		.docs-nav a:hover {
-			color: #a8ff60;
-		}
-
-		.docs-menu {
-			position: relative;
-		}
-		.docs-menu summary {
-			color: #89989f;
-			cursor: pointer;
-			font-size: 0.625rem;
-			letter-spacing: 0.1em;
-			list-style: none;
-			text-transform: uppercase;
-			white-space: nowrap;
+		.docs-nav-link:hover::after,
+		.docs-nav-link:focus-visible::after,
+		.docs-nav-link[aria-current="page"]::after,
+		.docs-menu summary:hover::after,
+		.docs-menu[open] summary::after {
+			@apply scale-x-100;
 		}
 		.docs-menu summary::-webkit-details-marker {
 			display: none;
 		}
-		.docs-menu summary:hover,
-		.docs-menu[open] summary {
-			color: #a8ff60;
-		}
-		.docs-menu-panel {
-			background: #101a20;
-			border: 1px solid #33464f;
-			display: grid;
-			gap: 0.85rem;
-			min-width: 16rem;
-			padding: 1rem;
-			position: absolute;
-			right: 0;
-			top: 1.6rem;
-			z-index: 2;
+		.docs-menu[open] summary > span {
+			@apply rotate-180;
 		}
 		.docs-menu-group {
-			display: grid;
-			gap: 0.35rem;
-		}
-		.docs-menu-group + .docs-menu-group {
-			border-top: 1px solid #26343b;
-			padding-top: 0.75rem;
+			@apply grid content-start gap-1 border border-[#202a30] bg-[#101a20] p-2.5;
 		}
 		.docs-menu-group strong {
-			color: #63757d;
-			font-size: 0.5rem;
-			font-weight: 400;
-			letter-spacing: 0.1em;
+			@apply flex items-center gap-2 px-1 py-1 font-mono text-[0.52rem] font-normal tracking-[0.13em] text-[#a8ff60];
+		}
+		.docs-menu-group strong span {
+			@apply text-[#63757d];
 		}
 		.docs-menu-panel a {
-			color: #a8ff60;
-			font-size: 0.58rem;
-			padding-inline-start: 0.5rem;
+			@apply px-1 py-1.5 text-[0.65rem] text-[#b6c3c8] no-underline normal-case transition-colors hover:bg-[#142127] hover:text-[#a8ff60];
 		}
-		.docs-menu-panel a:hover {
-			color: #e8edf0;
+		.docs-menu-panel a span {
+			@apply text-[#a8ff60];
 		}
-
-		.hire-button {
-			border: 1px solid #3b4b53;
-			color: #dce7eb;
-			font-size: 0.625rem;
-			letter-spacing: 0.1em;
-			padding: 0.55rem 0.85rem;
-			text-decoration: none;
-			text-transform: uppercase;
-			transition:
-				border-color 0.2s ease,
-				color 0.2s ease;
-			white-space: nowrap;
+		.docs-menu-intro strong {
+			@apply font-mono text-[0.6rem] font-normal tracking-[0.14em] text-[#a8ff60];
 		}
-
-		.hire-button span {
-			color: #a8ff60;
+		.docs-menu-intro p {
+			@apply mt-1 text-[0.7rem] text-[#89989f];
 		}
-
-		.hire-button:hover {
-			border-color: #a8ff60;
-			color: #a8ff60;
+		.docs-menu-panel .docs-menu-all {
+			@apply whitespace-nowrap border border-[#33464f] px-2.5 py-2 font-mono text-[0.52rem] tracking-[0.1em] text-[#dce7eb] transition-colors hover:border-[#a8ff60] hover:bg-[#101a20];
 		}
-
-		.topline {
-			align-items: center;
-			border-bottom: 1px solid #202a30;
-			color: #617078;
-			display: flex;
-			font:
-				0.52rem "DM Mono",
-				monospace;
-			justify-content: space-between;
-			letter-spacing: 0.1em;
-			min-height: 1.875rem;
+		:global(site-search button[data-open-modal]) {
+			@apply min-h-[2.15rem] w-auto rounded-none border border-[#3b4b53] bg-transparent px-2.5 font-mono text-[0.625rem] text-[#91a2aa];
 		}
-		.topline-right {
-			align-items: center;
-			display: flex;
-			gap: 0.7rem;
-		}
-		.topline i {
-			background: #a8ff60;
-			border-radius: 50%;
-			display: inline-block;
-			height: 0.35rem;
-			width: 0.35rem;
-		}
-		@media (max-width: 950px) {
-			.header {
-				grid-template-columns: auto auto minmax(0, 1fr);
-			}
-			.docs-nav {
-				grid-column: 3;
-			}
-			.docs-nav > a {
-				display: none;
-			}
-			.hire-button {
-				display: none;
-			}
+		:global(site-search button[data-open-modal]:hover) {
+			@apply border-[#a8ff60] text-[#a8ff60];
 		}
 		@media (max-width: 800px) {
-			.topline {
+			.docs-header {
+				display: flex;
+				gap: 0.6rem;
+				justify-content: space-between;
+				min-height: 4.5rem;
+				padding: 0 1rem;
+			}
+			.docs-header :global(.docs-search) {
+				flex: 0 0 auto;
+				margin-inline-start: auto;
+			}
+			:global(.sl-menu-button) {
 				display: none;
 			}
-			.header {
-				grid-template-columns: max-content auto max-content;
-				justify-content: space-between;
+			.docs-header.has-js .docs-nav {
+				display: none;
 			}
-			.docs-search {
-				justify-self: end;
+			.docs-header.has-js .docs-nav.is-open {
+				@apply absolute left-0 right-0 top-[calc(100%+0.25rem)] z-50 flex flex-col items-stretch gap-0 border border-[#33464f] bg-[#090b0d] p-2 shadow-[0_1rem_2rem_rgba(0,0,0,0.4)];
 			}
-			.docs-nav {
-				grid-column: auto;
+			.docs-header.has-js .docs-nav.is-open > a {
+				@apply block border-b border-[#202a30] px-3 py-3;
 			}
-			.ui-brand-copy {
-				font-size: 0.62rem;
+			.docs-header.has-js .docs-nav.is-open .docs-menu {
+				@apply py-1;
+			}
+			.docs-header.has-js .docs-nav.is-open .docs-menu summary {
+				@apply px-3 py-3;
+			}
+			.docs-header.has-js .docs-nav.is-open .docs-menu-group {
+				@apply border-x-0 border-b-0 border-t border-[#26343b] bg-transparent px-3;
+			}
+		}
+		@media (prefers-reduced-motion: reduce) {
+			.docs-nav-link,
+			.docs-menu summary,
+			.docs-nav-link::after,
+			.docs-menu summary::after,
+			.hire-button {
+				transition: none;
 			}
 		}
 	}
