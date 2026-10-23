@@ -5,7 +5,7 @@
 	"scripts": {
 		"dev": "astro dev",
 		"start": "astro dev",
-		"build": "astro build && bun ../../scripts/copy-mounted-headers.mjs docs",
+		"build": "WRANGLER_LOG_PATH=.wrangler/logs astro build && bun ../../scripts/copy-mounted-headers.mjs docs",
 		"preview": "bun run build && astro preview",
 		"lint": "oxlint . && eslint '**/*.astro' --no-warn-ignored",
 		"lint:fix": "oxlint . --fix && eslint '**/*.astro' --no-warn-ignored --fix",

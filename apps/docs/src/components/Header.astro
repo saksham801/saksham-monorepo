@@ -11,7 +11,7 @@ const isCurrent = (href: string) =>
 	Astro.url.pathname === href || (href === "/docs/" && Astro.url.pathname.startsWith("/docs/"));
 ---
 
-<div class="relative z-40 flex min-h-[1.9rem] items-center justify-between border-b border-[#202a30] px-[max(5vw,calc((100vw-80rem)/2))] font-mono text-[9px] tracking-[0.1em] text-[#718189] max-[36rem]:px-4" aria-label="Site information">
+<div class="docs-topline relative z-40 flex min-h-[1.9rem] items-center justify-between border-b border-[#202a30] px-[max(5vw,calc((100vw-80rem)/2))] font-mono text-[9px] tracking-[0.1em] text-[#718189] max-[36rem]:px-4" aria-label="Site information">
 	<span>SAKSHAM.DUBEY // DOCS_V1.0</span>
 	<span class="flex items-center gap-2.5 max-[36rem]:hidden">
 		<i class="size-1.5 rounded-full bg-[#a8ff60] shadow-[0_0_10px_rgba(168,255,96,0.7)]" aria-hidden="true"></i>
@@ -102,7 +102,7 @@ const isCurrent = (href: string) =>
 		WRITE ME <span class="text-[#a8ff60]" aria-hidden="true">↗</span>
 	</a>
 	<button
-		class="docs-menu-toggle hidden min-h-8 min-w-[4.8rem] items-center justify-center border border-[#33464f] bg-transparent px-2 font-mono text-[0.6rem] tracking-[0.08em] text-[#a8ff60] hover:border-[#a8ff60] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#a8ff60] max-[50rem]:inline-flex"
+		class="docs-menu-toggle hidden min-h-11 min-w-[4.8rem] items-center justify-center border border-[#33464f] bg-[#0d1519] px-2 font-mono text-[0.6rem] tracking-[0.08em] text-[#a8ff60] transition-colors hover:border-[#a8ff60] hover:bg-[#142127] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#a8ff60] max-[50rem]:inline-flex"
 		type="button"
 		aria-controls="docs-navigation"
 		aria-expanded="false"
@@ -197,6 +197,9 @@ const isCurrent = (href: string) =>
 			@apply border-[#a8ff60] text-[#a8ff60];
 		}
 		@media (max-width: 800px) {
+			.docs-topline {
+				display: none;
+			}
 			.docs-header {
 				display: flex;
 				gap: 0.6rem;
@@ -207,6 +210,10 @@ const isCurrent = (href: string) =>
 			.docs-header :global(.docs-search) {
 				flex: 0 0 auto;
 				margin-inline-start: auto;
+			}
+			:global(site-search button[data-open-modal]) {
+				min-height: 2.75rem;
+				min-width: 2.75rem;
 			}
 			:global(.sl-menu-button) {
 				display: none;
