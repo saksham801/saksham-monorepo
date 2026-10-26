@@ -3,22 +3,27 @@ import Search from "@astrojs/starlight/components/Search.astro";
 import Brand from "@saksham/ui/components/Brand.astro";
 
 const navLinks = [
-	{ href: "/blogs/", label: "/ articles" },
-	{ href: "/docs/", label: "/ docs" },
+	{ href: "/blogs/", label: "ARTICLES" },
+	{ href: "/docs/", label: "DOCS" },
 ];
 
 const isCurrent = (href: string) =>
 	Astro.url.pathname === href || (href === "/docs/" && Astro.url.pathname.startsWith("/docs/"));
 ---
 
-<div class="docs-topline relative z-40 flex min-h-[1.9rem] items-center justify-between border-b border-[#202a30] px-[max(5vw,calc((100vw-80rem)/2))] font-mono text-[9px] tracking-[0.1em] text-[#718189] max-[36rem]:px-4" aria-label="Site information">
-	<span>SAKSHAM.DUBEY // DOCS_V1.0</span>
-	<span class="flex items-center gap-2.5 max-[36rem]:hidden">
+<div class="docs-topline relative z-40 flex min-h-[2.1rem] items-center justify-between border-b border-white/[0.06] bg-[#090b0d] px-[max(5vw,calc((100vw-80rem)/2))] font-mono text-[9px] tracking-[0.12em] text-[#718189] max-[50rem]:hidden" aria-label="Site information">
+	<span>SAKSHAM.DUBEY <span class="mx-1 text-[#3b4b53]">/</span> ENGINEERING NOTES</span>
+	<span class="flex items-center gap-2.5 rounded-full border border-white/[0.06] bg-white/[0.025] px-2.5 py-1 max-[36rem]:hidden">
 		<i class="size-1.5 rounded-full bg-[#a8ff60] shadow-[0_0_10px_rgba(168,255,96,0.7)]" aria-hidden="true"></i>
 		SYSTEMS ONLINE
 	</span>
 </div>
-<div class="docs-header sticky top-0 z-40 mx-auto grid min-h-[5rem] max-w-7xl grid-cols-[auto_minmax(0,1fr)_auto_auto] items-center gap-[clamp(0.75rem,1.5vw,1.5rem)] border-b border-[#202a30] bg-[rgba(9,11,13,0.9)] px-[clamp(1rem,5vw,3rem)] py-3 font-mono backdrop-blur-[18px] max-[59.375rem]:grid-cols-[auto_minmax(0,1fr)] max-[59.375rem]:gap-4 max-[50rem]:grid-cols-[minmax(0,1fr)_auto_auto] max-[50rem]:gap-2">
+<div class="docs-header relative z-40 mx-auto grid min-h-[5rem] max-w-7xl grid-cols-[auto_auto_minmax(0,1fr)_auto] items-center gap-[clamp(0.75rem,1.5vw,1.5rem)] border-b border-white/[0.08] bg-[rgba(9,11,13,0.88)] px-[clamp(1rem,5vw,3rem)] py-0 font-mono backdrop-blur-2xl max-[59.375rem]:grid-cols-[auto_minmax(0,1fr)] max-[59.375rem]:gap-4 max-[50rem]:grid-cols-[minmax(0,1fr)_auto_auto] max-[50rem]:gap-2">
+	<span
+		class="docs-reading-progress pointer-events-none absolute inset-x-0 top-0 z-10 h-px origin-left bg-gradient-to-r from-[#a8ff60] via-[#d8ff8b] to-transparent shadow-[0_0_12px_rgba(168,255,96,0.8)]"
+		style="transform: scaleX(0)"
+		aria-hidden="true"
+	></span>
 	<Brand
 		href="/docs/"
 		name="SAKSHAM"
@@ -27,37 +32,41 @@ const isCurrent = (href: string) =>
 	/>
 	<Search class="docs-search justify-self-start max-[59.375rem]:hidden max-[50rem]:block max-[50rem]:justify-self-end" />
 	<nav
-		class="docs-nav print:hidden flex min-w-0 items-center justify-end gap-[clamp(0.8rem,1.5vw,1.5rem)] max-[59.375rem]:gap-2.5 max-[59.375rem]:[&>a]:text-[0.58rem]"
+		class="docs-nav print:hidden flex min-w-0 items-center justify-end gap-1 rounded-2xl border border-white/[0.07] bg-white/[0.025] p-1 shadow-[inset_0_1px_0_rgba(255,255,255,0.025)] max-[59.375rem]:gap-0.5 max-[59.375rem]:[&>a]:text-[0.58rem] max-[50rem]:rounded-none max-[50rem]:border-0 max-[50rem]:bg-transparent max-[50rem]:p-0 max-[50rem]:shadow-none"
 		id="docs-navigation"
 		aria-label="Primary"
 	>
+		<div class="docs-mobile-nav-heading" aria-hidden="true">
+			<span>QUICK NAVIGATION</span>
+			<span>SELECT A DESTINATION</span>
+		</div>
 		<a
 			href="/"
-			class="docs-nav-link relative whitespace-nowrap border border-transparent px-2.5 py-2 font-mono text-[0.61rem] tracking-[0.09em] text-[#89989f] no-underline uppercase transition-colors duration-200 hover:border-[#26343b] hover:bg-[#101a20] hover:text-[#dce7eb] focus-visible:text-[#a8ff60] aria-[current=page]:border-[#354b42] aria-[current=page]:bg-[#101a20] aria-[current=page]:text-[#a8ff60]"
+			class="docs-nav-link relative whitespace-nowrap rounded-xl border border-transparent px-3 py-2 font-mono text-[0.61rem] tracking-[0.09em] text-[#89989f] no-underline uppercase transition-[color,background-color,border-color] duration-200 hover:border-white/[0.07] hover:bg-white/[0.04] hover:text-[#dce7eb] focus-visible:text-[#a8ff60] aria-[current=page]:border-[#a8ff60]/20 aria-[current=page]:bg-[#a8ff60]/[0.08] aria-[current=page]:text-[#c8ff91] max-[59.375rem]:px-2.5"
 			aria-current={Astro.url.pathname === "/" ? "page" : undefined}
 		>
-			/ portfolio
+			PORTFOLIO
 		</a>
 		{navLinks.map((link) => (
 			<a
 				href={link.href}
-				class="docs-nav-link relative whitespace-nowrap border border-transparent px-2.5 py-2 font-mono text-[0.61rem] tracking-[0.09em] text-[#89989f] no-underline uppercase transition-colors duration-200 hover:border-[#26343b] hover:bg-[#101a20] hover:text-[#dce7eb] focus-visible:text-[#a8ff60] aria-[current=page]:border-[#354b42] aria-[current=page]:bg-[#101a20] aria-[current=page]:text-[#a8ff60]"
+				class="docs-nav-link relative whitespace-nowrap rounded-xl border border-transparent px-3 py-2 font-mono text-[0.61rem] tracking-[0.09em] text-[#89989f] no-underline uppercase transition-[color,background-color,border-color] duration-200 hover:border-white/[0.07] hover:bg-white/[0.04] hover:text-[#dce7eb] focus-visible:text-[#a8ff60] aria-[current=page]:border-[#a8ff60]/20 aria-[current=page]:bg-[#a8ff60]/[0.08] aria-[current=page]:text-[#c8ff91] max-[59.375rem]:px-2.5"
 				aria-current={isCurrent(link.href) ? "page" : undefined}
 			>
 				{link.label}
 			</a>
 		))}
 		<details class="docs-menu relative">
-			<summary class="relative cursor-pointer list-none whitespace-nowrap border border-transparent px-2.5 py-2 font-mono text-[0.61rem] tracking-[0.09em] text-[#89989f] uppercase transition-colors duration-200 hover:border-[#26343b] hover:bg-[#101a20] hover:text-[#a8ff60] [&::-webkit-details-marker]:hidden">
-				/ explore <span class="ml-1 inline-block text-[#a8ff60] transition-transform duration-200" aria-hidden="true">⌄</span>
+			<summary class="relative cursor-pointer list-none whitespace-nowrap rounded-xl border border-transparent px-3 py-2 font-mono text-[0.61rem] tracking-[0.09em] text-[#89989f] uppercase transition-[color,background-color,border-color] duration-200 hover:border-white/[0.07] hover:bg-white/[0.04] hover:text-[#c8ff91] [&::-webkit-details-marker]:hidden max-[59.375rem]:px-2.5">
+				Explore <span class="ml-1 inline-block text-[#a8ff60] transition-transform duration-200" aria-hidden="true">⌄</span>
 			</summary>
-			<div class="docs-menu-panel absolute right-0 top-[calc(100%+0.5rem)] z-50 grid w-[min(36rem,calc(100vw-2rem))] grid-cols-2 gap-x-4 gap-y-3 border border-[#33464f] bg-[#0d1519] p-4 shadow-[0_1.25rem_3rem_rgba(0,0,0,0.48)] max-[50rem]:static max-[50rem]:w-full max-[50rem]:border-x-0 max-[50rem]:border-b-0 max-[50rem]:border-t-[#26343b] max-[50rem]:bg-transparent max-[50rem]:p-2 max-[50rem]:shadow-none max-[28rem]:grid-cols-1">
+			<div class="docs-menu-panel absolute right-0 top-[calc(100%+0.65rem)] z-50 grid w-[min(38rem,calc(100vw-2rem))] grid-cols-2 gap-x-3 gap-y-3 rounded-2xl border border-white/[0.1] bg-[#0d1519]/95 p-4 shadow-[0_1.5rem_4rem_rgba(0,0,0,0.55)] backdrop-blur-2xl max-[50rem]:static max-[50rem]:w-full max-[50rem]:rounded-none max-[50rem]:border-x-0 max-[50rem]:border-b-0 max-[50rem]:border-t-[#26343b] max-[50rem]:bg-transparent max-[50rem]:p-2 max-[50rem]:shadow-none max-[50rem]:backdrop-blur-none max-[28rem]:grid-cols-1">
 				<div class="docs-menu-intro col-span-full flex items-center justify-between gap-4 border-b border-[#26343b] px-1 pb-3 max-[50rem]:hidden">
 					<div>
 						<strong>DOCS INDEX</strong>
 						<p>Guides and references for practical engineering.</p>
 					</div>
-					<a href="/docs/" class="docs-menu-all">ALL NOTES <span>↗</span></a>
+					<a href="/docs/" class="docs-menu-all">OPEN DOCS <span>↗</span></a>
 				</div>
 				<div class="docs-menu-group">
 					<strong>GUIDES</strong>
@@ -94,20 +103,26 @@ const isCurrent = (href: string) =>
 				</div>
 			</div>
 		</details>
+		<a href="mailto:hello@sakshampy.in" class="docs-mobile-contact">
+			<span>Have a project in mind?</span>
+			<strong>LET’S TALK <span aria-hidden="true">↗</span></strong>
+		</a>
 	</nav>
 	<a
 		href="mailto:hello@sakshampy.in"
-		class="hire-button whitespace-nowrap border border-[#3b4b53] px-3.5 py-2.5 font-mono text-[0.6rem] tracking-[0.09em] text-[#dce7eb] no-underline uppercase transition-colors duration-200 hover:border-[#a8ff60] hover:bg-[#101a20] hover:text-[#a8ff60] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#a8ff60] max-[59.375rem]:hidden"
+		class="hire-button whitespace-nowrap rounded-full border border-[#a8ff60]/25 bg-[#a8ff60]/[0.08] px-4 py-2.5 font-mono text-[0.6rem] tracking-[0.09em] text-[#dce7eb] no-underline uppercase shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] transition-[color,background-color,border-color,box-shadow] duration-200 hover:border-[#a8ff60]/60 hover:bg-[#a8ff60]/[0.14] hover:text-[#c8ff91] hover:shadow-[0_0_24px_rgba(168,255,96,0.1)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#a8ff60] max-[59.375rem]:hidden"
 	>
-		WRITE ME <span class="text-[#a8ff60]" aria-hidden="true">↗</span>
+		LET’S TALK <span class="text-[#a8ff60]" aria-hidden="true">↗</span>
 	</a>
 	<button
-		class="docs-menu-toggle hidden min-h-11 min-w-[4.8rem] items-center justify-center border border-[#33464f] bg-[#0d1519] px-2 font-mono text-[0.6rem] tracking-[0.08em] text-[#a8ff60] transition-colors hover:border-[#a8ff60] hover:bg-[#142127] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#a8ff60] max-[50rem]:inline-flex"
+		class="docs-menu-toggle hidden min-h-11 min-w-[4.8rem] items-center justify-center rounded-xl border border-white/[0.1] bg-white/[0.04] px-2 font-mono text-[0.6rem] tracking-[0.08em] text-[#c8ff91] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] transition-[color,background-color,border-color] hover:border-[#a8ff60]/50 hover:bg-[#a8ff60]/[0.08] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#a8ff60] max-[50rem]:inline-flex"
 		type="button"
 		aria-controls="docs-navigation"
 		aria-expanded="false"
+		aria-label="Open navigation"
 	>
-		<span class="docs-menu-label">[ MENU ]</span>
+		<span class="docs-menu-icon" aria-hidden="true"><i></i><i></i><i></i></span>
+		<span class="docs-menu-label">MENU</span>
 	</button>
 </div>
 
@@ -116,13 +131,40 @@ const isCurrent = (href: string) =>
 	const button = header?.querySelector<HTMLButtonElement>(".docs-menu-toggle");
 	const navigation = header?.querySelector<HTMLElement>("#docs-navigation");
 	const label = button?.querySelector<HTMLElement>(".docs-menu-label");
+	const progress = header?.querySelector<HTMLElement>(".docs-reading-progress");
+	const exploreMenu = header?.querySelector<HTMLDetailsElement>(".docs-menu");
 	const mobileQuery = window.matchMedia("(max-width: 800px)");
 	header?.classList.add("has-js");
 	const setMenuOpen = (isOpen: boolean) => {
 		navigation?.classList.toggle("is-open", isOpen);
 		button?.setAttribute("aria-expanded", String(isOpen));
-		if (label) label.textContent = isOpen ? "[ CLOSE ]" : "[ MENU ]";
+		button?.setAttribute("aria-label", isOpen ? "Close navigation" : "Open navigation");
+		if (label) label.textContent = isOpen ? "CLOSE" : "MENU";
+		if (!isOpen && exploreMenu) exploreMenu.open = false;
 	};
+
+	let animationFrame = 0;
+	const updateScrollState = () => {
+		const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
+		const scrollProgress = scrollableHeight > 0 ? window.scrollY / scrollableHeight : 0;
+		progress?.style.setProperty(
+			"transform",
+			`scaleX(${Math.min(1, Math.max(0, scrollProgress))})`,
+		);
+		header?.classList.toggle("is-scrolled", window.scrollY > 8);
+	};
+
+	const scheduleScrollUpdate = () => {
+		if (animationFrame) return;
+		animationFrame = window.requestAnimationFrame(() => {
+			updateScrollState();
+			animationFrame = 0;
+		});
+	};
+
+	updateScrollState();
+	window.addEventListener("scroll", scheduleScrollUpdate, { passive: true });
+	window.addEventListener("resize", updateScrollState, { passive: true });
 
 	button?.addEventListener("click", () =>
 		setMenuOpen(button.getAttribute("aria-expanded") !== "true"),
@@ -131,13 +173,24 @@ const isCurrent = (href: string) =>
 		link.addEventListener("click", () => setMenuOpen(false)),
 	);
 	document.addEventListener("keydown", (event) => {
-		if (event.key === "Escape" && button?.getAttribute("aria-expanded") === "true") {
+		if (event.key !== "Escape") return;
+		if (exploreMenu?.open) {
+			exploreMenu.open = false;
+			exploreMenu.querySelector("summary")?.focus();
+			return;
+		}
+		if (button?.getAttribute("aria-expanded") === "true") {
 			setMenuOpen(false);
 			button.focus();
 		}
 	});
 	document.addEventListener("click", (event) => {
-		if (event.target instanceof Node && !header?.contains(event.target)) setMenuOpen(false);
+		if (!(event.target instanceof Node)) return;
+		if (!header?.contains(event.target)) {
+			setMenuOpen(false);
+		} else if (exploreMenu?.open && !exploreMenu.contains(event.target)) {
+			exploreMenu.open = false;
+		}
 	});
 	mobileQuery.addEventListener("change", () => setMenuOpen(false));
 </script>
@@ -148,10 +201,23 @@ const isCurrent = (href: string) =>
 	@layer starlight.core {
 		:global(header.header) {
 			font-family: "DM Mono", monospace;
+			height: var(--sl-nav-height);
+			min-height: var(--sl-nav-height);
+			padding-block: 0;
+		}
+		.docs-header {
+			padding-block: 0;
+			transition:
+				background-color 180ms ease,
+				border-color 180ms ease,
+				box-shadow 180ms ease;
+		}
+		.docs-header.is-scrolled {
+			@apply border-white/[0.12] bg-[rgba(9,11,13,0.97)] shadow-[0_12px_32px_rgba(0,0,0,0.2)];
 		}
 		.docs-nav-link::after,
 		.docs-menu summary::after {
-			@apply absolute inset-x-0 bottom-1 h-px origin-left scale-x-0 bg-current transition-transform duration-200 content-[''];
+			@apply absolute inset-x-2 bottom-1 h-px origin-left scale-x-0 bg-current transition-transform duration-200 content-[''];
 		}
 		.docs-nav-link:hover::after,
 		.docs-nav-link:focus-visible::after,
@@ -167,7 +233,7 @@ const isCurrent = (href: string) =>
 			@apply rotate-180;
 		}
 		.docs-menu-group {
-			@apply grid content-start gap-1 border border-[#202a30] bg-[#101a20] p-2.5;
+			@apply grid content-start gap-1 rounded-xl border border-white/[0.06] bg-white/[0.025] p-2.5;
 		}
 		.docs-menu-group strong {
 			@apply flex items-center gap-2 px-1 py-1 font-mono text-[0.52rem] font-normal tracking-[0.13em] text-[#a8ff60];
@@ -175,8 +241,12 @@ const isCurrent = (href: string) =>
 		.docs-menu-group strong span {
 			@apply text-[#63757d];
 		}
+		.docs-mobile-nav-heading,
+		.docs-mobile-contact {
+			display: none;
+		}
 		.docs-menu-panel a {
-			@apply px-1 py-1.5 text-[0.65rem] text-[#b6c3c8] no-underline normal-case transition-colors hover:bg-[#142127] hover:text-[#a8ff60];
+			@apply rounded-lg px-2 py-1.5 text-[0.65rem] text-[#b6c3c8] no-underline normal-case transition-colors hover:bg-white/[0.05] hover:text-[#c8ff91];
 		}
 		.docs-menu-panel a span {
 			@apply text-[#a8ff60];
@@ -188,32 +258,69 @@ const isCurrent = (href: string) =>
 			@apply mt-1 text-[0.7rem] text-[#89989f];
 		}
 		.docs-menu-panel .docs-menu-all {
-			@apply whitespace-nowrap border border-[#33464f] px-2.5 py-2 font-mono text-[0.52rem] tracking-[0.1em] text-[#dce7eb] transition-colors hover:border-[#a8ff60] hover:bg-[#101a20];
+			@apply whitespace-nowrap rounded-lg border border-white/[0.1] bg-white/[0.03] px-2.5 py-2 font-mono text-[0.52rem] tracking-[0.1em] text-[#dce7eb] transition-colors hover:border-[#a8ff60]/50 hover:bg-[#a8ff60]/[0.08];
 		}
 		:global(site-search button[data-open-modal]) {
-			@apply min-h-[2.15rem] w-auto rounded-none border border-[#3b4b53] bg-transparent px-2.5 font-mono text-[0.625rem] text-[#91a2aa];
+			@apply min-h-[2.35rem] w-auto rounded-xl border border-white/[0.1] bg-white/[0.025] px-3 font-mono text-[0.625rem] text-[#91a2aa] transition-[color,background-color,border-color];
 		}
 		:global(site-search button[data-open-modal]:hover) {
-			@apply border-[#a8ff60] text-[#a8ff60];
+			@apply border-[#a8ff60]/50 bg-[#a8ff60]/[0.06] text-[#c8ff91];
 		}
 		@media (max-width: 800px) {
 			.docs-topline {
 				display: none;
 			}
 			.docs-header {
-				display: flex;
-				gap: 0.6rem;
-				justify-content: space-between;
+				display: grid;
+				grid-template-columns: minmax(0, 1fr) auto auto;
+				gap: 0.5rem;
 				min-height: 4.5rem;
-				padding: 0 1rem;
+				padding-inline: max(1rem, env(safe-area-inset-left)) max(
+						1rem,
+						env(safe-area-inset-right)
+					);
 			}
 			.docs-header :global(.docs-search) {
 				flex: 0 0 auto;
-				margin-inline-start: auto;
+				justify-self: end;
 			}
 			:global(site-search button[data-open-modal]) {
 				min-height: 2.75rem;
 				min-width: 2.75rem;
+			}
+			.docs-menu-toggle {
+				min-height: 2.75rem;
+				min-width: 5.4rem;
+				gap: 0.55rem;
+				padding-inline: 0.75rem;
+			}
+			.docs-menu-icon {
+				display: grid;
+				gap: 0.2rem;
+				width: 0.75rem;
+			}
+			.docs-menu-icon i {
+				display: block;
+				height: 1px;
+				width: 100%;
+				background: currentColor;
+				transition:
+					transform 180ms ease,
+					width 180ms ease,
+					opacity 180ms ease;
+			}
+			.docs-menu-icon i:nth-child(2) {
+				width: 0.5rem;
+			}
+			.docs-menu-toggle[aria-expanded="true"] .docs-menu-icon i:first-child {
+				transform: translateY(0.25rem) rotate(45deg);
+			}
+			.docs-menu-toggle[aria-expanded="true"] .docs-menu-icon i:nth-child(2) {
+				opacity: 0;
+			}
+			.docs-menu-toggle[aria-expanded="true"] .docs-menu-icon i:last-child {
+				transform: translateY(-0.25rem) rotate(-45deg);
+				width: 0.75rem;
 			}
 			:global(.sl-menu-button) {
 				display: none;
@@ -222,22 +329,105 @@ const isCurrent = (href: string) =>
 				display: none;
 			}
 			.docs-header.has-js .docs-nav.is-open {
-				@apply absolute left-0 right-0 top-[calc(100%+0.25rem)] z-50 flex flex-col items-stretch gap-0 border border-[#33464f] bg-[#090b0d] p-2 shadow-[0_1rem_2rem_rgba(0,0,0,0.4)];
+				align-items: stretch;
+				background: #090b0d;
+				backdrop-filter: blur(24px);
+				border: 1px solid rgb(255 255 255 / 0.12);
+				border-radius: 1rem;
+				box-shadow: 0 1rem 2.5rem rgb(0 0 0 / 0.48);
+				display: flex;
+				flex-direction: column;
+				gap: 0;
+				justify-content: flex-start;
+				inset-inline: 0.75rem;
+				max-height: min(
+					42rem,
+					calc(100vh - var(--sl-nav-height) - env(safe-area-inset-bottom) - 1rem)
+				);
+				max-height: min(
+					42rem,
+					calc(100dvh - var(--sl-nav-height) - env(safe-area-inset-bottom) - 1rem)
+				);
+				min-height: 0;
+				overflow-x: hidden;
+				overflow-y: auto;
+				overscroll-behavior: contain;
+				padding: 0.5rem;
+				position: absolute;
+				scroll-padding-block: 0.5rem;
+				scrollbar-color: #3b4b53 transparent;
+				scrollbar-width: thin;
+				-webkit-overflow-scrolling: touch;
+				top: calc(100% + 0.5rem);
+				touch-action: pan-y;
+				z-index: 50;
+			}
+			.docs-mobile-nav-heading {
+				align-items: center;
+				display: flex;
+				justify-content: space-between;
+				padding: 0.75rem 0.8rem;
+			}
+			.docs-mobile-nav-heading span:first-child {
+				color: #c8ff91;
+				font-size: 0.58rem;
+				letter-spacing: 0.13em;
+			}
+			.docs-mobile-nav-heading span:last-child {
+				color: #63757d;
+				font-size: 0.48rem;
+				letter-spacing: 0.08em;
 			}
 			.docs-header.has-js .docs-nav.is-open > a {
-				@apply block border-b border-[#202a30] px-3 py-3;
+				@apply block min-h-12 border-b border-white/[0.06] px-3 py-3;
 			}
 			.docs-header.has-js .docs-nav.is-open .docs-menu {
-				@apply py-1;
+				@apply w-full py-1;
 			}
 			.docs-header.has-js .docs-nav.is-open .docs-menu summary {
-				@apply px-3 py-3;
+				@apply w-full px-3 py-3 text-left;
 			}
 			.docs-header.has-js .docs-nav.is-open .docs-menu-group {
-				@apply border-x-0 border-b-0 border-t border-[#26343b] bg-transparent px-3;
+				@apply rounded-none border-x-0 border-b-0 border-t border-[#26343b] bg-transparent px-3;
+			}
+			.docs-header.has-js .docs-nav.is-open .docs-menu-intro + .docs-menu-group {
+				@apply border-t-0;
+			}
+			.docs-header.has-js .docs-nav.is-open .docs-menu-panel a {
+				@apply flex min-h-11 items-center;
+			}
+			.docs-mobile-contact {
+				align-items: center;
+				background: linear-gradient(110deg, rgb(168 255 96 / 0.1), rgb(168 255 96 / 0.025));
+				border: 1px solid rgb(168 255 96 / 0.15);
+				border-radius: 0.75rem;
+				justify-content: space-between;
+				margin-top: 0.5rem;
+				padding: 0.85rem 0.9rem;
+				text-decoration: none;
+			}
+			.docs-header.has-js .docs-nav.is-open .docs-mobile-contact {
+				display: flex;
+			}
+			.docs-mobile-contact > span {
+				color: #89989f;
+				font-family: "Manrope", sans-serif;
+				font-size: 0.7rem;
+			}
+			.docs-mobile-contact strong {
+				color: #c8ff91;
+				font-size: 0.55rem;
+				font-weight: 400;
+				letter-spacing: 0.08em;
 			}
 		}
 		@media (prefers-reduced-motion: reduce) {
+			.docs-menu-icon i {
+				transition: none;
+			}
+		}
+		@media (prefers-reduced-motion: reduce) {
+			.docs-header,
 			.docs-nav-link,
 			.docs-menu summary,
 			.docs-nav-link::after,

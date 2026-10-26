@@ -29,13 +29,17 @@
 
 @media (min-width: 50rem) {
 	:root {
-		--sl-nav-height: 7rem;
+		--sl-nav-height: 7.5rem;
 	}
 }
 
 @media (max-width: 50rem) {
 	:root {
-		--sl-nav-height: 5.25rem;
+		--sl-nav-height: 5.5rem;
+	}
+
+	nav.sidebar .sl-menu-button {
+		display: none !important;
 	}
 }
 
@@ -743,14 +747,7 @@ nav[aria-labelledby="starlight__on-this-page--mobile"] {
 	max-width: 12ch;
 }
 
-/* Leave room for Starlight sidebar toggle on docs pages */
 @media (max-width: 49.99rem) {
-	:root[data-has-sidebar] header.header {
-		padding-inline-end: calc(
-			var(--sl-nav-gap) + var(--sl-nav-pad-x) + var(--sl-menu-button-size) + 0.35rem
-		);
-	}
-
 	/* Compact search control on small screens */
 	site-search button {
 		min-height: 2rem;
